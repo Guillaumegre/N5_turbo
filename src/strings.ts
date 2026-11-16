@@ -71,8 +71,19 @@ export const strings = {
   filters: { title: 'Session filters' },
   words: { title: 'Word list' },
   stats: { title: 'Stats' },
-  settings: { title: 'Settings' },
+  settings: {
+    title: 'Settings',
+    appearance: 'Appearance',
+    light: 'Light',
+    dark: 'Dark',
+    system: 'Match phone',
+  },
   about: { title: 'About' },
+  speech: {
+    noVoiceTitle: 'No Japanese voice installed',
+    noVoiceIos: 'To hear words and sentences, add one in Settings → Accessibility → Spoken Content → Voices → Japanese.',
+    noVoiceAndroid: 'To hear words and sentences, install Japanese in Settings → System → Languages → Text-to-speech output.',
+  },
   common: {
     comingSoon: 'Coming in a later milestone.',
     back: 'Back',

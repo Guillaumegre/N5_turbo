@@ -6,7 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 
-import { DataProvider } from '@/data/DataProvider';
+import { DataProvider, useSettings } from '@/data/DataProvider';
 import { strings } from '@/strings';
 import { AppThemeProvider, useTheme } from '@/theme/ThemeProvider';
 
@@ -23,10 +23,18 @@ export default function RootLayout() {
   if (!loaded && !error) return null;
 
   return (
-    <AppThemeProvider>
-      <DataProvider>
-        <AppStack />
-      </DataProvider>
+    <DataProvider>
+      <ThemedApp />
+    </DataProvider>
+  );
+}
+
+/** The theme comes from settings (light by default, dark or system on request), so it sits inside the data. */
+function ThemedApp() {
+  const { theme, fontScale } = useSettings();
+  return (
+    <AppThemeProvider preference={theme} fontScale={fontScale}>
+      <AppStack />
     </AppThemeProvider>
   );
 }

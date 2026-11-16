@@ -22,7 +22,7 @@ export const DEFAULT_SETTINGS: Settings = {
   newPerDayFallback: 20,
   reviewsPerDay: 200,
   learningSteps: [1, 10],
-  theme: 'system',
+  theme: 'light',
   fontScale: 1,
 };
 

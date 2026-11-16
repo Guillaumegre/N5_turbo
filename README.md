@@ -49,7 +49,6 @@ tools/            build-time data pipeline (Python): word list, JMdict, Tatoeba,
 - JMdict / JmdictFurigana — © EDRDG, CC BY-SA 4.0 (the bundled vocabulary JSON is therefore CC BY-SA 4.0)
 - Tatoeba sentences — CC BY 2.0 FR
 - N5 word list — Jonathan Waller (tanos.co.uk), CC BY
-- Noto Sans JP — SIL Open Font License 1.1
 
 ## Could be better (later)
 

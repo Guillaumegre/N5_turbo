@@ -14,7 +14,8 @@ export function Furigana({ segments, size, showReading, color, readingColor, ali
         display: 'block',
         fontFamily: fonts.jp,
         fontSize: size,
-        lineHeight: showReading ? 2.0 : 1.45,
+        // Same line height either way: toggling furigana must not move the text.
+        lineHeight: 2.0,
         color,
         textAlign: align,
         wordBreak: 'break-all',
@@ -23,7 +24,7 @@ export function Furigana({ segments, size, showReading, color, readingColor, ali
         s.r ? (
           <ruby key={i} style={{ rubyAlign: 'center' }}>
             {s.t}
-            <rt style={{ fontSize: '0.5em', color: readingColor, display: showReading ? undefined : 'none', userSelect: 'none' }}>
+            <rt style={{ fontSize: '0.5em', color: readingColor, visibility: showReading ? 'visible' : 'hidden', userSelect: 'none' }}>
               {s.r}
             </rt>
           </ruby>

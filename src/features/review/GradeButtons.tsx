@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 2,
   },
-  name: { fontWeight: '600' },
+  name: { fontWeight: '500' },
   show: { minHeight: 56, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
-  showLabel: { fontWeight: '600' },
+  showLabel: { fontWeight: '500' },
 });

@@ -17,6 +17,7 @@ export function BigCard({
   sub,
   watermark,
   tone = 'ink',
+  compact = false,
   onPress,
 }: {
   eyebrow: string;
@@ -24,6 +25,8 @@ export function BigCard({
   sub?: string;
   watermark: string;
   tone?: 'ink' | 'accent';
+  /** Smaller card for secondary actions. */
+  compact?: boolean;
   onPress: () => void;
 }) {
   const { colors } = useTheme();
@@ -34,14 +37,15 @@ export function BigCard({
       onPress={onPress}
       style={({ pressed }) => [
         styles.bigCard,
+        compact && styles.compactCard,
         { backgroundColor: ink ? colors.inkCard : colors.accent },
         pressed && styles.pressedCard,
       ]}>
-      <AppText style={[styles.watermark, { color: ink ? colors.watermark : colors.watermarkWarm }]} accessible={false}>
+      <AppText style={[styles.watermark, compact && styles.compactWatermark, { color: ink ? colors.watermark : colors.watermarkWarm }]} accessible={false}>
         {watermark}
       </AppText>
       <AppText style={[styles.cardEyebrow, { color: ink ? colors.onInkSoft : 'rgba(255,255,255,.66)' }]}>{eyebrow}</AppText>
-      <AppText style={[styles.cardTitle, { color: ink ? colors.onInk : '#FBF9F5' }]}>{title}</AppText>
+      <AppText style={[styles.cardTitle, compact && styles.compactTitle, { color: ink ? colors.onInk : '#FBF9F5' }]}>{title}</AppText>
       {sub ? <AppText style={[styles.cardSub, { color: ink ? colors.onInkSoft : 'rgba(255,255,255,.78)' }]}>{sub}</AppText> : null}
     </Pressable>
   );
@@ -255,6 +259,9 @@ const styles = StyleSheet.create({
   bigCard: { position: 'relative', overflow: 'hidden', borderRadius: radius.xl, paddingVertical: 22, paddingHorizontal: 24 },
   pressedCard: { opacity: 0.92, transform: [{ scale: 0.995 }] },
   watermark: { position: 'absolute', right: 4, bottom: -48, fontFamily: fonts.mincho, fontSize: 132, lineHeight: 140 },
+  compactCard: { paddingVertical: 16, paddingHorizontal: 20 },
+  compactWatermark: { fontSize: 96, lineHeight: 104, bottom: -34 },
+  compactTitle: { fontSize: 21, letterSpacing: -0.6, marginTop: 4 },
   cardEyebrow: { fontSize: 11, fontWeight: '700', letterSpacing: 1.5, textTransform: 'uppercase' },
   cardTitle: { fontSize: 29, fontWeight: '900', letterSpacing: -1, marginTop: 6 },
   cardSub: { fontSize: 13.5, fontWeight: '500', marginTop: 3 },

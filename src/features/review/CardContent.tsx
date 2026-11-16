@@ -82,7 +82,7 @@ export function CardBack({ word, furigana }: { word: Word; furigana: boolean }) 
                 color={colors.text}
                 readingColor={colors.furigana}
               />
-              <AppText muted style={{ fontSize: 15 * fontScale }}>{ex.en}</AppText>
+              <AppText muted style={{ fontSize: 15 * fontScale, fontWeight: '400' }}>{ex.en}</AppText>
             </View>
             <IconButton icon="speaker" size={36} label={strings.review.playSentence} bordered onPress={() => speakJapanese(readingOf(ex.ja))} />
           </View>
@@ -95,12 +95,12 @@ export function CardBack({ word, furigana }: { word: Word; furigana: boolean }) 
 const styles = StyleSheet.create({
   front: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: spacing.lg, paddingVertical: spacing.xl },
   label: { letterSpacing: 1, textTransform: 'uppercase' },
-  prompt: { fontWeight: '600', textAlign: 'center' },
+  prompt: { fontWeight: '400', textAlign: 'center' },
   center: { textAlign: 'center' },
   back: { gap: spacing.lg, paddingVertical: spacing.lg },
   head: { alignItems: 'center', gap: spacing.xs },
   wordRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, flexWrap: 'wrap' },
-  meaning: { fontWeight: '600', textAlign: 'center' },
+  meaning: { fontWeight: '400', textAlign: 'center' },
   rule: { height: StyleSheet.hairlineWidth * 2 },
   examples: { gap: spacing.lg },
   example: { flexDirection: 'row', gap: spacing.sm, alignItems: 'flex-start' },

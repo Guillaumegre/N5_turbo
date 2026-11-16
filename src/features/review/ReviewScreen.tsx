@@ -133,7 +133,10 @@ function TopBar({ onEnd, canUndo, onUndo, furigana, onToggleFurigana, progress, 
   const pct = progress.total ? Math.min(100, (progress.done / progress.total) * 100) : 0;
   return (
     <View style={styles.topBar}>
-      <IconButton icon="close" label={strings.review.endSession} onPress={onEnd} />
+      {/* Equal-width sides keep the progress pill centred whatever the buttons. */}
+      <View style={styles.side}>
+        <IconButton icon="close" label={strings.review.endSession} onPress={onEnd} />
+      </View>
       <View style={[styles.pill, { backgroundColor: colors.surfaceMuted }]} accessibilityRole="progressbar">
         {remainingMs !== null ? (
           <>
@@ -152,7 +155,7 @@ function TopBar({ onEnd, canUndo, onUndo, furigana, onToggleFurigana, progress, 
           </>
         )}
       </View>
-      <View style={styles.topRight}>
+      <View style={[styles.side, styles.topRight]}>
         <IconButton icon="undo" label={strings.review.undo} onPress={onUndo} disabled={!canUndo} />
         <Pressable
           accessibilityRole="switch"
@@ -256,19 +259,20 @@ const styles = StyleSheet.create({
   column: { flex: 1, width: '100%', maxWidth: maxContentWidth, alignSelf: 'center', paddingHorizontal: spacing.md, paddingBottom: spacing.md },
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 52 },
   pill: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16 },
-  pillText: { fontWeight: '600', fontVariant: ['tabular-nums'] },
+  pillText: { fontWeight: '500', fontVariant: ['tabular-nums'] },
   pillTotal: { fontWeight: '400' },
   track: { width: 56, height: 4, borderRadius: 2, overflow: 'hidden' },
   fill: { height: 4, borderRadius: 2 },
-  topRight: { flexDirection: 'row', gap: 4 },
+  side: { flex: 1, flexDirection: 'row', alignItems: 'center' },
+  topRight: { justifyContent: 'flex-end', gap: 4 },
   furiToggle: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
   furiText: { fontSize: 18, fontWeight: '500' },
   practice: { alignSelf: 'center', marginTop: 8, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 999 },
-  practiceText: { fontWeight: '600' },
+  practiceText: { fontWeight: '500' },
   counters: { flexDirection: 'row', justifyContent: 'center', gap: spacing.lg, paddingTop: 4 },
   countItem: { flexDirection: 'row', alignItems: 'baseline', gap: 5 },
-  count: { fontSize: 18, fontWeight: '900', fontVariant: ['tabular-nums'] },
-  countLabel: { fontWeight: '600' },
+  count: { fontSize: 18, fontWeight: '500', fontVariant: ['tabular-nums'] },
+  countLabel: { fontWeight: '400' },
   currentCount: { textDecorationLine: 'underline' },
   scroll: { flexGrow: 1 },
   actions: { gap: spacing.sm, paddingTop: spacing.sm },

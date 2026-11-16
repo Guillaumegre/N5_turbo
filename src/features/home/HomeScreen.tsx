@@ -1,13 +1,15 @@
 import { Redirect, router } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { useData, useSettings, useTodayCounts } from '@/data/DataProvider';
+import { useData, useSettings, useTodayCounts, useUpdateSetting } from '@/data/DataProvider';
 import { streak } from '@/data/repo/cards';
+import { listPresets, type Preset } from '@/data/repo/presets';
+import { SPRINT_MINUTES } from '@/domain/filters';
 import { strings } from '@/strings';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radius } from '@/theme/tokens';
 import { AppText } from '@/ui/AppText';
-import { BigCard, Divider, Row, Section, Track } from '@/ui/Blocks';
+import { BigCard, Divider, Pills, Row, Section, Track } from '@/ui/Blocks';
 import { Button } from '@/ui/Button';
 import { formatShortDate } from '@/ui/dates';
 import { Screen } from '@/ui/Screen';
@@ -27,6 +29,13 @@ export function HomeScreen() {
   const { db, now, config } = useData();
   const settings = useSettings();
   const counts = useTodayCounts();
+  const update = useUpdateSetting();
+  const presets = listPresets(db);
+  // A preset on Home starts its session straight away.
+  const startPreset = (p: Preset) => {
+    update('customFilter', p.filter);
+    router.push(p.filter.length === 'sprint' ? `/review?custom=1&minutes=${SPRINT_MINUTES}` : '/review?custom=1');
+  };
 
   if (!settings.onboarded) return <Redirect href="/goal?first=1" />;
 
@@ -73,7 +82,11 @@ export function HomeScreen() {
           ))}
         </View>
         {total ? (
-          <Button label={strings.home.start(estimateMinutes(counts.new, counts.learning, counts.due))} onPress={() => router.push('/review')} />
+          <Button
+            size="large"
+            label={strings.home.start(estimateMinutes(counts.new, counts.learning, counts.due))}
+            onPress={() => router.push('/review')}
+          />
         ) : (
           <>
             <AppText muted>{strings.home.doneSub}</AppText>
@@ -82,14 +95,27 @@ export function HomeScreen() {
         )}
       </View>
 
-      <BigCard
-        tone="ink"
-        watermark="選"
-        eyebrow={strings.home.customEyebrow}
-        title={strings.home.customTitle}
-        sub={strings.home.customSub}
-        onPress={() => router.push('/filters')}
-      />
+      <View style={styles.custom}>
+        <BigCard
+          tone="ink"
+          compact
+          watermark="選"
+          eyebrow={strings.home.customEyebrow}
+          title={strings.home.customTitle}
+          sub={strings.home.customSub}
+          onPress={() => router.push('/filters')}
+        />
+        {presets.length ? (
+          <Pills
+            options={presets.map((p) => ({ value: p.id, label: `▸ ${p.name}` }))}
+            selected={[]}
+            onToggle={(id) => {
+              const p = presets.find((x) => x.id === id);
+              if (p) startPreset(p);
+            }}
+          />
+        ) : null}
+      </View>
 
       <View style={styles.tiles}>
         <View style={[styles.tile, { backgroundColor: colors.surface, borderColor: colors.border }]}>
@@ -144,6 +170,7 @@ const styles = StyleSheet.create({
   counterValue: { fontSize: 26, fontWeight: '900', letterSpacing: -0.6 },
   counterLabel: { fontWeight: '700', textTransform: 'capitalize' },
   tiles: { flexDirection: 'row', gap: 12 },
+  custom: { gap: 10 },
   tile: { flex: 1, borderWidth: 1, borderRadius: 18, paddingVertical: 14, paddingHorizontal: 16, gap: 6 },
   tileValue: { fontSize: 22, fontWeight: '900', letterSpacing: -0.6 },
   tileTotal: { fontSize: 14, fontWeight: '500' },

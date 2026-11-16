@@ -21,8 +21,12 @@ export function Furigana({ segments, size, showReading, color, readingColor, ali
       style={[styles.row, align === 'center' && styles.center]}>
       {units.map((u, i) => (
         <View key={i} style={styles.unit}>
-          {showReading && u.r ? (
-            <Text style={{ fontFamily: fonts.jp, fontSize: rubySize, lineHeight: rubySize * 1.25, color: readingColor }}>{u.r}</Text>
+          {/* Always laid out, only hidden: toggling furigana must not move the text. */}
+          {u.r ? (
+            <Text
+              style={{ fontFamily: fonts.jp, fontSize: rubySize, lineHeight: rubySize * 1.25, color: readingColor, opacity: showReading ? 1 : 0 }}>
+              {u.r}
+            </Text>
           ) : null}
           <Text style={{ fontFamily: fonts.jp, fontSize: size, lineHeight: size * 1.4, color }}>{u.t}</Text>
         </View>

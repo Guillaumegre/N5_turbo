@@ -49,7 +49,7 @@ const LENGTHS: { value: SessionLength; label: string }[] = [
   { value: 50, label: t.lengthCards(50) },
   { value: 'sprint', label: t.sprint(SPRINT_MINUTES) },
 ];
-const ROW_OPTIONS = (Object.keys(KANA_ROWS) as KanaRow[]).map((row) => ({ value: row, label: t.row(KANA_ROWS[row][0]), jp: true }));
+const ROW_OPTIONS = (Object.keys(KANA_ROWS) as KanaRow[]).map((row) => ({ value: row, label: t.row(KANA_ROWS[row]), jp: true }));
 const FIRST_KANA = usedKana(words, 'first').map((k) => ({ value: k, label: k, jp: true }));
 const LAST_KANA = usedKana(words, 'last').map((k) => ({ value: k, label: k, jp: true }));
 const COMMON_ENDINGS = ['い', 'う', 'る', 'く', 'す', 'つ', 'む', 'ん'];
@@ -76,7 +76,7 @@ function suggestName(f: Filter): string {
   const parts: string[] = [];
   if (f.themes.length) parts.push(f.themes.map(nameOf).join(', '));
   if (f.pos.length) parts.push(f.pos.map((p) => t.posLabels[p]).join(', '));
-  if (f.startsWith.length) parts.push(`${f.startsWith.map((v) => (v in KANA_ROWS ? t.row(KANA_ROWS[v as KanaRow][0]) : v)).join(' ')}…`);
+  if (f.startsWith.length) parts.push(`${f.startsWith.map((v) => (v in KANA_ROWS ? t.row(KANA_ROWS[v as KanaRow]) : v)).join(' ')}…`);
   if (f.endsWith.length) parts.push(`…${f.endsWith.join(' ')}`);
   if (f.weakOnly) parts.push(t.weak.replace(' only', ''));
   if (f.direction !== 'recognition') parts.push(f.direction === 'production' ? t.enToJp : t.random);
@@ -243,6 +243,7 @@ export function FiltersScreen() {
           selected={filter.startsWith}
           onToggle={(v) => set({ startsWith: toggle(filter.startsWith, v) })}
         />
+        {kanaMode === 'rows' ? <AppText variant="caption" faint>{t.rowsHint}</AppText> : null}
       </Group>
 
       <Group title={t.endsWith}>

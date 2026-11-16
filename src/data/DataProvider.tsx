@@ -1,21 +1,21 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
-import { newWordsPerDay } from '@/domain/goal';
-import { buildQueue, queueCounts } from '@/domain/srs/queue';
+import { queueCounts } from '@/domain/srs/queue';
 import { AnkiV2Scheduler } from '@/domain/srs/scheduler';
-import { studyDayStart } from '@/domain/srs/time';
 import { DEFAULT_CONFIG, type SchedulerConfig } from '@/domain/srs/types';
 
 import type { Db } from './db/client';
 import { openDb } from './db/open';
-import { allCards, doneToday, seedCards, startedWords } from './repo/cards';
-import { getAllSettings } from './repo/settings';
+import { seedCards } from './repo/cards';
+import { getAllSettings, setSetting, type Settings } from './repo/settings';
+import { buildTodayQueue } from './today';
 import { words } from './vocab';
 
 type AppData = {
   db: Db;
   scheduler: AnkiV2Scheduler;
   config: SchedulerConfig;
+  settings: Settings;
   /** Increments after every write; hooks recompute from it. */
   revision: number;
   /** Current time, refreshed every minute and after every write. */
@@ -26,6 +26,9 @@ type AppData = {
 const DataContext = createContext<AppData | null>(null);
 
 export function DataProvider({ children, fallback = null }: { children: ReactNode; fallback?: ReactNode }) {
+  // Database reads look like pure calls to React Compiler, which would cache them on `db` alone
+  // and never see later writes. `revision` is what invalidates them, so opt out here.
+  'use no memo';
   const [db, setDb] = useState<Db | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [revision, setRevision] = useState(0);
@@ -60,7 +63,7 @@ export function DataProvider({ children, fallback = null }: { children: ReactNod
     if (!db) return null;
     const settings = getAllSettings(db);
     const config = { ...DEFAULT_CONFIG, learningSteps: settings.learningSteps };
-    return { db, scheduler: new AnkiV2Scheduler(config), config, revision, now, notifyChanged };
+    return { db, scheduler: new AnkiV2Scheduler(config), config, settings, revision, now, notifyChanged };
   }, [db, revision, now, notifyChanged]);
 
   if (error) throw error;
@@ -74,21 +77,28 @@ export function useData(): AppData {
   return data;
 }
 
+export function useSettings(): Settings {
+  return useData().settings;
+}
+
+/** Persists one setting and refreshes every screen that reads it. */
+export function useUpdateSetting() {
+  const { db, notifyChanged } = useData();
+  return useCallback(
+    <K extends keyof Settings>(key: K, value: Settings[K]) => {
+      setSetting(db, key, value, Date.now());
+      notifyChanged();
+    },
+    [db, notifyChanged],
+  );
+}
+
 /** Today's Anki counters (new / learning / due) and goal pacing. */
 export function useTodayCounts() {
+  'use no memo'; // reads the database: see DataProvider
   const { db, config, revision, now } = useData();
   return useMemo(() => {
-    const settings = getAllSettings(db);
-    const started = startedWords(db);
-    const newPerDay = settings.goalDeadline
-      ? newWordsPerDay({ deadline: settings.goalDeadline }, words.length - started, now, config.dayStartHour)
-      : settings.newPerDayFallback;
-    const queue = buildQueue(allCards(db), {
-      now,
-      config,
-      limits: { newRecognition: newPerDay, newProduction: newPerDay, reviews: settings.reviewsPerDay },
-      doneToday: doneToday(db, studyDayStart(now, config.dayStartHour)),
-    });
+    const { queue, newPerDay, started } = buildTodayQueue(db, config, now);
     return { ...queueCounts(queue), newPerDay, started, totalWords: words.length };
     // `revision` changes after every write, which is what invalidates this.
     // eslint-disable-next-line react-hooks/exhaustive-deps

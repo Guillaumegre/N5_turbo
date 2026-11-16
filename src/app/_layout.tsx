@@ -45,7 +45,7 @@ function AppStack() {
           animation: 'fade',
         }}>
         <Stack.Screen name="index" options={{ title: strings.appName }} />
-        <Stack.Screen name="review" options={{ title: strings.review.title }} />
+        <Stack.Screen name="review" options={{ title: strings.review.title, headerShown: false }} />
         <Stack.Screen name="filters" options={{ title: strings.filters.title }} />
         <Stack.Screen name="words" options={{ title: strings.words.title }} />
         <Stack.Screen name="stats" options={{ title: strings.stats.title }} />

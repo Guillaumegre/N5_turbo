@@ -54,3 +54,11 @@ type Vocab = { version: number; sources: Record<string, string>; themes: Theme[]
 export const vocab = raw as unknown as Vocab;
 export const words: Word[] = vocab.words;
 export const themes: Theme[] = vocab.themes;
+
+export const wordById = new Map(words.map((w) => [w.id, w]));
+export const themeName = new Map(themes.map((t) => [t.id, t.name]));
+
+/** Kana reading of segments, for text-to-speech (avoids the engine misreading kanji). */
+export function readingOf(segments: FuriganaSegment[]): string {
+  return segments.map((s) => s.r ?? s.t).join('');
+}

@@ -1,6 +1,1 @@
-import { strings } from '@/strings';
-import { PlaceholderScreen } from '@/ui/PlaceholderScreen';
-
-export default function Route() {
-  return <PlaceholderScreen title={strings.review.title} />;
-}
+export { ReviewScreen as default } from '@/features/review/ReviewScreen';

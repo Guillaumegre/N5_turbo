@@ -28,9 +28,10 @@ function leave() {
 
 export function ReviewScreen() {
   const { colors } = useTheme();
-  const params = useLocalSearchParams<{ minutes?: string }>();
+  const params = useLocalSearchParams<{ minutes?: string; custom?: string }>();
   const minutes = params.minutes ? Number(params.minutes) : undefined;
-  const s = useReviewSession({ timerMinutes: minutes && minutes > 0 ? minutes : undefined });
+  const custom = params.custom === '1';
+  const s = useReviewSession({ timerMinutes: minutes && minutes > 0 ? minutes : undefined, custom });
   const { furigana } = useSettings();
   const updateSetting = useUpdateSetting();
   const toggleFurigana = () => updateSetting('furigana', !furigana);
@@ -49,8 +50,17 @@ export function ReviewScreen() {
   });
 
   const body = (() => {
-    if (s.finished && !s.stats.answers) return <NothingToStudy onMore={s.learnMore} />;
-    if (s.finished) return <SessionSummary stats={s.stats} reason={s.finished} onMore={s.learnMore} onResume={s.resume} onDone={leave} />;
+    if (s.finished && !s.stats.answers) return <NothingToStudy onMore={custom ? undefined : s.learnMore} />;
+    if (s.finished)
+      return (
+        <SessionSummary
+          stats={s.stats}
+          reason={s.finished}
+          onMore={custom ? undefined : s.learnMore}
+          onResume={s.resume}
+          onDone={leave}
+        />
+      );
     const card = s.current!;
     const word = wordById.get(card.wordId)!;
     return (
@@ -65,7 +75,12 @@ export function ReviewScreen() {
           remainingMs={s.remainingMs}
           paused={s.paused}
         />
-        <Counters counts={s.counts} current={card} />
+        {s.counts.new + s.counts.learning + s.counts.due || !s.practice ? <Counters counts={s.counts} current={card} /> : null}
+        {s.practice ? (
+          <View style={[styles.practice, { backgroundColor: colors.surfaceMuted }]}>
+            <AppText variant="caption" muted style={styles.practiceText}>{strings.review.practice}</AppText>
+          </View>
+        ) : null}
         <ScrollView style={styles.flex} contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
           {s.revealed ? (
             <Animated.View key={`${card.id}-back`} entering={FadeIn.duration(180)}>
@@ -178,14 +193,17 @@ function Counters({ counts, current }: { counts: { new: number; learning: number
   );
 }
 
-function NothingToStudy({ onMore }: { onMore: () => void }) {
+/** `onMore` is absent in a custom session: nothing matched the filters. */
+function NothingToStudy({ onMore }: { onMore?: () => void }) {
   return (
     <View style={styles.nothing}>
-      <AppText variant="title" style={styles.centerText}>{strings.review.nothingTitle}</AppText>
-      <AppText muted style={styles.centerText}>{strings.review.nothingBody}</AppText>
+      <AppText variant="title" style={styles.centerText}>
+        {onMore ? strings.review.nothingTitle : strings.review.noMatchTitle}
+      </AppText>
+      <AppText muted style={styles.centerText}>{onMore ? strings.review.nothingBody : strings.review.noMatchBody}</AppText>
       <View style={styles.nothingActions}>
-        <Button label={strings.review.learnMore} onPress={onMore} />
-        <Button label={strings.review.back} variant="secondary" onPress={leave} />
+        {onMore ? <Button label={strings.review.learnMore} onPress={onMore} /> : null}
+        <Button label={onMore ? strings.review.back : strings.review.backToFilters} variant="secondary" onPress={leave} />
       </View>
     </View>
   );
@@ -245,6 +263,8 @@ const styles = StyleSheet.create({
   topRight: { flexDirection: 'row', gap: 4 },
   furiToggle: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
   furiText: { fontSize: 18, fontWeight: '500' },
+  practice: { alignSelf: 'center', marginTop: 8, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 999 },
+  practiceText: { fontWeight: '600' },
   counters: { flexDirection: 'row', justifyContent: 'center', gap: spacing.lg, paddingTop: 4 },
   countItem: { flexDirection: 'row', alignItems: 'baseline', gap: 5 },
   count: { fontSize: 18, fontWeight: '900', fontVariant: ['tabular-nums'] },

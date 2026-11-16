@@ -15,11 +15,12 @@ function formatDuration(ms: number): string {
   return s < 60 ? `${s} s` : `${Math.floor(s / 60)} min ${String(s % 60).padStart(2, '0')} s`;
 }
 
-type Props = { stats: SessionStats; reason: EndReason; onMore: () => void; onResume: () => void; onDone: () => void };
+/** `onMore` is absent in custom sessions (no daily goal there). */
+type Props = { stats: SessionStats; reason: EndReason; onMore?: () => void; onResume: () => void; onDone: () => void };
 
 export function SessionSummary({ stats, reason, onMore, onResume, onDone }: Props) {
   const { colors } = useTheme();
-  const title = reason === 'done' ? strings.summary.goalDone : reason === 'time' ? strings.summary.timeUp : strings.summary.ended;
+  const title = reason === 'done' ? (onMore ? strings.summary.goalDone : strings.summary.sessionDone) : reason === 'time' ? strings.summary.timeUp : strings.summary.ended;
   const perCard = stats.answers ? `${(stats.timeMs / stats.answers / 1000).toFixed(1)}s` : '–';
   const bars = [
     { n: stats.byRating[1], color: colors.again, label: strings.review.again },
@@ -76,11 +77,11 @@ export function SessionSummary({ stats, reason, onMore, onResume, onDone }: Prop
 
       <View style={styles.spacer} />
       <View style={styles.actions}>
-        {reason === 'done' ? (
-          <Button label={strings.summary.keepGoing} onPress={onMore} />
-        ) : (
+        {reason !== 'done' ? (
           <Button label={strings.summary.resume} onPress={onResume} />
-        )}
+        ) : onMore ? (
+          <Button label={strings.summary.keepGoing} onPress={onMore} />
+        ) : null}
         <Button label={strings.summary.done} variant="secondary" onPress={onDone} />
       </View>
     </View>

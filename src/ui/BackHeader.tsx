@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -13,7 +14,18 @@ export function goBack(fallback: '/' = '/') {
 }
 
 /** TypeKana header: square back button, heavy title, small Japanese subtitle. */
-export function BackHeader({ title, titleJa, onBack = goBack }: { title?: string; titleJa?: string; onBack?: () => void }) {
+export function BackHeader({
+  title,
+  titleJa,
+  onBack = goBack,
+  right,
+}: {
+  title?: string;
+  titleJa?: string;
+  onBack?: () => void;
+  /** Action on the right (e.g. "Reset"). */
+  right?: ReactNode;
+}) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   return (
@@ -39,7 +51,10 @@ export function BackHeader({ title, titleJa, onBack = goBack }: { title?: string
           ) : null}
           {titleJa ? <AppText variant="caption" faint>{titleJa}</AppText> : null}
         </View>
-      ) : null}
+      ) : (
+        <View style={styles.text} />
+      )}
+      {right}
     </View>
   );
 }

@@ -1,7 +1,7 @@
 import Svg, { Circle, Path } from 'react-native-svg';
 
 /** Thin stroke icons used across the app (same drawing as the design canvas). */
-export type IconName = 'close' | 'undo' | 'speaker' | 'chevronLeft' | 'chevronRight' | 'clock';
+export type IconName = 'close' | 'undo' | 'speaker' | 'chevronLeft' | 'chevronRight' | 'clock' | 'check';
 
 const PATHS: Record<IconName, string[]> = {
   close: ['M6 6l12 12', 'M18 6L6 18'],
@@ -10,6 +10,7 @@ const PATHS: Record<IconName, string[]> = {
   chevronLeft: ['M15 6l-6 6 6 6'],
   chevronRight: ['M9 6l6 6-6 6'],
   clock: ['M12 9v4l2 2', 'M10 2h4'],
+  check: ['M5 12.5l4.5 4.5L19 7.5'],
 };
 
 export function Icon({ name, size = 20, color }: { name: IconName; size?: number; color: string }) {

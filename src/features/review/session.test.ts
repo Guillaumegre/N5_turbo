@@ -5,6 +5,7 @@ import { DEFAULT_CONFIG, MINUTE, type CardStatus, type Rating } from '@/domain/s
 import {
   applyAnswer,
   applyUndo,
+  createCustomSession,
   createSession,
   interleave,
   nextCard,
@@ -82,5 +83,32 @@ describe('review session', () => {
       byRating: { 1: 1, 2: 0, 3: 2, 4: 0 },
       toRevisit: ['a'],
     });
+  });
+});
+
+describe('custom session with practice cards', () => {
+  it('puts practice after real cards and never schedules them', () => {
+    const later = NOW + 5 * 24 * 60 * MINUTE;
+    let s = createCustomSession({ learning: [], review: [card('r', 'review')], fresh: [], practice: [card('p', 'review', later)] });
+    expect(s.pending.map((c) => c.id)).toEqual(['r', 'p']);
+
+    s = answer(s, 3, NOW); // r: real review
+    // Practice answer: the card state the repo returns is unchanged.
+    const shown = nextCard(s, NOW)!;
+    s = applyAnswer(s, shown, shown, 1, NOW, 4000); // Again → back at the end
+    expect(s.pending.map((c) => c.id)).toEqual(['p']);
+    expect(s.learning).toEqual([]);
+    s = applyAnswer(s, shown, shown, 3, NOW, 4000);
+    expect(nextCard(s, NOW)).toBeNull();
+    expect(progress(s)).toEqual({ done: 3, total: 3 });
+  });
+
+  it('undo brings a practice card back', () => {
+    let s = createCustomSession({ learning: [], review: [], fresh: [], practice: [card('p', 'review', NOW + 9e9)] });
+    const shown = nextCard(s, NOW)!;
+    s = applyAnswer(s, shown, shown, 3, NOW, 1000);
+    expect(nextCard(s, NOW)).toBeNull();
+    s = applyUndo(s);
+    expect(nextCard(s, NOW)?.id).toBe('p');
   });
 });

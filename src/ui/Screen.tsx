@@ -16,13 +16,15 @@ type Props = {
   scroll?: boolean;
   /** Pinned under the scroll area (e.g. a primary button). */
   footer?: ReactNode;
+  /** Action on the right of the header. */
+  headerRight?: ReactNode;
 };
 
 /** Page wrapper: paper background, 24 px gutters, centred column with a max width on desktop. */
-export function Screen({ children, title, titleJa, back = true, scroll = true, footer }: Props) {
+export function Screen({ children, title, titleJa, back = true, scroll = true, footer, headerRight }: Props) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const header = back || title ? <BackHeader title={title} titleJa={titleJa} /> : <View style={{ height: insets.top + 12 }} />;
+  const header = back || title ? <BackHeader title={title} titleJa={titleJa} right={headerRight} /> : <View style={{ height: insets.top + 12 }} />;
   const body = <View style={styles.body}>{children}</View>;
   return (
     <View style={[styles.root, { backgroundColor: colors.background }]}>

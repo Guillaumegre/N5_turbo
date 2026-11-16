@@ -2,6 +2,7 @@
  * Review session engine (pure, no React): which card to show next, learning repeats within
  * the session, undo, progress and end-of-session stats.
  */
+import type { CustomQueue } from '@/domain/filters';
 import type { StudyCard, StudyQueue } from '@/domain/srs/queue';
 import { MINUTE, type Rating } from '@/domain/srs/types';
 
@@ -22,6 +23,8 @@ export type Session = {
   /** Cards in (re)learning that come back during this session, sorted by due time. */
   learning: StudyCard[];
   answers: AnswerRecord[];
+  /** Ids of practice cards (custom sessions, not due yet): answers don't change their schedule. */
+  practice: string[];
 };
 
 /** Spreads new cards evenly among reviews (Anki's "mix new cards and reviews"). */
@@ -44,7 +47,22 @@ export function createSession(queue: StudyQueue): Session {
     pending: interleave(queue.review, queue.fresh),
     learning: [...queue.learning].sort((a, b) => a.due - b.due),
     answers: [],
+    practice: [],
   };
+}
+
+/** A custom session: real reviews first (new cards mixed in), then practice cards. */
+export function createCustomSession(queue: CustomQueue): Session {
+  return {
+    pending: [...interleave(queue.review, queue.fresh), ...queue.practice],
+    learning: [...queue.learning].sort((a, b) => a.due - b.due),
+    answers: [],
+    practice: queue.practice.map((c) => c.id),
+  };
+}
+
+export function isPractice(s: Session, card: StudyCard): boolean {
+  return s.practice.includes(card.id);
 }
 
 /** The card to show now, or null when the session is over. */
@@ -66,16 +84,20 @@ export function applyAnswer(
   now: number,
   durationMs: number,
 ): Session {
-  const pending = s.pending.filter((c) => c.id !== shown.id);
+  let pending = s.pending.filter((c) => c.id !== shown.id);
   let learning = s.learning.filter((c) => c.id !== shown.id);
-  // Learning cards come back in this session (10 minutes, 1 minute…); graduated cards are done.
-  if (updated.status === 'learning' || updated.status === 'relearning') {
+  if (isPractice(s, shown)) {
+    // Practice: a missed card comes back at the end of the session; the schedule never moves.
+    if (rating === 1) pending = [...pending, shown];
+  } else if (updated.status === 'learning' || updated.status === 'relearning') {
+    // Learning cards come back in this session (10 minutes, 1 minute…); graduated cards are done.
     learning = [...learning, updated].sort((a, b) => a.due - b.due);
   }
   return {
     pending,
     learning,
     answers: [...s.answers, { card: shown, rating, durationMs: Math.min(durationMs, MAX_ANSWER_MS), at: now }],
+    practice: s.practice,
   };
 }
 
@@ -87,12 +109,15 @@ export function applyUndo(s: Session): Session {
     pending: [last.card, ...s.pending.filter((c) => c.id !== last.card.id)],
     learning: s.learning.filter((c) => c.id !== last.card.id),
     answers: s.answers.slice(0, -1),
+    practice: s.practice,
   };
 }
 
 /** Anki's three counters for what is left: new / learning / due. */
 export function remainingCounts(s: Session) {
-  const fromPending = (status: StudyCard['status'][]) => s.pending.filter((c) => status.includes(c.status)).length;
+  // Practice cards aren't reviews: they only show in the progress pill.
+  const fromPending = (status: StudyCard['status'][]) =>
+    s.pending.filter((c) => status.includes(c.status) && !s.practice.includes(c.id)).length;
   return {
     new: fromPending(['new']),
     learning: s.learning.length + fromPending(['learning', 'relearning']),

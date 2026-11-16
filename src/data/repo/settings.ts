@@ -1,5 +1,7 @@
 import { eq } from 'drizzle-orm';
 
+import { DEFAULT_FILTER, type Filter } from '@/domain/filters';
+
 import type { Db } from '../db/client';
 import { settings } from '../db/schema';
 
@@ -16,6 +18,8 @@ export type Settings = {
   learningSteps: number[];
   theme: 'system' | 'light' | 'dark';
   fontScale: number;
+  /** The filter screen's current choices (kept between visits). */
+  customFilter: Filter;
 };
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -27,6 +31,7 @@ export const DEFAULT_SETTINGS: Settings = {
   learningSteps: [1, 10],
   theme: 'light',
   fontScale: 1,
+  customFilter: DEFAULT_FILTER,
 };
 
 export function getSetting<K extends keyof Settings>(db: Db, key: K): Settings[K] {

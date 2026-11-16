@@ -3,18 +3,28 @@ import { useCallback, useEffect, useState } from 'react';
 import { AppState } from 'react-native';
 
 import { useData } from '@/data/DataProvider';
+import { customSessionQueue } from '@/data/custom';
 import { answerCard, undoLast } from '@/data/repo/cards';
 import { buildTodayQueue } from '@/data/today';
+import { normalizeFilter } from '@/domain/filters';
 import { previewLabels } from '@/domain/srs/format';
 import type { Rating } from '@/domain/srs/types';
 
-import { applyAnswer, applyUndo, createSession, nextCard, progress, remainingCounts, sessionStats, type Session } from './session';
+import { applyAnswer, applyUndo, createCustomSession, createSession, isPractice, nextCard, progress, remainingCounts, sessionStats, type Session } from './session';
 
 export type EndReason = 'done' | 'time' | 'user';
 
-export function useReviewSession({ timerMinutes }: { timerMinutes?: number }) {
-  const { db, scheduler, config, notifyChanged } = useData();
-  const [session, setSession] = useState<Session>(() => createSession(buildTodayQueue(db, config, Date.now()).queue));
+const PRACTICE_LABELS = { 1: '', 2: '', 3: '', 4: '' };
+
+/** `custom`: a session from the filter screen's current choices instead of today's queue. */
+export function useReviewSession({ timerMinutes, custom = false }: { timerMinutes?: number; custom?: boolean }) {
+  const { db, scheduler, config, settings, notifyChanged } = useData();
+  const [filter] = useState(() => normalizeFilter(settings.customFilter));
+  const [session, setSession] = useState<Session>(() =>
+    custom
+      ? createCustomSession(customSessionQueue(db, config, Date.now(), filter))
+      : createSession(buildTodayQueue(db, config, Date.now()).queue),
+  );
   const [extraNew, setExtraNew] = useState(0);
   const [clock, setClock] = useState(() => Date.now());
   const [revealed, setRevealed] = useState(false);
@@ -39,7 +49,9 @@ export function useReviewSession({ timerMinutes }: { timerMinutes?: number }) {
 
   const current = endedBy ? null : nextCard(session, clock);
   const finished: EndReason | null = endedBy ?? (current ? null : 'done');
-  const labels = current && revealed ? previewLabels(scheduler, current, clock) : null;
+  const practice = current ? isPractice(session, current) : false;
+  // Practice answers don't move the card, so there's no next interval to show.
+  const labels = current && revealed ? (practice ? PRACTICE_LABELS : previewLabels(scheduler, current, clock)) : null;
 
   const reveal = useCallback(() => {
     if (current) setRevealed(true);
@@ -55,7 +67,7 @@ export function useReviewSession({ timerMinutes }: { timerMinutes?: number }) {
         rating,
         now: at,
         durationMs,
-        kind: 'review',
+        kind: isPractice(session, current) ? 'practice' : 'review',
         scheduler,
         newId: () => Crypto.randomUUID(),
       });
@@ -67,7 +79,7 @@ export function useReviewSession({ timerMinutes }: { timerMinutes?: number }) {
       if (remainingMs === 0) setEndedBy('time');
       notifyChanged();
     },
-    [current, revealed, shownAt, db, scheduler, remainingMs, notifyChanged],
+    [current, revealed, shownAt, db, scheduler, remainingMs, notifyChanged, session],
   );
 
   const undo = useCallback(() => {
@@ -90,19 +102,27 @@ export function useReviewSession({ timerMinutes }: { timerMinutes?: number }) {
     setShownAt(Date.now());
   }, []);
 
-  /** "Learn 5 more words": a fresh session with a higher new-word allowance for today. */
+  /**
+   * "Learn 5 more words": a fresh session with a higher new-word allowance for today.
+   * In a custom session: the same filters again (practice the words once more).
+   */
   const learnMore = useCallback(() => {
-    const more = extraNew + 5;
-    setExtraNew(more);
-    setSession(createSession(buildTodayQueue(db, config, Date.now(), more).queue));
+    if (custom) {
+      setSession(createCustomSession(customSessionQueue(db, config, Date.now(), filter)));
+    } else {
+      const more = extraNew + 5;
+      setExtraNew(more);
+      setSession(createSession(buildTodayQueue(db, config, Date.now(), more).queue));
+    }
     setRevealed(false);
     setShownAt(Date.now());
     setEndedBy(null);
     setRemainingMs(null);
-  }, [db, config, extraNew]);
+  }, [db, config, extraNew, custom, filter]);
 
   return {
     current,
+    practice,
     revealed,
     labels,
     finished,

@@ -31,17 +31,18 @@ export function GradeButtons({
         <Pressable
           key={r}
           accessibilityRole="button"
-          accessibilityLabel={`${NAMES[r]}, next in ${labels[r]}`}
+          accessibilityLabel={labels[r] ? `${NAMES[r]}, next in ${labels[r]}` : NAMES[r]}
           onPress={() => onAnswer(r)}
           style={({ pressed }) => [
             styles.button,
             { backgroundColor: pressed ? colors.surfaceMuted : colors.surface, borderColor: colors.border },
           ]}>
           <AppText style={[styles.name, { color: tint[r] }]}>{NAMES[r]}</AppText>
-          <AppText variant="caption" muted>
-            {labels[r]}
-            {showKeys ? ` · ${r}` : ''}
-          </AppText>
+          {labels[r] || showKeys ? (
+            <AppText variant="caption" muted>
+              {[labels[r], showKeys ? String(r) : ''].filter(Boolean).join(' · ')}
+            </AppText>
+          ) : null}
         </Pressable>
       ))}
     </View>

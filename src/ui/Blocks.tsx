@@ -47,13 +47,15 @@ export function BigCard({
   );
 }
 
-export function Section({ title, children }: { title: string; children: ReactNode }) {
+export function Section({ title, children }: { title?: string; children: ReactNode }) {
   const { colors } = useTheme();
   return (
     <View>
-      <AppText variant="label" faint style={styles.sectionTitle}>
-        {title}
-      </AppText>
+      {title ? (
+        <AppText variant="label" faint style={styles.sectionTitle}>
+          {title}
+        </AppText>
+      ) : null}
       <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>{children}</View>
     </View>
   );
@@ -156,6 +158,90 @@ export function Chips<T extends string | number>({
   );
 }
 
+/** A titled group without a card around it (filter screen). `aside` sits right of the title. */
+export function Group({ title, aside, children }: { title: string; aside?: ReactNode; children: ReactNode }) {
+  return (
+    <View style={styles.group}>
+      <View style={styles.groupHead}>
+        <AppText variant="label" faint>{title}</AppText>
+        {aside}
+      </View>
+      {children}
+    </View>
+  );
+}
+
+export type PillOption = { value: string; label: string; jp?: boolean };
+
+/**
+ * Wrapping pill chips. Multi-select by default (`selected` = every active value).
+ * `columns` lays them out as an even grid instead (kana rows).
+ */
+export function Pills({
+  options,
+  selected,
+  onToggle,
+  onLongPress,
+  columns,
+  radio = false,
+  extra,
+}: {
+  options: PillOption[];
+  selected: string[];
+  onToggle: (value: string) => void;
+  onLongPress?: (value: string) => void;
+  columns?: number;
+  radio?: boolean;
+  extra?: ReactNode;
+}) {
+  const { colors } = useTheme();
+  return (
+    <View style={styles.pills} accessibilityRole={radio ? 'radiogroup' : undefined}>
+      {options.map((o) => {
+        const active = selected.includes(o.value);
+        return (
+          <Pressable
+            key={o.value}
+            accessibilityRole={radio ? 'radio' : 'checkbox'}
+            accessibilityState={radio ? { selected: active } : { checked: active }}
+            accessibilityLabel={o.label}
+            onPress={() => onToggle(o.value)}
+            onLongPress={onLongPress ? () => onLongPress(o.value) : undefined}
+            style={({ pressed }) => [
+              styles.pill,
+              columns ? { width: `${100 / columns - 2}%` as const, paddingHorizontal: 0 } : null,
+              { backgroundColor: active ? colors.text : colors.surface, borderColor: active ? colors.text : colors.borderStrong },
+              pressed && styles.pressed,
+            ]}>
+            <AppText
+              style={[
+                o.jp ? styles.pillJp : styles.pillText,
+                { color: active ? colors.background : colors.text },
+              ]}>
+              {o.label}
+            </AppText>
+          </Pressable>
+        );
+      })}
+      {extra}
+    </View>
+  );
+}
+
+/** Dashed accent pill ("+ Save current", "More…"). */
+export function PillButton({ label, onPress, onLongPress }: { label: string; onPress: () => void; onLongPress?: () => void }) {
+  const { colors } = useTheme();
+  return (
+    <Pressable
+      accessibilityRole="button"
+      onPress={onPress}
+      onLongPress={onLongPress}
+      style={({ pressed }) => [styles.pill, styles.dashed, { borderColor: colors.accent }, pressed && styles.pressed]}>
+      <AppText style={[styles.pillText, { color: colors.accent }]}>{label}</AppText>
+    </Pressable>
+  );
+}
+
 export function Track({ value, height = 4 }: { value: number; height?: number }) {
   const { colors } = useTheme();
   return (
@@ -187,4 +273,11 @@ const styles = StyleSheet.create({
   chip: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 11, borderRadius: radius.sm, borderWidth: 1 },
   chipText: { fontSize: 14.5, fontWeight: '700' },
   track: { borderRadius: 2, overflow: 'hidden' },
+  group: { gap: 10 },
+  groupHead: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginLeft: 2 },
+  pills: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  pill: { minHeight: 40, paddingHorizontal: 14, borderRadius: 999, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  dashed: { borderStyle: 'dashed', backgroundColor: 'transparent' },
+  pillText: { fontSize: 14, fontWeight: '700' },
+  pillJp: { fontFamily: fonts.jp, fontSize: 16 },
 });

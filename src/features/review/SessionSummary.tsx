@@ -31,7 +31,7 @@ export function SessionSummary({ stats, reason, onMore, onResume, onDone }: Prop
     <View style={styles.root}>
       <View style={styles.head}>
         <View style={[styles.seal, { borderColor: colors.accent }]}>
-          <AppText lang="ja" variant="jpWord" style={{ fontSize: 38, lineHeight: 48, color: colors.accent }}>済</AppText>
+          <AppText variant="jpWord" style={{ fontSize: 38, lineHeight: 48, color: colors.accent }}>済</AppText>
         </View>
         <AppText variant="title">{title}</AppText>
         <AppText muted>{formatDuration(stats.timeMs)}</AppText>
@@ -67,7 +67,7 @@ export function SessionSummary({ stats, reason, onMore, onResume, onDone }: Prop
           <View style={styles.chips}>
             {stats.toRevisit.map((id) => (
               <View key={id} style={[styles.chip, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-                <AppText lang="ja" style={{ fontSize: 16 }}>{wordById.get(id)?.kanji}</AppText>
+                <AppText style={{ fontSize: 16 }}>{wordById.get(id)?.kanji}</AppText>
               </View>
             ))}
           </View>

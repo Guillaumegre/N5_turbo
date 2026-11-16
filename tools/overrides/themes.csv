@@ -1,0 +1,716 @@
+id,kanji,reading,meaning_en,themes
+1565440-ああ,ああ,ああ,ah!; oh!; alas!,other
+1198180-あう,会う,あう,to meet; to encounter; to see,actions
+1381380-あお,青,あお,blue,colors
+1381390-あおい,青い,あおい,blue,colors;adjectives
+2013900-あか,赤,あか,red,colors
+1383240-あかい,赤い,あかい,red,colors;adjectives
+1532350-あかるい,明るい,あかるい,cheerful; bright; spirited,adjectives
+1332650-あき,秋,あき,autumn; fall,time
+1586270-あく,開く,あく,to open (e.g. doors),actions
+1202450-あける,開ける,あける,"to open (a door, etc.)",actions
+1352320-あげる,上げる,あげる,to give; to raise,actions
+1428280-あさ,朝,あさ,morning,time
+1586330-あさごはん,朝ごはん,あさごはん,breakfast,food
+1584640-あさって,明後日,あさって,day after tomorrow,time
+1404630-あし,足,あし,foot; paw; leg,body
+1584660-あした,明日,あした,tomorrow,time
+1000320-あそこ,あそこ,あそこ,there; over there; that place,places;questions
+1542160-あそぶ,遊ぶ,あそぶ,"to play (games, sports)",actions;leisure
+1586420-あたたかい,暖かい,あたたかい,warm; mild; (pleasantly) hot,nature;adjectives
+1582310-あたま,頭,あたま,head,body
+1361490-あたらしい,新しい,あたらしい,new; novel; fresh,adjectives
+1483185-あちら,あちら,あちら,that way; that direction; over there,places;questions
+1343460-あつい,暑い,あつい,hot; warm; sultry,nature;adjectives
+1467720-あつい,熱い,あつい,hot (to the touch),adjectives
+1275320-あつい,厚い,あつい,thick; deep; heavy,adjectives
+1483185-あっち,あっち,あっち,that way; that direction; over there,places;questions
+1269320-あと,後,あと,after; later; remainder,time
+1223615-あなた,あなた,あなた,you,people
+1249900-あに,兄,あに,older brother; elder brother,people
+1307630-あね,姉,あね,older sister; elder sister,people
+1017760-アパート,アパート,アパート,apartment building; apartment block,home
+1000420-あの,あの,あの,that; those; the,questions
+1547450-あびる,浴びる,あびる,to take (a shower); to bathe,actions
+1218380-あぶない,危ない,あぶない,dangerous; risky; hazardous,adjectives
+1213400-あまい,甘い,あまい,sweet-tasting; sweet; sugary,food;adjectives
+1584930-あまり,あまり,あまり,(not) very; (not) much; not very good,other
+1171900-あめ,雨,あめ,rain,nature
+1153520-あめ,飴,あめ,(hard) candy; toffee,food
+1390930-あらう,洗う,あらう,to wash; to cleanse; to rinse,actions
+1296400-ある,ある,ある,to be; to have (of things),actions
+1514320-あるく,歩く,あるく,to walk,actions
+1000580-あれ,あれ,あれ,that place (over there); that,questions
+2820690-いい,いい,いい,good; excellent; fine,adjectives
+1583250-いいえ,いいえ,いいえ,no; not at all,other
+1587040-いう,言う,いう,to say; to utter; to declare,actions
+1191730-いえ,家,いえ,house; residence; dwelling,home
+2845606-いかが,いかが,いかが,how; in what way; how about,questions
+1578850-いく,行く,いく,to go; to move (towards),actions
+1219960-いくつ,いくつ,いくつ,how many; how old,questions
+1219980-いくら,いくら,いくら,how much; however (much),questions
+1421700-いけ,池,いけ,pond,nature
+1159980-いしゃ,医者,いしゃ,doctor; physician,people
+1157070-いす,椅子,いす,chair; seat; stool,home
+1519290-いそがしい,忙しい,いそがしい,busy; occupied; hectic,adjectives
+1432680-いたい,痛い,いたい,painful; sore,adjectives
+1160790-いち,一,いち,one; 1,numbers
+1576260-いちにち,一日,いちにち,one day; all day (long),time
+1165970-いちばん,一番,いちばん,first; number one; best,numbers
+1188760-いつ,いつ,いつ,when; at what time; how soon,time;questions
+1268570-いつか,五日,いつか,5th day of the month; five days,numbers;time
+1163400-いっしょ,一緒,いっしょ,(doing) together,other
+1268070-いつつ,五つ,いつつ,five; five years of age,numbers
+1188890-いつも,いつも,いつも,always; all the time; at all times,time
+1258330-いぬ,犬,いぬ,dog,animals
+1288850-いま,今,いま,now; the present time; just now,time
+1156800-いみ,意味,いみ,meaning; significance; sense,school_work
+1524590-いもうと,妹,いもうと,younger sister,people
+1587610-いや,嫌,いや,unpleasant; disagreeable; nasty,adjectives
+1582820-いりぐち,入口,いりぐち,entrance; entry; gate,places
+1577980-いる,いる,いる,to be (of animate objects); to exist,actions
+1546640-いる,いる,いる,to be needed; to be necessary,actions
+1465610-いれる,入れる,いれる,to put in; to let in; to take in,actions
+1357600-いろ,色,いろ,colour,colors
+1587850-いろいろ,いろいろ,いろいろ,various; a variety of; all sorts of,adjectives
+1352130-うえ,上,うえ,above; over; up,places
+1269410-うしろ,後ろ,うしろ,back; behind; rear,places
+1475480-うすい,薄い,うすい,thin (of an object); watery,adjectives
+1193180-うた,歌,うた,song; singing,leisure
+1588120-うたう,歌う,うたう,to sing,actions;leisure
+1191740-うち,うち,うち,one's house; one's home; one's family,home;people
+1378690-うまれる,生まれる,うまれる,to be born,actions
+1201190-うみ,海,うみ,sea; ocean; waters,nature
+1473950-うる,売る,うる,to sell,actions
+1481920-うるさい,うるさい,うるさい,noisy; loud; annoying,adjectives
+1580340-うわぎ,上着,うわぎ,coat; jacket; outerwear,clothes
+1202270-え,絵,え,picture; drawing; painting,leisure
+1173720-えいが,映画,えいが,movie; film; motion picture,leisure
+1173750-えいがかん,映画館,えいがかん,movie theatre; movie theater; cinema,places;leisure
+1174420-えいご,英語,えいご,English (language),school_work
+1001140-ええ,ええ,ええ,yes; that is correct; right,other
+1175140-えき,駅,えき,railway station; train station,places;transport
+1030630-エレベーター,エレベーター,エレベーター,elevator; lift,home
+1175570-えん-suffix,～円,～えん,yen (currency of Japan),numbers
+1178590-えんぴつ,鉛筆,えんぴつ,(wooden) pencil,school_work
+2826528-お-suffix,お～,お～,honorific/polite/humble prefix,other
+1486650-おいしい,おいしい,おいしい,good(-tasting); nice; delicious,food;adjectives
+1407460-おおい,多い,おおい,many; numerous; a lot,adjectives
+1588880-おおきい,大きい,おおきい,big; large; great,adjectives
+1412890-おおきな,大きな,おおきな,big; large; great,adjectives
+1414220-おおぜい,大勢,おおぜい,crowd of people; great number of people,people
+1002650-おかあさん,お母さん,おかあさん,mother; mom; mum,people
+1001710-おかし,お菓子,おかし,confections; sweets; candy,food
+1001820-おかね,お金,おかね,money,home
+1223640-おきる,起きる,おきる,to get up; to wake up; to happen,actions
+1421850-おく,置く,おく,to put; to place,actions
+1179330-おくさん,奥さん,おくさん,wife; your wife; his wife,people
+1329015-おさけ,お酒,おさけ,alcohol; sake,food
+1299685-おさら,お皿,おさら,plate; dish,food;home
+2261490-おじさん,おじさん,おじさん,uncle; old man,people
+1002320-おじいさん,おじいさん,おじいさん,grandfather; old man,people
+1236900-おしえる,教える,おしえる,to teach; to instruct; to tell,school_work;actions
+1180470-おす,押す,おす,to press (down); to push (e.g. a button),actions
+1421970-おそい,遅い,おそい,slow; late,time;adjectives
+1002430-おちゃ,お茶,おちゃ,tea (esp. green tea),food
+1002100-おてあらい,お手洗い,おてあらい,toilet; restroom; lavatory,places
+1002590-おとうさん,お父さん,おとうさん,father; dad; papa,people
+1581930-おとうと,弟,おとうと,younger brother; little brother,people
+1419990-おとこ,男,おとこ,man; male,people
+1420010-おとこのこ,男の子,おとこのこ,boy; son; baby boy,people
+1576050-おととい,一昨日,おととい,day before yesterday,time
+1576060-おととし,おととし,おととし,year before last,time
+1414170-おとな,大人,おとな,adult; grown-up,people
+1002610-おなか,お腹,おなか,belly; abdomen; stomach,body
+1451750-おなじ,同じ,おなじ,same; identical; equal,adjectives
+1001830-おにいさん,お兄さん,おにいさん,older brother; elder brother,people
+1001990-おねえさん,お姉さん,おねえさん,older sister; elder sister; older girl,people
+2261500-おばさん,おばさん,おばさん,aunt,people
+1002330-おばあさん,おばあさん,おばあさん,grandmother; old woman,people
+2220600-おふろ,お風呂,おふろ,bath,home
+1513065-おべんとう,お弁当,おべんとう,bento; Japanese box lunch,food
+1206050-おぼえる,覚える,おぼえる,to memorize; to memorise; to learn,school_work;actions
+1002120-おまわりさん,おまわりさん,おまわりさん,police officer,people
+1335750-おもい,重い,おもい,heavy; weighty; heavy (feeling),adjectives
+1533580-おもしろい,面白い,おもしろい,interesting; fascinating; intriguing,adjectives
+1174340-およぐ,泳ぐ,およぐ,to swim,actions
+1589500-おりる,降りる,おりる,to alight (e.g. from bus); to get off,transport;actions
+1589600-おわる,終わる,おわる,to end; to come to an end; to finish,actions
+1183720-おんがく,音楽,おんがく,music,leisure
+1344930-おんな,女,おんな,woman; female,people
+1344970-おんなのこ,女の子,おんなのこ,girl; daughter; baby girl,people
+1199330-かい-suffix,～回,～かい,counter for occurrences,numbers
+1203020-かい-suffix,～階,～かい,counter for storeys and floors of a building,numbers;places
+1203620-がいこく,外国,がいこく,foreign country,places
+1203650-がいこくじん,外国人,がいこくじん,foreigner; foreign citizen,people
+1198550-かいしゃ,会社,かいしゃ,company; corporation; firm,school_work
+1203090-かいだん,階段,かいだん,stairs; stairway; staircase,home
+1589730-かいもの,買い物,かいもの,shopping; purchased goods,leisure
+1473740-かう,買う,かう,to buy; to purchase,actions
+1512130-かえす,返す,かえす,to return (something); to restore,actions
+1221270-かえる,帰る,かえる,to return; to come home; to go home,actions
+1217730-かお,顔,かお,face; visage; looks,body
+1207590-かかる,かかる,かかる,"to take (a resource, e.g. time or money)",actions
+1260490-かぎ,鍵,かぎ,key; lock,home
+1343950-かく,書く,かく,to write; to compose; to pen,school_work;actions
+1206900-がくせい,学生,がくせい,student (esp. a university student),people;school_work
+1194480-かげつ-suffix,～か月,～かげつ,counter for months,numbers;time
+1207610-かける,かける,かける,to put on (glasses); to call (phone); to hang,actions;clothes
+1301940-かさ,傘,かさ,umbrella; parasol,home
+1411160-かす,貸す,かす,to lend; to loan,actions
+1499720-かぜ,風,かぜ,wind; breeze; draught,nature
+1583720-かぜ,風邪,かぜ,(common) cold; influenza; flu,body
+1516925-かた,方,かた,person (polite); way of doing,people
+1192150-かぞく,家族,かぞく,family,people
+1511600-かたかな,かたかな,かたかな,katakana,school_work
+2871532-がつ-suffix,～月,～がつ,month (of the year),time
+1206730-がっこう,学校,がっこう,school,school_work
+1037670-カップ,カップ,カップ,cup,food;home
+1192280-かてい,家庭,かてい,home; household; family,people;home
+1206110-かど,角,かど,corner; edge; (street) corner,places
+1208910-かばん,かばん,かばん,bag; satchel; briefcase,home
+1194870-かびん,花瓶,かびん,(flower) vase,home
+1484330-かぶる,かぶる,かぶる,to put on (one's head); to wear,clothes;actions
+1311530-かみ,紙,かみ,paper,school_work
+1038350-カメラ,カメラ,カメラ,camera,home
+1194290-かようび,火曜日,かようび,Tuesday,time
+1365850-からい,辛い,からい,spicy; hot; salty,food;adjectives
+1409140-からだ,体,からだ,body; health,body
+1323560-かりる,借りる,かりる,to borrow,actions
+1631750-がる-suffix,～がる,～がる,to show signs of being; to feel,other
+1252560-かるい,軽い,かるい,light (not heavy),adjectives
+1039140-カレー,カレー,カレー,rice and curry,food
+1039220-カレンダー,カレンダー,カレンダー,calendar,time
+1390020-かわ,川,かわ,river,nature
+1581310-がわ-suffix,～側,～がわ,"side (of something, or taking someone's side)",places
+1577200-かわいい,かわいい,かわいい,cute; adorable; charming,adjectives
+1213170-かんじ,漢字,かんじ,kanji; Chinese character,school_work
+1534520-き,木,き,tree; wood,nature
+1576760-きいろ,黄色,きいろ,yellow,colors
+1182030-きいろい,黄色い,きいろい,yellow,colors;adjectives
+1350040-きえる,消える,きえる,to disappear; to vanish,actions
+1591110-きく,聞く,きく,to listen; to hear; to ask,actions
+1520670-きた,北,きた,north; the North,places
+1042820-ギター,ギター,ギター,guitar,leisure
+1178940-きたない,汚い,きたない,dirty; filthy; foul,adjectives
+1226440-きっさてん,喫茶店,きっさてん,coffee shop; tearoom; coffee lounge,food;places
+1385070-きって,切手,きって,stamp (postage),home
+1385170-きっぷ,切符,きっぷ,ticket,transport
+1579260-きのう,昨日,きのう,yesterday,time
+1578150-きゅう,九,きゅう,nine; 9,numbers
+1231580-ぎゅうにく,牛肉,ぎゅうにく,beef,food
+1231590-ぎゅうにゅう,牛乳,ぎゅうにゅう,(cow's) milk,food
+1579110-きょう,今日,きょう,today; this day,time
+1237150-きょうしつ,教室,きょうしつ,classroom; lecture room,school_work
+1249960-きょうだい,兄弟,きょうだい,brothers and sisters; siblings,people
+1231690-きょねん,去年,きょねん,last year,time
+1257240-きらい,嫌い,きらい,disliking; hating; detesting,adjectives
+1384830-きる,切る,きる,to cut,actions
+1423000-きる,着る,きる,to wear (from the shoulders down),clothes;actions
+1591900-きれい,きれい,きれい,pretty; beautiful; clean,adjectives
+1042610-キロ,キロ,キロ,kilogram; kilometre,numbers
+1243490-ぎんこう,銀行,ぎんこう,bank; banking institution,places
+1243320-きんようび,金曜日,きんようび,Friday,time
+1578150-く,九,く,nine; 9,numbers
+1538160-くすり,薬,くすり,medicine; pharmaceuticals; (legal) drugs,body
+1184270-ください,ください,ください,please (do for me); please (give me),other
+1193060-くだもの,果物,くだもの,fruit,food
+1275640-くち,口,くち,mouth; opening,body
+1246700-くつ,靴,くつ,shoe; shoes; boots,clothes
+1246740-くつした,靴下,くつした,socks; sock; stockings,clothes
+1592250-くに,国,くに,country; state,places
+1592340-くもり,曇り,くもり,cloudiness; cloudy weather,nature
+1457560-くもる,曇る,くもる,to get cloudy; to cloud over,nature;actions
+1154330-くらい,暗い,くらい,dark; gloomy; murky,adjectives
+1154340-くらい-suffix,～くらい,～くらい,about; approximately,numbers;questions
+1044070-クラス,クラス,クラス,class,school_work
+1046810-グラム,グラム,グラム,gram; gramme,numbers
+1547720-くる,来る,くる,to come (spatially or temporally),actions
+1323080-くるま,車,くるま,car; automobile; vehicle,transport
+1287410-くろ,黒,くろ,black,colors
+1287420-くろい,黒い,くろい,black; dark,colors;adjectives
+1252330-けいかん,警官,けいかん,police officer; policeman; constable,people
+1579100-けさ,今朝,けさ,this morning,time
+1350110-けす,消す,けす,to turn off; to erase,actions
+1254760-けっこう,結構,けっこう,fine; enough; no thank you,adjectives
+1254790-けっこん,結婚,けっこん,marriage,people
+1255890-げつようび,月曜日,げつようび,Monday,time
+1263400-げんかん,玄関,げんかん,entrance; front door; entryway,home
+1260720-げんき,元気,げんき,lively; full of spirit; energetic,adjectives
+1264740-こ-suffix,～個,～こ,counter for (small) things or pieces,numbers
+1268060-ご,五,ご,five; 5,numbers
+1270910-ご-suffix,～語,～ご,language (e.g. 日本語),school_work
+1273270-こうえん,公園,こうえん,(public) park,places
+1592970-こうさてん,交差点,こうさてん,crossing; intersection,places
+1280770-こうちゃ,紅茶,こうちゃ,black tea,food
+1272500-こうばん,交番,こうばん,police box; koban,places
+1380440-こえ,声,こえ,voice,body
+1049000-コート,コート,コート,coat,clothes
+1049180-コーヒー,コーヒー,コーヒー,coffee,food
+1288810-ここ,ここ,ここ,here; this place; this point,places;questions
+1268990-ごご,午後,ごご,afternoon; p.m.,time
+1243850-ここのか,九日,ここのか,9th day of the month; nine days,numbers;time
+1243600-ここのつ,九つ,ここのつ,nine; nine years of age,numbers
+1269060-ごぜん,午前,ごぜん,morning; a.m.,time
+1449540-こたえる,答える,こたえる,to answer; to reply,school_work;actions
+1004500-こちら,こちら,こちら,this way; this direction; this person,questions;places
+1004500-こっち,こっち,こっち,this way; this direction; this (one),questions;places
+1050390-コップ,コップ,コップ,glass (drinking vessel); tumbler,home
+1579130-ことし,今年,ことし,this year,time
+1264540-ことば,言葉,ことば,word; phrase; expression,school_work
+1307850-こども,子供,こども,child; children,people
+1582920-この,この,この,"this; last (couple of years, etc.)",questions
+1270590-ごはん,ごはん,ごはん,cooked rice; meal,food
+1050590-コピーする,コピーする,コピーする,to copy,school_work;actions
+1289590-こまる,困る,こまる,to be troubled; to have difficulty,actions
+1628530-これ,これ,これ,this; this one; this person,questions
+1579080-ころ-suffix,～ころ,～ころ,(approximate) time; around; about,time
+1289100-こんげつ,今月,こんげつ,this month,time
+1289220-こんしゅう,今週,こんしゅう,this week,time
+1004880-こんな,こんな,こんな,this sort of; this kind of; like this,questions
+1289470-こんばん,今晩,こんばん,tonight; this evening,time
+1005110-さあ,さあ,さあ,come (on); come now; come along,other
+1294940-さい-suffix,～歳,～さい,... years old; age (of) ...,numbers;people
+1296970-さいふ,財布,さいふ,wallet; purse; coin purse,home
+1578010-さかな,魚,さかな,fish,animals;food
+1387210-さき,先,さき,ahead; first (in order); tip,places;time
+1297210-さく,咲く,さく,to bloom; to flower; to blossom,nature;actions
+1297960-さくぶん,作文,さくぶん,"writing (an essay, prose, etc.)",school_work
+1291330-さす,差す,さす,"to hold up (an umbrella, etc.)",actions
+1298520-さつ-suffix,～冊,～さつ,counter for books,numbers
+1299400-ざっし,雑誌,ざっし,magazine; journal; periodical,home
+1291600-さとう,砂糖,さとう,sugar,food
+1210360-さむい,寒い,さむい,cold (e.g. weather),nature;adjectives
+1293660-さらいねん,さ来年,さらいねん,year after next,time
+1005340-さん-suffix,～さん,～さん,Mr; Mrs; Miss,people
+1579350-さん,三,さん,three; 3,numbers
+1303620-さんぽ,散歩,さんぽ,walk; stroll,leisure
+1579470-し,四,し,four; 4,numbers
+2020680-じ-suffix,～時,～じ,hour; o'clock; (specified) time,time
+1576630-しお,塩,しお,salt; common salt; table salt,food
+1505990-しかし,しかし,しかし,however; but,other
+1315920-じかん,時間,じかん,time,time
+1315920-じかん-suffix,～時間,～じかん,hours (duration),time
+1304970-しごと,仕事,しごと,work; job; labor,school_work
+1318970-じしょ,辞書,じしょ,dictionary; lexicon,school_work
+1381820-しずか,静か,しずか,quiet; silent; calm,adjectives
+1184140-した,下,した,below; down; under,places
+1319210-しち,七,しち,seven,numbers
+1320760-しつもん,質問,しつもん,question; inquiry; enquiry,school_work
+1318290-じてんしゃ,自転車,じてんしゃ,bicycle; bike,transport
+1318400-じどうしゃ,自動車,じどうしゃ,car; automobile; motorcar,transport
+1310730-しぬ,死ぬ,しぬ,to die; to pass away,actions
+1315140-じびき,字引,じびき,dictionary,school_work
+1318610-じぶん,自分,じぶん,myself; yourself; oneself,people
+1436560-しまる,閉まる,しまる,to be shut; to close; to be closed,actions
+1508590-しめる,閉める,しめる,to close; to shut,actions
+1436570-しめる,締める,しめる,to tie; to fasten; to tighten,clothes;actions
+1005900-じゃ,じゃ,じゃ,then; well; so,other
+1321900-しゃしん,写真,しゃしん,photograph; photo; picture,leisure
+1061520-シャツ,シャツ,シャツ,shirt,clothes
+1061820-シャワー,シャワー,シャワー,shower,home
+1579840-じゅう,十,じゅう,ten; 10,numbers
+2083570-じゅう-suffix,～中,～じゅう,(all) through; throughout,time
+1333500-しゅうかん-suffix,～週間,～しゅうかん,weeks (duration),time
+1330290-じゅぎょう,授業,じゅぎょう,lesson; class; teaching,school_work
+1337270-しゅくだい,宿題,しゅくだい,homework; assignment,school_work
+1353320-じょうず,上手,じょうず,good at; skillful,adjectives
+1580480-じょうぶ,丈夫,じょうぶ,strong; durable; healthy,adjectives
+1595020-しょうゆ,醤油,しょうゆ,soy sauce; soya sauce; shoyu,food
+1358550-しょくどう,食堂,しょくどう,dining room; dining hall; cafeteria,food;places
+1420470-しる,知る,しる,to know; to be aware (of); to understand,actions
+1474900-しろ,白,しろ,white,colors
+1474910-しろい,白い,しろい,white,colors;adjectives
+1366410-じん-suffix,～人,～じん,person (nationality),people
+1362360-しんぶん,新聞,しんぶん,newspaper,home
+1372190-すいようび,水曜日,すいようび,Wednesday,time
+1228260-すう,吸う,すう,to smoke; to inhale; to suck,actions
+1067470-スカート,スカート,スカート,skirt,clothes
+1277450-すき,好き,すき,like; fond of,adjectives
+1195960-すぎ-suffix,～すぎ,～すぎ,too (much); over- (e.g. eating); past,time
+1348910-すくない,少ない,すくない,few; little; small (amount),adjectives
+1430620-すぐに,すぐに,すぐに,immediately; right away; at once,time
+1348870-すこし,少し,すこし,a little; a bit; a small amount,other
+1554370-すずしい,涼しい,すずしい,cool; refreshing,nature;adjectives
+2006560-ずつ-suffix,～ずつ,～ずつ,at a time; piecemeal,numbers
+1070790-ストーブ,ストーブ,ストーブ,(room) heater; stove,home
+1072590-スプーン,スプーン,スプーン,spoon; spoon lure,home
+1073210-スポーツ,スポーツ,スポーツ,sport; sports,leisure
+1074260-ズボン,ズボン,ズボン,trousers; pants,clothes
+1334040-すむ,住む,すむ,to live (of humans); to reside,actions
+1157170-する,する,する,to do; to carry out; to perform,actions
+1291800-すわる,座る,すわる,to sit (down); to have a seat,actions
+1472650-せい,背,せい,height; stature,body
+1379380-せいと,生徒,せいと,pupil; student; schoolchild,people;school_work
+1074270-セーター,セーター,セーター,sweater; jumper,clothes
+1382590-せっけん,せっけん,せっけん,soap,home
+1472740-せびろ,背広,せびろ,business suit,clothes
+1237680-せまい,狭い,せまい,narrow; confined; small,adjectives
+2839962-ゼロ,ゼロ,ゼロ,zero; 0; nought,numbers
+1388740-せん,千,せん,"thousand; 1,000",numbers
+1387500-せんげつ,先月,せんげつ,last month,time
+1387870-せんしゅう,先週,せんしゅう,last week; the week before,time
+1387990-せんせい,先生,せんせい,sensei; teacher,people;school_work
+1390980-せんたく,洗濯,せんたく,washing; laundry,home;actions
+1396130-ぜんぶ,全部,ぜんぶ,all; entire; whole,other
+2137720-そう,そう,そう,so; the same; that's the case,other
+1399790-そうじ,掃除,そうじ,cleaning; sweeping; dusting,home;actions
+1612860-そうして,そうして,そうして,and; like that,other
+1006670-そこ,そこ,そこ,there (place just mentioned); that place,places;questions
+1006780-そちら,そちら,そちら,there,places;questions
+1006780-そっち,そっち,そっち,there,places;questions
+1203250-そと,外,そと,outside; exterior; other place,places
+1006830-その,その,その,that; the,questions
+1403830-そば,そば,そば,(place) near by; (place) close by,places
+1245290-そら,空,そら,sky; the air; the heavens,nature
+1006970-それ,それ,それ,that; it; then,questions
+1006980-それから,それから,それから,and then; after that,other
+1406050-それでは,それでは,それでは,"well, ...; right, ...; now, ...",other
+1412560-だい-suffix,～台,～だい,counter for machines and vehicles,numbers
+1413240-だいがく,大学,だいがく,university; college,school_work
+1413890-たいしかん,大使館,たいしかん,embassy,places
+1414150-だいじょうぶ,大丈夫,だいじょうぶ,all right; OK; safe,adjectives
+1413660-だいすき,大好き,だいすき,liking very much,adjectives
+1414340-たいせつ,大切,たいせつ,important; significant; serious,adjectives
+1412640-だいどころ,台所,だいどころ,kitchen,home
+1415000-たいへん,大変,たいへん,difficult; hard; challenging,adjectives
+1283190-たかい,高い,たかい,high; tall; expensive,adjectives
+1007340-だけ-suffix,～だけ,～だけ,only; just; merely,questions
+1415870-たくさん,たくさん,たくさん,a lot; lots; plenty,numbers
+1076190-タクシー,タクシー,タクシー,taxi,transport
+1338180-だす,出す,だす,to take out; to get out; to put out,actions
+1416220-たち-suffix,～たち,～たち,plural suffix (e.g. 私たち),people
+1597040-たつ,立つ,たつ,to stand (up); to rise,actions
+1335640-たて,たて,たて,length; height; vertical,places
+1257540-たてもの,建物,たてもの,building,places
+1207240-たのしい,楽しい,たのしい,enjoyable; fun; pleasant,adjectives
+1548370-たのむ,頼む,たのむ,to request; to beg; to ask,actions
+1597150-たばこ,たばこ,たばこ,tobacco; cigarette; cigar,home
+1407980-たぶん,多分,たぶん,probably; likely; perhaps,other
+1358340-たべもの,食べ物,たべもの,food,food
+1358280-たべる,食べる,たべる,to eat,food;actions
+1549140-たまご,卵,たまご,eggs; egg; spawn,food
+1416830-だれ,誰,だれ,who,questions
+1416840-だれか,誰か,だれか,someone; somebody,people;questions
+1419110-たんじょうび,誕生日,たんじょうび,birthday,time
+1597350-だんだん,だんだん,だんだん,gradually; by degrees; little by little,other
+1347750-ちいさい,小さい,ちいさい,small; little; tiny,adjectives
+2136180-ちいさな,小さな,ちいさな,small; little; tiny,adjectives
+1242130-ちかい,近い,ちかい,near; close; short (distance),places;adjectives
+1158880-ちがう,違う,ちがう,to differ (from); to be different,actions
+1242160-ちかく,近く,ちかく,near; neighbourhood; neighborhood,places
+1420900-ちかてつ,地下鉄,ちかてつ,subway; metro; underground (railway),transport
+1421290-ちず,地図,ちず,map; atlas; chart,places
+1497610-ちち,父,ちち,father; father (e.g. of a discipline),people
+1422720-ちゃいろ,茶色,ちゃいろ,brown,colors
+1597530-ちゃわん,茶碗,ちゃわん,rice bowl; tea cup; teacup,food;home
+1620400-ちゅう-suffix,～中,～ちゅう,during; while; in (the course of),time
+1427340-ちょうど,ちょうど,ちょうど,exactly; precisely; just,time
+1163940-ちょっと,ちょっと,ちょっと,a little; a bit; slightly,other
+2225040-ついたち,一日,ついたち,first day of the month,time;numbers
+1305990-つかう,使う,つかう,"to use (a tool, method, etc.)",actions
+1483740-つかれる,疲れる,つかれる,to get tired; to tire; to get fatigued,actions
+1316380-つぎ,次,つぎ,next; following; subsequent,time
+1422970-つく,着く,つく,to arrive; to reach,actions
+1220210-つくえ,机,つくえ,desk,home
+1597890-つくる,作る,つくる,to make; to produce; to manufacture,actions
+1495770-つける,つける,つける,to turn on; to attach,actions
+1240825-つとめる,勤める,つとめる,"to work (for, at, in)",school_work;actions
+1008190-つまらない,つまらない,つまらない,dull; uninteresting; boring,adjectives
+1556730-つめたい,冷たい,つめたい,cold (to the touch); chilly; icy,adjectives
+1236070-つよい,強い,つよい,strong; brawny; powerful,adjectives
+1327190-て,手,て,hand; arm,body
+1078750-テープ,テープ,テープ,tape,home
+1078810-テープレコーダー,テープレコーダー,テープレコーダー,tape recorder,home
+1078630-テーブル,テーブル,テーブル,table,home
+1598550-でかける,出かける,でかける,to go out; to leave,actions
+1327720-てがみ,手紙,てがみ,letter; note,home
+1340450-できる,できる,できる,to be able to do; to be possible,actions
+1338850-でぐち,出口,でぐち,exit; way out,places
+1079760-テスト,テスト,テスト,"test (of ability, knowledge, etc.); exam",school_work
+1008450-では,では,では,then; well; so,other
+1083590-デパート,デパート,デパート,department store; department,places
+1008460-でも,でも,でも,but; however; though,other
+1338240-でる,出る,でる,to leave; to exit; to go out,actions
+1080510-テレビ,テレビ,テレビ,television; TV; TV program,home
+1438690-てんき,天気,てんき,weather; fair weather,nature
+1443000-でんき,電気,でんき,(electric) light; electricity,home
+1443530-でんしゃ,電車,でんしゃ,train; electric train,transport
+1443840-でんわ,電話,でんわ,telephone call; phone call,home
+1266970-と,戸,と,door (esp. Japanese-style),home
+1445160-ど-suffix,～度,～ど,times; degrees (temperature),numbers
+1087820-ドア,ドア,ドア,door,home
+1084810-トイレ,トイレ,トイレ,toilet; restroom; bathroom,home;places
+1008910-どう,どう,どう,how; in what way; how about,questions
+1466940-どうして,どうして,どうして,why; for what reason; for what purpose,questions
+1189130-どうぞ,どうぞ,どうぞ,please (go ahead); here you are,other
+1451470-どうぶつ,動物,どうぶつ,animal,animals
+1009000-どうも,どうも,どうも,thanks; very; somehow,other
+1579840-とお,十,とお,ten; 10; ten years of age,numbers
+1177800-とおい,遠い,とおい,far; distant; far away,places;adjectives
+1335000-とおか,十日,とおか,10th day of the month; ten days,numbers;time
+1315840-とき-suffix,～時,～とき,when; at the time of,time
+1598680-ときどき,時々,ときどき,sometimes; occasionally; at times,time
+1316140-とけい,時計,とけい,clock; watch; timepiece,home
+1577140-どこ,どこ,どこ,"where; what place; how much (long, far)",places;questions
+1343100-ところ,所,ところ,place; spot; scene,places
+1468060-とし,年,とし,year; age,time
+1370420-としょかん,図書館,としょかん,library,places
+1189360-どちら,どちら,どちら,which way; which direction; where,places;questions
+1189360-どっち,どっち,どっち,which way; which direction; where,questions;places
+1008630-とても,とても,とても,very; awfully; exceedingly,other
+1189370-どなた,どなた,どなた,who,questions
+1555830-となり,隣,となり,next to; next door,places
+1920240-どの,どの,どの,which; what (way),questions
+1429700-とぶ,飛ぶ,とぶ,to fly; to soar; to jump,actions
+1310620-とまる,止まる,とまる,to stop; to halt,actions
+1540170-ともだち,友達,ともだち,friend; companion,people
+1445590-どようび,土曜日,どようび,Saturday,time
+1430250-とり,鳥,とり,bird,animals
+1253020-とりにく,鶏肉,とりにく,chicken meat,food
+1326980-とる,取る,とる,to take; to get; to pick up,actions
+1298790-とる,撮る,とる,to take (a photograph),actions
+1009290-どれ,どれ,どれ,which (of three or more),questions
+1009330-どんな,どんな,どんな,what kind of; what sort of; what,questions
+1529520-ない,ない,ない,not; there isn't,adjectives
+1089890-ナイフ,ナイフ,ナイフ,knife,home
+1423310-なか,中,なか,inside; interior; among,places
+1429750-ながい,長い,ながい,"long (distance, length); long (time)",adjectives
+1532870-なく,鳴く,なく,to cry (of animals); to chirp,animals;actions
+1529530-なくす,なくす,なくす,to lose (something),actions
+1577120-なぜ,なぜ,なぜ,why; how; for what reason,questions
+1191320-なつ,夏,なつ,summer,time
+1191420-なつやすみ,夏休み,なつやすみ,summer vacation; summer holiday,time
+1582300-など-suffix,～など,～など,et cetera; etc.; and the like,questions
+1319220-ななつ,七つ,ななつ,seven; seven years of age,numbers
+2846738-なん,何,なん,what,questions
+1579630-なのか,七日,なのか,7th day of the month; seven days,numbers;time
+1531710-なまえ,名前,なまえ,name; given name,people
+1333070-ならう,習う,ならう,to take lessons in; to be taught,school_work;actions
+1508380-ならぶ,並ぶ,ならぶ,to line up; to stand in a line,actions
+1508390-ならべる,並べる,ならべる,to line up; to set up,actions
+1375610-なる,なる,なる,to become; to get; to grow,actions
+2846738-なん-suffix,何～,なん～,what,questions
+1461140-に,二,に,two; 2,numbers
+1463480-にぎやか,にぎやか,にぎやか,bustling; busy; crowded,adjectives
+1463520-にく,肉,にく,meat,food
+1380840-にし,西,にし,west,places
+2083100-にち-suffix,～日,～にち,nth day (of the month); counter for days,time
+1464900-にちようび,日曜日,にちようび,Sunday,time
+1195430-にもつ,荷物,にもつ,luggage; baggage; package,home;transport
+1091500-ニュース,ニュース,ニュース,news,other
+1436130-にわ,庭,にわ,garden; yard; courtyard,home
+2149890-にん-suffix,～人,～にん,counter for people,numbers;people
+1416400-ぬぐ,脱ぐ,ぬぐ,"to take off (clothes, shoes, etc.)",clothes;actions
+1183300-ぬるい,ぬるい,ぬるい,lukewarm; tepid,adjectives
+1092820-ネクタイ,ネクタイ,ネクタイ,tie; necktie,clothes
+1467640-ねこ,猫,ねこ,cat,animals
+1360010-ねる,寝る,ねる,to go to bed; to lie in bed,actions
+2084840-ねん-suffix,～年,～ねん,year (e.g. 2026年); counter for years,time;numbers
+1093450-ノート,ノート,ノート,notebook; copy-book; exercise book,school_work
+1352570-のぼる,登る,のぼる,to ascend; to go up; to climb,actions;nature
+1600430-のみもの,飲み物,のみもの,drink; beverage,food
+1169870-のむ,飲む,のむ,to drink; to swallow; to take (medicine),food;actions
+1355120-のる,乗る,のる,to ride; to get on (a vehicle),transport;actions
+1313000-は,歯,は,tooth; teeth,body
+1100760-パーティー,パーティー,パーティー,party (social gathering),leisure
+1010080-はい,はい,はい,yes; that is correct,other
+2019640-はい-suffix,～杯,～はい,counter for cupfuls and glassfuls,food;numbers
+1201940-はいざら,灰皿,はいざら,ashtray,home
+1465590-はいる,入る,はいる,to enter; to come in; to go in,actions
+1546590-はがき,はがき,はがき,postcard,home
+1607260-はく,はく,はく,to put on (shoes; trousers),clothes;actions
+1585650-はこ,箱,はこ,box; case; chest,home
+1237410-はし,橋,はし,bridge,places
+1476410-はし,箸,はし,chopsticks,food
+1307500-はじまる,始まる,はじまる,to begin; to start; to commence,actions
+1342540-はじめ,初め,はじめ,beginning; start; outset,time
+1342550-はじめて,初めて,はじめて,for the first time; first time,time
+1402540-はしる,走る,はしる,to run; to run (of a vehicle),actions
+1098390-バス,バス,バス,bus,transport
+1098620-バター,バター,バター,butter,food
+1600790-はたち,二十歳,はたち,20 years old,numbers;people
+1451150-はたらく,働く,はたらく,to work; to labor; to labour,school_work;actions
+1583090-はち,八,はち,eight; 8,numbers
+1600850-はつか,二十日,はつか,20th day of the month; 20 days,numbers;time
+1194500-はな,花,はな,flower; blossom; bloom,nature
+1486720-はな,鼻,はな,nose,body
+1600900-はなし,話,はなし,talk; speech; chat,other
+1562350-はなす,話す,はなす,to talk; to speak; to converse,actions
+1514990-はは,母,はは,mother,people
+1404975-はやい-早い,早い,はやい,early; soon; earlier than usual,time;adjectives
+1404975-はやい-速い,速い,はやい,fast; quick; rapid,adjectives
+1341000-はる,春,はる,spring; springtime,time
+1427900-はる,貼る,はる,to stick; to paste; to affix,actions
+1376460-はれ,晴れ,はれ,clear weather; fine weather,nature
+1376470-はれる,晴れる,はれる,to clear up; to clear away; to be sunny,nature;actions
+1478750-はん,半,はん,half-past; half,numbers;time
+1482110-ばん,晩,ばん,evening; night; dinner,time
+2022640-ばん-suffix,～番,～ばん,number (in a series),numbers
+1103090-パン,パン,パン,bread,food
+1096420-ハンカチ,ハンカチ,ハンカチ,handkerchief,clothes
+1482290-ばんごう,番号,ばんごう,number; series of digits,numbers
+1601340-ばんごはん,晩ごはん,ばんごはん,dinner; evening meal,food
+1479890-はんぶん,半分,はんぶん,half,numbers
+1447440-ひがし,東,ひがし,east,places
+1583370-ひき-suffix,～匹,～ひき,counter for small animals,numbers;animals
+1169250-ひく,引く,ひく,to pull; to catch (a cold),actions
+1419370-ひく,弾く,ひく,to play (a stringed or keyboard instrument),actions;leisure
+1434180-ひくい,低い,ひくい,low (position),adjectives
+1485470-ひこうき,飛行機,ひこうき,airplane; aeroplane; plane,transport
+1290800-ひだり,左,ひだり,left; left-hand side; left hand,places
+1580640-ひと,人,ひと,person; someone; somebody,people
+1160820-ひとつ,一つ,ひとつ,one (thing),numbers
+1162130-ひとつき,一月,ひとつき,one month,numbers;time
+1576150-ひとり,一人,ひとり,one person; alone,people;numbers
+1577280-ひま,暇,ひま,spare time; free time; leisure,time
+1488000-ひゃく,百,ひゃく,hundred; 100,numbers
+1490220-びょういん,病院,びょういん,hospital; clinic; doctor's office,places
+1490230-びょうき,病気,びょうき,"illness (usu. excluding minor ailments, e.g. common cold)",body
+1507090-ひらがな,ひらがな,ひらがな,hiragana,school_work
+1426250-ひる,昼,ひる,noon; midday; daytime,time
+1602340-ひるごはん,昼ごはん,ひるごはん,lunch; midday meal,food
+1278410-ひろい,広い,ひろい,spacious; vast; wide,adjectives
+1109380-フィルム,フィルム,フィルム,film,leisure
+1499690-ふうとう,封筒,ふうとう,envelope,home
+1115150-プール,プール,プール,(swimming) pool; pool (cue sport),leisure;places
+1110110-フォーク,フォーク,フォーク,fork,home
+1370760-ふく,吹く,ふく,to blow (of the wind),actions
+1500940-ふく,服,ふく,clothes (esp. Western clothes); clothing,clothes
+1461160-ふたつ,二つ,ふたつ,two (things),numbers
+1457440-ぶたにく,豚肉,ぶたにく,pork,food
+1582670-ふたり,二人,ふたり,two persons; two people; pair,people;numbers
+1462900-ふつか,二日,ふつか,2nd day of the month; two days,numbers;time
+1408180-ふとい,太い,ふとい,fat; thick; deep (of a voice),adjectives
+1446070-ふゆ,冬,ふゆ,winter,time
+1282790-ふる,降る,ふる,"to fall (of rain, snow, ash, etc.)",nature;actions
+1265070-ふるい,古い,ふるい,old; aged; ancient,adjectives
+1502840-ふん-suffix,～分,～ふん,minute (unit of time),time
+1505470-ぶんしょう,文章,ぶんしょう,sentence; writing; text,school_work
+1120410-ページ,ページ,ページ,page; nth page,school_work
+1185200-へた,下手,へた,unskillful; poor; awkward,adjectives
+1119650-ベッド,ベッド,ベッド,bed,home
+1120990-ペット,ペット,ペット,pet,animals
+1499320-へや,部屋,へや,room; chamber,home
+1512070-へん,辺,へん,area; vicinity; region,places
+1121380-ペン,ペン,ペン,pen,school_work
+1512670-べんきょう,勉強,べんきょう,study,school_work
+1512610-べんり,便利,べんり,convenient; handy; useful,adjectives
+1519170-ぼうし,帽子,ぼうし,hat; cap,clothes
+1123590-ボールペン,ボールペン,ボールペン,ball-point pen,school_work
+1203260-ほか,外,ほか,another (person or thing); other,other
+1124970-ポケット,ポケット,ポケット,pocket,clothes
+1547330-ほしい,欲しい,ほしい,want; wanted,adjectives
+1125150-ポスト,ポスト,ポスト,post; position; postbox,places
+1295510-ほそい,細い,ほそい,thin; slender; fine,adjectives
+1123880-ボタン,ボタン,ボタン,button (clothing); push-button,clothes
+1122650-ホテル,ホテル,ホテル,hotel,places
+1522150-ほん,本,ほん,book; volume; script,school_work
+1522150-ほん-suffix,～本,～ほん,counter for long thin objects,numbers
+1522980-ほんだな,本棚,ほんだな,bookshelves; bookshelf; bookcase,home
+1523060-ほんとう,本当,ほんとう,genuine; authentic; real,adjectives
+1524610-まい-suffix,～枚,～まい,counter for flat objects (paper; shirts),numbers
+1524700-まいあさ,毎朝,まいあさ,every morning,time
+1584350-まいつき,毎月,まいつき,every month; each month; monthly,time
+1524690-まいしゅう,毎週,まいしゅう,every week,time
+1524720-まいにち,毎日,まいにち,every day; daily,time
+1584360-まいとし,毎年,まいとし,every year; yearly; annually,time
+1524730-まいばん,毎晩,まいばん,every night,time
+1392580-まえ,前,まえ,in front (of); before (e.g. a building),time;places
+1392580-まえ-suffix,～前,～まえ,before (e.g. 3時前); ago,time
+1239730-まがる,曲がる,まがる,to turn; to bend,actions;places
+1495000-まずい,まずい,まずい,bad(-tasting); unpalatable; unsavoury,adjectives
+1524930-また,また,また,again; also,time
+1527110-まだ,まだ,まだ,still; as yet; only,time
+1603990-まち,町,まち,town; block; neighbourhood,places
+1410590-まつ,待つ,まつ,to wait,actions
+1580600-まっすぐ,まっすぐ,まっすぐ,straight (ahead); direct; upright,adjectives;places
+1128430-マッチ,マッチ,マッチ,match (for lighting a fire),home
+1401400-まど,窓,まど,window,home
+1604230-まるい,丸い,まるい,round; circular; spherical,adjectives
+1584460-まん,万,まん,"10,000; ten thousand",numbers
+1526360-まんねんひつ,万年筆,まんねんひつ,fountain pen,school_work
+1523940-みがく,磨く,みがく,to polish; to brush (teeth),actions
+1171010-みぎ,右,みぎ,right; right-hand side; right hand,places
+1418620-みじかい,短い,みじかい,short,adjectives
+1371260-みず,水,みず,water (esp. cool or cold),food
+1582120-みせ,店,みせ,store; shop; establishment,places
+1259210-みせる,見せる,みせる,to show; to display,actions
+1454080-みち,道,みち,road; path; street,places
+1301330-みっか,三日,みっか,3rd day of the month; three days,numbers;time
+1299740-みっつ,三つ,みっつ,three; three years of age,numbers
+1555300-みどり,緑,みどり,green,colors
+1202170-みなさん,皆さん,みなさん,all; everyone; everybody,people
+1459870-みなみ,南,みなみ,south,places
+1317170-みみ,耳,みみ,ear,body
+1259290-みる,見る,みる,to see; to look; to watch,actions
+1202150-みんな,みんな,みんな,everyone; everybody; all,people
+1561470-むいか,六日,むいか,6th day of the month; six days,numbers;time
+1277140-むこう,向こう,むこう,over there; ahead; beyond,places
+1460850-むずかしい,難しい,むずかしい,difficult; hard; troublesome,adjectives
+1585315-むっつ,六つ,むっつ,six; six years of age,numbers;home
+1406820-むら,村,むら,village,places
+1604890-め,目,め,eye,body
+1132570-メートル,メートル,メートル,metre (unit of length); meter,numbers
+1577670-めがね,めがね,めがね,glasses; eyeglasses; spectacles,clothes
+1012480-もう,もう,もう,already; yet; by now,time
+1534890-もくようび,木曜日,もくようび,Thursday,time
+1012550-もしもし,もしもし,もしもし,hello (e.g. on phone),other
+1315720-もつ,持つ,もつ,to hold; to have; to carry,actions
+1012620-もっと,もっと,もっと,(some) more; even more; longer,other
+1502390-もの,物,もの,thing; object; article,home
+1584800-もん,門,もん,gate,home
+1536010-もんだい,問題,もんだい,question (e.g. on a test); problem,school_work
+2082160-や-suffix,～屋,～や,shop; store; restaurant,places
+1476960-やおや,八百屋,やおや,greengrocer; fruit and vegetable shop,food;places
+1537370-やさい,野菜,やさい,vegetable,food
+1157000-やさしい,やさしい,やさしい,easy; plain; simple,adjectives
+1153670-やすい,安い,やすい,cheap; inexpensive,adjectives
+1227500-やすみ,休み,やすみ,vacation; holiday; absence,time
+1227560-やすむ,休む,やすむ,to rest; to have a break; to be absent,actions
+1583095-やっつ,八つ,やっつ,eight; eight years of age,numbers
+1302680-やま,山,やま,mountain; hill; (mountain) forest,nature
+1012980-やる,やる,やる,to do; to undertake; to perform,actions
+1542790-ゆうがた,夕方,ゆうがた,early evening (usu. from 3pm to 6pm),time
+1584910-ゆうはん,夕飯,ゆうはん,evening meal; dinner; supper,food;time
+1542430-ゆうびんきょく,郵便局,ゆうびんきょく,post office,places
+1542640-ゆうべ,昨夜,ゆうべ,last night; yesterday evening,time
+1541620-ゆうめい,有名,ゆうめい,famous; well-known,adjectives
+1386500-ゆき,雪,ゆき,snow; snowfall,nature
+1013050-ゆっくりと,ゆっくりと,ゆっくりと,slowly; unhurriedly; without haste,other
+1476920-ようか,八日,ようか,8th day of the month; eight days,numbers;time
+1546020-ようふく,洋服,ようふく,clothes; Western-style clothes,clothes
+1605870-よく,よく,よく,often; well,time
+1180570-よこ,横,よこ,side; beside; horizontal,places
+1307320-よっか,四日,よっか,4th day of the month; four days,numbers;time
+1307040-よっつ,四つ,よっつ,four; 4; four years of age,numbers
+1266440-よぶ,呼ぶ,よぶ,to call out (to); to call; to invoke,actions
+1456360-よむ,読む,よむ,to read,school_work;actions
+1536350-よる,夜,よる,night; evening,time
+1324520-よわい,弱い,よわい,weak; frail; delicate,adjectives
+1547900-らいげつ,来月,らいげつ,next month,time
+1548010-らいしゅう,来週,らいしゅう,next week,time
+1548220-らいねん,来年,らいねん,next year,time
+1138860-ラジオ,ラジオ,ラジオ,radio,home
+1138960-ラジカセ,ラジカセ,ラジカセ,radio-cassette player,home
+1551790-りっぱ,りっぱ,りっぱ,splendid; fine; handsome,adjectives
+1552750-りゅうがくせい,留学生,りゅうがくせい,overseas student; exchange student,people;school_work
+1602710-りょうしん,両親,りょうしん,parents; both parents,people
+1554310-りょうり,料理,りょうり,cooking; cookery; cuisine,food
+1553170-りょこう,旅行,りょこう,travel; trip; journey,leisure;transport
+1557630-れい,零,れい,zero; nought,numbers
+1557110-れいぞうこ,冷蔵庫,れいぞうこ,refrigerator; fridge,home
+1144940-レコード,レコード,レコード,(phonograph) record,leisure
+1145310-レストラン,レストラン,レストラン,restaurant (esp. Western-style),food;places
+1559160-れんしゅう,練習,れんしゅう,practice; training; drill,school_work
+1560670-ろうか,廊下,ろうか,corridor; hallway; passageway,home
+1585310-ろく,六,ろく,six; 6,numbers
+1148640-ワイシャツ,ワイシャツ,ワイシャツ,(formal) shirt; dress shirt,clothes
+1324300-わかい,若い,わかい,young; youthful,adjectives
+1606560-わかる,わかる,わかる,to understand; to comprehend; to grasp,actions
+1519210-わすれる,忘れる,わすれる,to forget; to leave carelessly,actions
+1311110-わたし,私,わたし,I; me,people
+2842390-わたくし,私,わたくし,I (formal),people
+1444610-わたす,渡す,わたす,to hand over; to hand in; to pass,actions
+1444680-わたる,渡る,わたる,to cross over; to go across,actions
+1151260-わるい,悪い,わるい,bad; poor; undesirable,adjectives

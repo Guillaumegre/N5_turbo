@@ -61,6 +61,7 @@ class Word:
     waller_meaning: str
     entry: dict | None = None
     forced_seq: str = ""  # JMdict id pinned in overrides/list_entries.csv
+    default_themes: list[str] = field(default_factory=list)  # from overrides/extra_words.csv
     id: str = ""
     display: str = ""
     meaning: str = ""
@@ -298,6 +299,27 @@ def stem(word: Word) -> str:
     return d
 
 
+# Same digits, different word: 1日 = いちにち (one day) or ついたち (the 1st); 1月 = いちがつ or ひとつき.
+AMBIGUOUS_DATES = {"一日", "一月"}
+KANJI_DIGITS = {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+DATE_RE = re.compile(r"^([一二三四五六七八九十]+)(月|日)$")
+
+
+def digit_aliases(word: Word) -> set[str]:
+    """四月 -> {"4月", "４月"}: Tatoeba usually writes months and dates with digits."""
+    m = DATE_RE.match(word.bare)
+    if not m:
+        return set()
+    num, n = m[1], 0
+    if "十" in num:
+        tens, _, ones = num.partition("十")
+        n = KANJI_DIGITS.get(tens, 1) * 10 + KANJI_DIGITS.get(ones, 0)
+    else:
+        n = KANJI_DIGITS[num]
+    ascii_ = f"{n}{m[2]}"
+    return {ascii_, ascii_.translate(str.maketrans("0123456789", "０１２３４５６７８９"))}
+
+
 def stem_reading(word: Word) -> str:
     """Reading of stem(word), used to check a sentence reads the word the same way (一日: いちにち vs ついたち)."""
     if not has_kanji(word.display):
@@ -327,6 +349,10 @@ def choose_examples(word: Word, index, jpn, eng, sf: SentenceFurigana, known: se
         and word.id not in NOT_NUMERAL_SUFFIXES
     )
     numeral_re = re.compile(NUMERAL_RE + re.escape(s)) if needs_numeral else None
+    aliases = digit_aliases(word)
+
+    def written(ja: str) -> bool:
+        return s in ja or any(a in ja and not re.search(f"[0-9０-９]{re.escape(a)}", ja) for a in aliases)
     # Cheap pre-filter before running Sudachi.
     pre = []
     for h in hits.values():
@@ -335,7 +361,7 @@ def choose_examples(word: Word, index, jpn, eng, sf: SentenceFurigana, known: se
             continue
         if numeral_re and not numeral_re.search(ja):
             continue
-        pre.append((0 if h.good else 1, abs(len(ja) - 12), s not in ja, h))
+        pre.append((0 if h.good else 1, abs(len(ja) - 12), not written(ja), h))
     pre.sort(key=lambda x: x[:3])
 
     scored = []
@@ -357,10 +383,13 @@ def choose_examples(word: Word, index, jpn, eng, sf: SentenceFurigana, known: se
             continue
         force = {word.bare: word.reading.strip(TILDES)} if h.reading and has_kanji(word.bare) else None
         segs = sf.segments(ja, force)
-        if kr and kr not in reading_of(segs):
+        uses_digits = s not in ja and written(ja)
+        if kr and not uses_digits and kr not in reading_of(segs):
             continue  # Sudachi reads the word differently (一日: いちにち vs ついたち)
+        if uses_digits and h.reading is None and word.bare in AMBIGUOUS_DATES:
+            continue  # 1日 could be いちにち or ついたち: only trust sentences the index annotates
         rare_kanji = sum(1 for c in ja if has_kanji(c) and c not in n5_kanji)
-        digits = sum(1 for c in ja if c.isdigit())
+        digits = 0 if uses_digits else sum(1 for c in ja if c.isdigit())
         score = (
             unknown * 3
             + rare_kanji * 1.5
@@ -368,7 +397,7 @@ def choose_examples(word: Word, index, jpn, eng, sf: SentenceFurigana, known: se
             + proper * 0.5
             + abs(len(ja) - 12) / 4
             + (0 if h.good else 1)
-            + (0 if s in ja else 3)
+            + (0 if written(ja) else 3)
         )
         scored.append((score, h, segs, en))
     scored.sort(key=lambda x: x[0])
@@ -451,6 +480,9 @@ def main() -> None:
             expr = ov["expression"] if ov else first_variant(r["expression"])
             reading = ov["reading"] if ov else first_variant(r["reading"])
             words.append(Word(expr, reading, r["meaning"].strip(), forced_seq=(ov or {}).get("jmdict", "")))
+    # Words missing from Waller's list (found by comparing with other public N5 lists).
+    for r in read_overrides("extra_words.csv", key="expression").values():
+        words.append(Word(r["expression"], r["reading"], r["gloss_hint"], default_themes=[t for t in r["themes"].split(";") if t]))
 
     by_id = {e["id"]: e for e in jm["words"]}
     for w in words:
@@ -504,6 +536,8 @@ def main() -> None:
     for w in words:
         if w.id in theme_ov:
             w.themes = [t.strip() for t in theme_ov[w.id]["themes"].split(";") if t.strip()]
+        elif w.default_themes:
+            w.themes = w.default_themes
         else:
             extra = " ".join(g["text"] for s in (senses_for(w) if w.entry else [])[:1] for g in s["gloss"])
             w.themes = propose(w.waller_meaning, w.pos, extra)

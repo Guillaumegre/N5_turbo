@@ -714,3 +714,21 @@ id,kanji,reading,meaning_en,pos,themes
 1444610-わたす,渡す,わたす,to hand over; to hand in; to pass,verb,actions
 1444680-わたる,渡る,わたる,to cross over; to go across,verb,actions
 1151260-わるい,悪い,わるい,bad; poor; undesirable,i-adj,adjectives
+1162120-いちがつ,一月,いちがつ,January,noun,time
+1461560-にがつ,二月,にがつ,February,noun,time
+1300250-さんがつ,三月,さんがつ,March,noun,time
+1307180-しがつ,四月,しがつ,April,noun,time
+1268170-ごがつ,五月,ごがつ,May,noun,time
+1561330-ろくがつ,六月,ろくがつ,June,noun,time
+1319280-しちがつ,七月,しちがつ,July,noun,time
+1476730-はちがつ,八月,はちがつ,August,noun,time
+1243660-くがつ,九月,くがつ,September,noun,time
+1334570-じゅうがつ,十月,じゅうがつ,October,noun,time
+1334480-じゅういちがつ,十一月,じゅういちがつ,November,noun,time
+1334910-じゅうにがつ,十二月,じゅうにがつ,December,noun,time
+1402730-おくる,送る,おくる,to send; to dispatch; to forward,verb,actions
+1192420-かない,家内,かない,(my) wife,noun,people
+1270390-ごしゅじん,ご主人,ごしゅじん,your husband; her husband,noun,people
+1073900-スリッパ,スリッパ,スリッパ,slipper; slippers,noun,clothes;home
+1414580-たいてい,たいてい,たいてい,mostly; ordinarily; usually,na-adj,time
+1535780-もちろん,もちろん,もちろん,of course; certainly; naturally,adverb,other

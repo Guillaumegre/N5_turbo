@@ -15,7 +15,7 @@ tools/.venv/Scripts/python.exe -m unittest discover -s tools/tests
 
 | Step | Source | Notes |
 |---|---|---|
-| Word list | Jonathan Waller's N5 list (via open-anki-jlpt-decks) | 718 rows → 715 study items (有る/在る and 掛ける/かける merged) |
+| Word list | Jonathan Waller's N5 list (via open-anki-jlpt-decks) + `overrides/extra_words.csv` | 718 rows → 715 study items (有る/在る and 掛ける/かける merged), + 18 words missing from Waller (the 12 months, 送る, 家内, ご主人, スリッパ, たいてい, もちろん) = 733 |
 | Entry, meaning, part of speech | JMdict (jmdict-simplified) | sense chosen by overlap with Waller's gloss, max 3 short glosses |
 | Display form | JMdict `uk` flag | words usually written in kana are shown in kana (下さい → ください) |
 | Word furigana | JmdictFurigana | per-kanji segments `{"t":"赤","r":"あか"}` |
@@ -35,6 +35,7 @@ IDs are `<JMdict seq>-<reading>` (+ `-suffix` for ～ items): stable across rebu
 | `pos.csv` | fix the part of speech |
 | `list_entries.csv` | fix a list row (spelling/reading) or pin its JMdict entry |
 | `exclude_sentences.csv` | drop a Tatoeba sentence (bad translation, archaic…) |
+| `extra_words.csv` | words added on top of Waller's list, with their themes |
 
 ## Reports (`tools/reports/`, regenerated on every build)
 
@@ -45,7 +46,7 @@ IDs are `<JMdict seq>-<reading>` (+ `-suffix` for ～ items): stable across rebu
 
 ## Known limitations
 
-- 35 words have no example sentence (mostly dates and counters like 九日, 七つ; Tatoeba writes them with digits).
+- 27 words have no example sentence (mostly counters like 七つ, and words Tatoeba rarely uses). Months and dates accept the digit spelling (４月, ９日).
 - Sound changes after digits are not handled: in `１本` the furigana shows ほん instead of ぽん.
 - Sudachi picks one reading per context; rare misreadings may remain (see `ambiguous_readings.md`).
 

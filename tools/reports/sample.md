@@ -95,10 +95,10 @@ Furigana shown as kanji(reading). Sentence source: Tatoeba sentence id.
 - **id:** `1576260-いちにち`
   - つらい一(いち)日(にち)になりそうだ。  
     _I'm going to have a heavy day._  (#202522)
-  - 日(ひ)一(いち)日(にち)と暖(あたた)かくなって来(く)る。  
-    _It is becoming warmer day by day._  (#122901)
-  - 先(せん)週(しゅう)一(いち)日(にち)休(やす)みを取(と)った。  
-    _I took a day off last week._  (#141821)
+  - １日(にち)おきに買(か)い物(もの)に行(い)く。  
+    _I go shopping every other day._  (#235706)
+  - 明日(あした)１日(にち)休(やす)ませてください。  
+    _Will you let me have a holiday tomorrow?_  (#80639)
 
 ## 上手  ·  じょうず
 
@@ -137,10 +137,10 @@ Furigana shown as kanji(reading). Sentence source: Tatoeba sentence id.
 - **id:** `1175140-えき`
   - 大(だい)学(がく)は駅(えき)から遠(とお)いんです。  
     _Our college is far from the station._  (#137633)
+  - 私(わたし)は友(とも)達(だち)を駅(えき)まで送(おく)った。  
+    _I saw my friend to the station._  (#152484)
   - 駅(えき)まではちょっと遠(とお)いよ。  
     _The station is pretty far._  (#188848)
-  - 駅(えき)へ行(い)って来(き)たところだ。  
-    _I have been to the station._  (#188870)
 
 ## 犬  ·  いぬ
 
@@ -288,4 +288,4 @@ Furigana shown as kanji(reading). Sentence source: Tatoeba sentence id.
 
 ## Words ending in い (reading)
 
-87 words, e.g. 青い、赤い、明るい、暖かい、新しい、暑い、熱い、厚い、危ない、甘い、いい、忙しい、痛い、薄い、うるさい、おいしい、多い、大きい、大勢、遅い、お手洗い、一昨日、重い、面白い、～回、～階、学生、家庭、辛い、軽い
+89 words, e.g. 青い、赤い、明るい、暖かい、新しい、暑い、熱い、厚い、危ない、甘い、いい、忙しい、痛い、薄い、うるさい、おいしい、多い、大きい、大勢、遅い、お手洗い、一昨日、重い、面白い、～回、～階、学生、家庭、辛い、軽い

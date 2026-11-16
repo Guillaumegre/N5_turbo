@@ -62,6 +62,8 @@ class Word:
     entry: dict | None = None
     forced_seq: str = ""  # JMdict id pinned in overrides/list_entries.csv
     default_themes: list[str] = field(default_factory=list)  # from overrides/extra_words.csv
+    freq: int = 0  # Tatoeba sentences using the word: drives the order new cards are introduced
+    rank: int = 0
     id: str = ""
     display: str = ""
     meaning: str = ""
@@ -330,16 +332,23 @@ def stem_reading(word: Word) -> str:
 
 def choose_examples(word: Word, index, jpn, eng, sf: SentenceFurigana, known: set[str], n5_kanji: set[str], excluded: set[str]):
     assert word.entry
-    forms = {k["text"] for k in word.entry["kanji"]} | {k["text"] for k in word.entry["kana"]}
+    kanji_forms = {k["text"] for k in word.entry["kanji"]}
+    kana_forms = {k["text"] for k in word.entry["kana"]}
+    # A word shown with kanji (歯, 二, 戸) must not match kana headwords, which are mostly
+    # homophones such as the particles は, に, と, unless the index names its JMdict entry.
+    kana_ok = not has_kanji(word.display)
     hits: dict[int, IndexHit] = {}
-    for form in forms:
+    for form in kanji_forms | kana_forms:
         for h in index.get(form, []):
             if h.seq and h.seq != word.entry["id"]:
+                continue
+            if form not in kanji_forms and not kana_ok and h.seq != word.entry["id"]:
                 continue
             if h.reading and to_hiragana(h.reading) != word.reading.strip(TILDES):
                 continue
             if h.jpn in jpn and h.eng in eng and str(h.jpn) not in excluded:
                 hits.setdefault(h.jpn, h)
+    word.freq = len(hits)
 
     s = stem(word)
     kr = stem_reading(word)
@@ -552,6 +561,11 @@ def main() -> None:
         if (i + 1) % 100 == 0:
             print(f"  {i + 1}/{len(words)}")
 
+    # 1 = most frequent. Ties keep list order. Suffixes/prefixes share hits with their base word
+    # (～本 / 本), so they are pushed after it to be introduced once the base is known.
+    for r, w in enumerate(sorted(words, key=lambda w: -w.freq // (4 if w.expression != w.bare else 1)), start=1):
+        w.rank = r
+
     manifest = json.loads((CACHE / "manifest.json").read_text(encoding="utf-8"))
     out = {
         "version": 1,
@@ -560,6 +574,7 @@ def main() -> None:
         "words": [
             {
                 "id": w.id,
+                "rank": w.rank,
                 "kanji": w.display,
                 "reading": w.reading,
                 "furigana": w.furigana,

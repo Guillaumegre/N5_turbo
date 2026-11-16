@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 
+import { DataProvider } from '@/data/DataProvider';
 import { strings } from '@/strings';
 import { AppThemeProvider, useTheme } from '@/theme/ThemeProvider';
 
@@ -23,7 +24,9 @@ export default function RootLayout() {
 
   return (
     <AppThemeProvider>
-      <AppStack />
+      <DataProvider>
+        <AppStack />
+      </DataProvider>
     </AppThemeProvider>
   );
 }

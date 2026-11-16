@@ -4,10 +4,10 @@ Words: 733
 
 ## Examples per word
 
-- 0: 27 words
-- 1: 6 words
+- 0: 29 words
+- 1: 7 words
 - 2: 6 words
-- 3: 694 words
+- 3: 691 words
 
 ## Words per theme
 
@@ -66,12 +66,14 @@ Words: 733
 - こっち (こっち) this way; this direction; this (one)
 - ～ころ (～ころ) (approximate) time; around; about
 - さ来年 (さらいねん) year after next
+- 四 (し) four; 4
 - 字引 (じびき) dictionary
 - ～中 (～じゅう) (all) through; throughout
 - 醤油 (しょうゆ) soy sauce; soya sauce; shoyu
 - ～ずつ (～ずつ) at a time; piecemeal
 - 背 (せい) height; stature
 - ゼロ (ゼロ) zero; 0; nought
+- 十 (とお) ten; 10; ten years of age
 - 七つ (ななつ) seven; seven years of age
 - 二十日 (はつか) 20th day of the month; 20 days
 - 一月 (ひとつき) one month

@@ -33,6 +33,8 @@ export type Example = {
 
 export type Word = {
   id: string;
+  /** Frequency rank, 1 = most common: order in which new words are introduced. */
+  rank: number;
   /** Written form shown on the card front (kana when the word is usually written in kana). */
   kanji: string;
   reading: string;

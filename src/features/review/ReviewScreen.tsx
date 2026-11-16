@@ -169,12 +169,10 @@ function Counters({ counts, current }: { counts: { new: number; learning: number
   return (
     <View style={styles.counters}>
       {items.map((i) => (
-        <AppText
-          key={i.key}
-          accessibilityLabel={`${i.n} ${i.label}`}
-          style={[styles.count, { color: i.color }, kind === i.key && styles.currentCount]}>
-          {i.n}
-        </AppText>
+        <View key={i.key} style={styles.countItem} accessible accessibilityLabel={`${i.n} ${i.label}`}>
+          <AppText style={[styles.count, { color: i.color }, kind === i.key && styles.currentCount]}>{i.n}</AppText>
+          <AppText variant="caption" muted style={styles.countLabel}>{i.label}</AppText>
+        </View>
       ))}
     </View>
   );
@@ -247,8 +245,10 @@ const styles = StyleSheet.create({
   topRight: { flexDirection: 'row', gap: 4 },
   furiToggle: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
   furiText: { fontSize: 18, fontWeight: '500' },
-  counters: { flexDirection: 'row', justifyContent: 'center', gap: spacing.md, paddingTop: 4 },
-  count: { fontSize: 14, fontWeight: '600', fontVariant: ['tabular-nums'] },
+  counters: { flexDirection: 'row', justifyContent: 'center', gap: spacing.lg, paddingTop: 4 },
+  countItem: { flexDirection: 'row', alignItems: 'baseline', gap: 5 },
+  count: { fontSize: 18, fontWeight: '900', fontVariant: ['tabular-nums'] },
+  countLabel: { fontWeight: '600' },
   currentCount: { textDecorationLine: 'underline' },
   scroll: { flexGrow: 1 },
   actions: { gap: spacing.sm, paddingTop: spacing.sm },

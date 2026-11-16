@@ -5,6 +5,11 @@ export const strings = {
   appName: 'N5 Turbo',
   home: {
     eyebrow: '日本語能力試験 N5',
+    title: 'Today',
+    cardsToday: (n: number) => (n === 1 ? 'card today' : 'cards today'),
+    start: (minutes: number) => `Start review · ~${minutes} min`,
+    goalTile: (date: string) => `Goal · ${date}`,
+    perDay: (n: number) => `${n} new words a day`,
     subtitle: 'Every JLPT N5 word, one card at a time.',
     streak: 'Streak',
     days: (n: number) => (n === 1 ? '1 day' : `${n} days`),

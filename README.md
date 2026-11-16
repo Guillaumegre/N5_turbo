@@ -50,3 +50,9 @@ tools/            build-time data pipeline (Python): word list, JMdict, Tatoeba,
 - Tatoeba sentences — CC BY 2.0 FR
 - N5 word list — Jonathan Waller (tanos.co.uk), CC BY
 - Noto Sans JP — SIL Open Font License 1.1
+
+## Could be better (later)
+
+- **Voice:** the app uses the phone's built-in Japanese text-to-speech. A clearly more natural option is
+  pre-generated neural audio (Google / Azure Japanese voices) for the 733 words and their sentences,
+  bundled with the app (~20 MB, offline, same voice on every device).

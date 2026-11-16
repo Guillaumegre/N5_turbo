@@ -5,12 +5,22 @@ import { useData, useSettings, useTodayCounts } from '@/data/DataProvider';
 import { streak } from '@/data/repo/cards';
 import { strings } from '@/strings';
 import { useTheme } from '@/theme/ThemeProvider';
-import { fonts } from '@/theme/tokens';
+import { fonts, radius } from '@/theme/tokens';
 import { AppText } from '@/ui/AppText';
 import { BigCard, Divider, Row, Section, Track } from '@/ui/Blocks';
+import { Button } from '@/ui/Button';
 import { formatShortDate } from '@/ui/dates';
 import { Screen } from '@/ui/Screen';
 
+/** Rough session length: new cards come back a few times, reviews are quick. */
+function estimateMinutes(fresh: number, learning: number, due: number): number {
+  return Math.max(1, Math.round((fresh * 30 + learning * 15 + due * 10) / 60));
+}
+
+/**
+ * Home: the Claude Design layout (today's card with the three counters, custom session,
+ * streak and goal tiles, links) drawn with TypeKana's components.
+ */
 export function HomeScreen() {
   'use no memo'; // reads the database (streak): see DataProvider
   const { colors } = useTheme();
@@ -22,13 +32,20 @@ export function HomeScreen() {
 
   const days = streak(db, now, config.dayStartHour);
   const total = counts.new + counts.learning + counts.due;
+  const date = new Date(now).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+  const counters = [
+    { n: counts.new, label: strings.review.countNew, color: colors.easy },
+    { n: counts.learning, label: strings.review.countLearning, color: colors.accent },
+    { n: counts.due, label: strings.review.countDue, color: colors.good },
+  ];
 
   return (
     <Screen back={false}>
       <View style={styles.topRow}>
-        <View style={[styles.pill, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          <AppText variant="caption" muted style={styles.pillLabel}>{strings.home.streak}</AppText>
-          <AppText style={styles.pillValue}>{strings.home.days(days)}</AppText>
+        <View style={styles.titles}>
+          <AppText style={[styles.eyebrow, { color: colors.accent }]}>{strings.home.eyebrow}</AppText>
+          <AppText variant="display" style={styles.title}>{strings.home.title}</AppText>
+          <AppText muted style={styles.date}>{date}</AppText>
         </View>
         <Pressable
           accessibilityRole="button"
@@ -41,45 +58,61 @@ export function HomeScreen() {
         </Pressable>
       </View>
 
-      <View>
-        <AppText style={[styles.eyebrow, { color: colors.accent }]}>{strings.home.eyebrow}</AppText>
-        <AppText variant="display" style={styles.title}>{strings.appName}</AppText>
-        <AppText muted style={styles.subtitle}>{strings.home.subtitle}</AppText>
-      </View>
-
-      <View style={styles.cards}>
-        <BigCard
-          tone="ink"
-          watermark="習"
-          eyebrow={strings.home.todayEyebrow}
-          title={total ? strings.home.todayTitle(total) : strings.home.doneTitle}
-          sub={total ? strings.home.todaySub(counts.new, counts.learning, counts.due) : strings.home.doneSub}
-          onPress={() => router.push('/review')}
-        />
-        <BigCard
-          tone="accent"
-          watermark="選"
-          eyebrow={strings.home.customEyebrow}
-          title={strings.home.customTitle}
-          sub={strings.home.customSub}
-          onPress={() => router.push('/filters')}
-        />
-      </View>
-
-      <Pressable accessibilityRole="button" onPress={() => router.push('/goal')} style={({ pressed }) => pressed && styles.pressed}>
-        <View style={[styles.goal, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          <View style={styles.goalHead}>
-            <AppText style={styles.goalTitle}>{strings.home.progress(counts.started, counts.totalWords)}</AppText>
-            <AppText variant="caption" accent style={styles.goalLink}>
-              {settings.goalDeadline ? '' : strings.home.setGoal}
-            </AppText>
-          </View>
-          <Track value={counts.started / counts.totalWords} />
-          <AppText variant="caption" faint>
-            {settings.goalDeadline ? strings.home.goalLine(formatShortDate(settings.goalDeadline), counts.newPerDay) : strings.home.noGoal}
-          </AppText>
+      <View style={[styles.today, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+        <AppText style={[styles.watermark, { color: colors.surfaceMuted }]} accessible={false}>習</AppText>
+        <View style={styles.bigRow}>
+          <AppText style={styles.bigNumber}>{total}</AppText>
+          <AppText muted style={styles.bigLabel}>{strings.home.cardsToday(total)}</AppText>
         </View>
-      </Pressable>
+        <View style={styles.counters}>
+          {counters.map((c) => (
+            <View key={c.label} style={styles.counter}>
+              <AppText style={[styles.counterValue, { color: c.color }]}>{c.n}</AppText>
+              <AppText variant="caption" muted style={styles.counterLabel}>{c.label}</AppText>
+            </View>
+          ))}
+        </View>
+        {total ? (
+          <Button label={strings.home.start(estimateMinutes(counts.new, counts.learning, counts.due))} onPress={() => router.push('/review')} />
+        ) : (
+          <>
+            <AppText muted>{strings.home.doneSub}</AppText>
+            <Button label={strings.review.learnMore} variant="secondary" onPress={() => router.push('/review')} />
+          </>
+        )}
+      </View>
+
+      <BigCard
+        tone="ink"
+        watermark="選"
+        eyebrow={strings.home.customEyebrow}
+        title={strings.home.customTitle}
+        sub={strings.home.customSub}
+        onPress={() => router.push('/filters')}
+      />
+
+      <View style={styles.tiles}>
+        <View style={[styles.tile, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+          <AppText variant="caption" muted>{strings.home.streak}</AppText>
+          <AppText style={styles.tileValue}>{strings.home.days(days)}</AppText>
+        </View>
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => router.push('/goal')}
+          style={({ pressed }) => [styles.tile, { backgroundColor: colors.surface, borderColor: colors.border }, pressed && styles.pressed]}>
+          <AppText variant="caption" muted>
+            {settings.goalDeadline ? strings.home.goalTile(formatShortDate(settings.goalDeadline)) : strings.home.setGoal}
+          </AppText>
+          <AppText style={styles.tileValue}>
+            {counts.started}
+            <AppText muted style={styles.tileTotal}> / {counts.totalWords}</AppText>
+          </AppText>
+          <Track value={counts.started / counts.totalWords} />
+          <AppText variant="caption" style={{ color: colors.good, fontWeight: '600' }}>
+            {strings.home.perDay(counts.newPerDay)}
+          </AppText>
+        </Pressable>
+      </View>
 
       <Section title={strings.home.more}>
         <Row glyph="語" label={strings.home.wordList} sub={strings.home.wordListSub} onPress={() => router.push('/words')} />
@@ -93,19 +126,25 @@ export function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  topRow: { flexDirection: 'row', alignItems: 'center' },
-  pill: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 7, paddingHorizontal: 12, borderRadius: 999, borderWidth: 1 },
-  pillLabel: { fontWeight: '600' },
-  pillValue: { fontSize: 13, fontWeight: '800' },
-  gear: { marginLeft: 'auto', width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
+  topRow: { flexDirection: 'row', alignItems: 'flex-start' },
+  titles: { flex: 1 },
+  eyebrow: { fontFamily: fonts.mincho, fontSize: 15, letterSpacing: 4, marginTop: 6 },
+  title: { marginTop: 8 },
+  date: { fontSize: 14.5, marginTop: 4 },
+  gear: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   gearGlyph: { fontSize: 30, lineHeight: 36 },
   pressed: { opacity: 0.7 },
-  eyebrow: { fontFamily: fonts.mincho, fontSize: 15, letterSpacing: 4 },
-  title: { marginTop: 10 },
-  subtitle: { fontSize: 14.5, marginTop: 9 },
-  cards: { gap: 12 },
-  goal: { borderWidth: 1, borderRadius: 18, paddingVertical: 14, paddingHorizontal: 16, gap: 8 },
-  goalHead: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between' },
-  goalTitle: { fontSize: 14, fontWeight: '700', letterSpacing: -0.2 },
-  goalLink: { fontWeight: '700' },
+  today: { position: 'relative', overflow: 'hidden', borderWidth: 1, borderRadius: radius.xl, padding: 22, gap: 18 },
+  watermark: { position: 'absolute', right: 6, top: -26, fontFamily: fonts.mincho, fontSize: 132, lineHeight: 140 },
+  bigRow: { flexDirection: 'row', alignItems: 'baseline', gap: 10 },
+  bigNumber: { fontSize: 56, fontWeight: '900', letterSpacing: -2, lineHeight: 60 },
+  bigLabel: { fontSize: 16 },
+  counters: { flexDirection: 'row' },
+  counter: { flex: 1, gap: 2 },
+  counterValue: { fontSize: 26, fontWeight: '900', letterSpacing: -0.6 },
+  counterLabel: { fontWeight: '700', textTransform: 'capitalize' },
+  tiles: { flexDirection: 'row', gap: 12 },
+  tile: { flex: 1, borderWidth: 1, borderRadius: 18, paddingVertical: 14, paddingHorizontal: 16, gap: 6 },
+  tileValue: { fontSize: 22, fontWeight: '900', letterSpacing: -0.6 },
+  tileTotal: { fontSize: 14, fontWeight: '500' },
 });

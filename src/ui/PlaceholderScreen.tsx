@@ -3,10 +3,9 @@ import { strings } from '@/strings';
 import { AppText } from './AppText';
 import { Screen } from './Screen';
 
-export function PlaceholderScreen({ title }: { title: string }) {
+export function PlaceholderScreen({ title, titleJa }: { title: string; titleJa?: string }) {
   return (
-    <Screen>
-      <AppText variant="title">{title}</AppText>
+    <Screen title={title} titleJa={titleJa}>
       <AppText muted>{strings.common.comingSoon}</AppText>
     </Screen>
   );

@@ -2,5 +2,5 @@ import { strings } from '@/strings';
 import { PlaceholderScreen } from '@/ui/PlaceholderScreen';
 
 export default function Route() {
-  return <PlaceholderScreen title={strings.stats.title} />;
+  return <PlaceholderScreen title={strings.stats.title} titleJa={strings.stats.titleJa} />;
 }

@@ -6,6 +6,8 @@ import { settings } from '../db/schema';
 /** Typed settings stored as JSON, one row per key (each key syncs independently). */
 export type Settings = {
   furigana: boolean;
+  /** Set once the first-launch goal screen was completed (or skipped). */
+  onboarded: boolean;
   /** Goal deadline (epoch ms), set on first launch. */
   goalDeadline: number | null;
   /** New words per day used when no goal is set. */
@@ -18,6 +20,7 @@ export type Settings = {
 
 export const DEFAULT_SETTINGS: Settings = {
   furigana: true,
+  onboarded: false,
   goalDeadline: null,
   newPerDayFallback: 20,
   reviewsPerDay: 200,

@@ -73,7 +73,7 @@ export function ReviewScreen() {
             </Animated.View>
           ) : (
             <Animated.View key={`${card.id}-front`} entering={FadeIn.duration(140)} style={styles.flex}>
-              <CardFront word={word} direction={card.direction} />
+              <CardFront word={word} direction={card.direction} furigana={furigana} />
             </Animated.View>
           )}
         </ScrollView>

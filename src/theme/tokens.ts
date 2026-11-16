@@ -9,20 +9,39 @@ export const spacing = {
   xxl: 64,
 } as const;
 
+/** TypeKana radii. */
 export const radius = {
-  sm: 6,
-  md: 12,
+  sm: 12,
+  md: 16,
   lg: 20,
+  xl: 22,
 } as const;
 
 /** Content never grows wider than this on tablets / desktop browsers. */
 export const maxContentWidth = 640;
 
-/** Font family names registered in the root layout via expo-font. */
+/**
+ * Japanese type without bundling webfonts (as TypeKana): iOS ships Hiragino Sans (gothic)
+ * and Hiragino Mincho, Android exposes Noto CJK as sans-serif / serif, the web falls back
+ * through the usual Japanese system fonts.
+ * - gothic: card words and sentences (clear strokes for learners)
+ * - mincho: decoration (eyebrows, watermarks)
+ */
 export const fonts = {
-  jp: 'NotoSansJP_400Regular',
-  jpBold: 'NotoSansJP_700Bold',
-  ui: Platform.select({ ios: 'System', android: 'sans-serif', default: 'system-ui' }),
+  jp: Platform.select({
+    ios: 'Hiragino Sans',
+    android: 'sans-serif',
+    default: '"Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif',
+  }),
+  mincho: Platform.select({
+    ios: 'Hiragino Mincho ProN',
+    android: 'serif',
+    default: '"Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif',
+  }),
+  ui: Platform.select({
+    web: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+    default: undefined,
+  }),
 } as const;
 
 /** Base font sizes; multiplied by the user's font-scale setting (accessibility). */

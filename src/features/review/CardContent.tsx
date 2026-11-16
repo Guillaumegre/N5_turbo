@@ -16,7 +16,7 @@ function posLabel(word: Word): string {
 }
 
 /** Front: the word in kanji only (JP → EN) or the English meaning (EN → JP). */
-export function CardFront({ word, direction }: { word: Word; direction: Direction }) {
+export function CardFront({ word, direction, furigana }: { word: Word; direction: Direction; furigana: boolean }) {
   const { colors, fontScale } = useTheme();
   if (direction === 'production') {
     return (
@@ -30,9 +30,14 @@ export function CardFront({ word, direction }: { word: Word; direction: Directio
   return (
     <View style={styles.front}>
       <AppText variant="caption" muted style={styles.label}>{strings.review.jpToEn}</AppText>
-      <AppText variant="jpWord" style={[styles.center, { fontSize: 76 * fontScale, lineHeight: 96 * fontScale }]}>
-        {word.kanji}
-      </AppText>
+      <Furigana
+        segments={word.furigana}
+        size={76 * fontScale}
+        showReading={furigana}
+        color={colors.text}
+        readingColor={colors.furigana}
+        align="center"
+      />
       <IconButton icon="speaker" label={strings.review.playWord} bordered onPress={() => speakJapanese(word.reading)} />
     </View>
   );

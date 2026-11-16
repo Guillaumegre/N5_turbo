@@ -1,44 +1,41 @@
 import { Pressable, StyleSheet } from 'react-native';
 
 import { useTheme } from '@/theme/ThemeProvider';
-import { radius, spacing } from '@/theme/tokens';
+import { radius } from '@/theme/tokens';
 
 import { AppText } from './AppText';
 
 type Props = {
   label: string;
   onPress: () => void;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'ink' | 'secondary';
+  disabled?: boolean;
 };
 
-export function Button({ label, onPress, variant = 'primary' }: Props) {
+/** Primary = vermilion, ink = black (TypeKana's two card colours), secondary = outlined card. */
+export function Button({ label, onPress, variant = 'primary', disabled }: Props) {
   const { colors } = useTheme();
-  const primary = variant === 'primary';
+  const bg = variant === 'primary' ? colors.accent : variant === 'ink' ? colors.inkCard : colors.surface;
+  const fg = variant === 'primary' ? colors.onAccent : variant === 'ink' ? colors.onInk : colors.text;
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityState={{ disabled }}
+      disabled={disabled}
       onPress={onPress}
       style={({ pressed }) => [
         styles.base,
-        primary
-          ? { backgroundColor: colors.accent }
-          : { backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1 },
-        pressed && { opacity: 0.8 },
+        { backgroundColor: bg },
+        variant === 'secondary' && { borderColor: colors.borderStrong, borderWidth: 1 },
+        pressed && { opacity: 0.85 },
+        disabled && { opacity: 0.4 },
       ]}>
-      <AppText style={[styles.label, { color: primary ? colors.onAccent : colors.text }]}>
-        {label}
-      </AppText>
+      <AppText style={[styles.label, { color: fg }]}>{label}</AppText>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  base: {
-    minHeight: 48,
-    paddingHorizontal: spacing.lg,
-    borderRadius: radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  label: { fontWeight: '600' },
+  base: { minHeight: 54, paddingHorizontal: 24, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center' },
+  label: { fontSize: 16, fontWeight: '800', letterSpacing: -0.2 },
 });

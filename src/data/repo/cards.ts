@@ -1,5 +1,7 @@
 import { and, desc, eq, gte, sql } from 'drizzle-orm';
 
+import { studyDaysBetween } from '@/domain/srs/time';
+
 import type { DoneToday, StudyCard } from '@/domain/srs/queue';
 import type { Scheduler } from '@/domain/srs/scheduler';
 import type { CardState, Direction, Rating } from '@/domain/srs/types';
@@ -165,3 +167,28 @@ export function startedWords(db: Db): number {
     db.get<{ n: number }>(sql`SELECT COUNT(*) AS n FROM cards WHERE direction = 'recognition' AND status != 'new'`)?.n ?? 0
   );
 }
+
+/** Consecutive study days ending today (or yesterday, when today has no review yet). */
+export function streak(db: Db, now: number, dayStartHour: number): number {
+  const rows = db
+    .select({ at: revlog.reviewedAt })
+    .from(revlog)
+    .where(eq(revlog.deleted, 0))
+    .orderBy(desc(revlog.reviewedAt))
+    .all();
+  const daysAgo = new Set(rows.map((r) => studyDaysBetween(r.at, now, dayStartHour)));
+  const start = daysAgo.has(0) ? 0 : 1;
+  let n = 0;
+  while (daysAgo.has(start + n)) n++;
+  return n;
+}
+
+/** Back to zero: every card new again; the review log is kept as tombstones so a later sync can follow. */
+export function resetProgress(db: Db, scheduler: Scheduler, now: number): void {
+  const fresh = stateColumns(scheduler.newCard(now));
+  db.transaction((tx) => {
+    tx.update(cards).set({ ...fresh, updatedAt: now }).run();
+    tx.update(revlog).set({ deleted: 1, updatedAt: now }).where(eq(revlog.deleted, 0)).run();
+  });
+}
+

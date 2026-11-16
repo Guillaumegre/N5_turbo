@@ -11,6 +11,25 @@ npm start          # Expo dev server (scan the QR code with a dev build / Expo G
 npm run check      # typecheck + lint + tests
 ```
 
+## Test on an iPhone (development build)
+
+A development build is N5 Turbo's own debug app, signed with the Apple Developer account: it stays
+installed (about a year, unlike Expo Go's weekly re-download) and supports every native module.
+
+One-time setup:
+
+```bash
+npx eas-cli@latest login                     # Expo account
+npx eas-cli@latest device:create             # open the link on the iPhone, install the profile
+npx eas-cli@latest build --profile development --platform ios   # Apple sign-in, cloud build ~15 min
+```
+
+Install the build from the link/QR code EAS gives you, then on the iPhone turn on
+Settings → Privacy & Security → Developer Mode (restart when asked).
+
+Every day after that: `npx expo start`, scan the QR code with the Camera app. Code changes reload live;
+rebuild only after adding a package with native code.
+
 ## Project structure
 
 ```

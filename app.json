@@ -8,9 +8,12 @@
     "scheme": "n5turbo",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.guillaumegrl.n5turbo",
+      "supportsTablet": true
     },
     "android": {
+      "package": "com.guillaumegrl.n5turbo",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

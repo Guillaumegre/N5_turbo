@@ -11,7 +11,7 @@ import { Chips, Divider, Row, Section, SwitchRow } from '@/ui/Blocks';
 import { formatShortDate } from '@/ui/dates';
 import { Screen } from '@/ui/Screen';
 
-const SITE = 'https://guillaumegre.github.io/N5_turbo';
+import { SITE } from '@/features/about/AboutScreen';
 
 const THEMES: { value: Settings['theme']; label: string }[] = [
   { value: 'light', label: strings.settings.light },

@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { RATINGS, type Rating } from '@/domain/srs/types';
 import { strings } from '@/strings';
 import { useTheme } from '@/theme/ThemeProvider';
-import { radius, spacing } from '@/theme/tokens';
+import { spacing } from '@/theme/tokens';
 import { AppText } from '@/ui/AppText';
 
 const NAMES: Record<Rating, string> = {
@@ -33,13 +33,11 @@ export function GradeButtons({
           accessibilityRole="button"
           accessibilityLabel={labels[r] ? `${NAMES[r]}, next in ${labels[r]}` : NAMES[r]}
           onPress={() => onAnswer(r)}
-          style={({ pressed }) => [
-            styles.button,
-            { backgroundColor: pressed ? colors.surfaceMuted : colors.surface, borderColor: colors.border },
-          ]}>
+          // Soft wash of the grade's colour: 13% (pressed: 24%) alpha over the paper.
+          style={({ pressed }) => [styles.button, { backgroundColor: tint[r] + (pressed ? '3D' : '21') }]}>
           <AppText style={[styles.name, { color: tint[r] }]}>{NAMES[r]}</AppText>
           {labels[r] || showKeys ? (
-            <AppText variant="caption" muted>
+            <AppText variant="caption" style={[styles.interval, { color: colors.textMuted }]}>
               {[labels[r], showKeys ? String(r) : ''].filter(Boolean).join(' · ')}
             </AppText>
           ) : null}
@@ -68,14 +66,14 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', gap: spacing.sm },
   button: {
     flex: 1,
-    minHeight: 64,
-    borderRadius: radius.md,
-    borderWidth: 1,
+    minHeight: 68,
+    borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 2,
+    gap: 3,
   },
-  name: { fontWeight: '500' },
-  show: { minHeight: 56, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
-  showLabel: { fontWeight: '500' },
+  name: { fontSize: 15, fontWeight: '500' },
+  interval: { fontVariant: ['tabular-nums'] },
+  show: { minHeight: 60, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+  showLabel: { fontSize: 17, fontWeight: '500', letterSpacing: -0.2 },
 });

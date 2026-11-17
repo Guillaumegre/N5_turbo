@@ -12,6 +12,9 @@ import { Button } from '@/ui/Button';
 import { formatShortDate } from '@/ui/dates';
 import { Screen } from '@/ui/Screen';
 
+/** Three months: about 8 new words and 20 minutes a day, a pace most learners can sustain. */
+const RECOMMENDED = '3m';
+
 /** First launch (and Settings → Daily goal): pick a deadline, see the daily pace it implies. */
 export function GoalScreen() {
   const { colors } = useTheme();
@@ -23,8 +26,8 @@ export function GoalScreen() {
 
   const options = goalOptions(now, totalWords - started, config.dayStartHour);
   const [picked, setPicked] = useState(() => {
-    // Preselect the option closest to the current goal, else 2 months.
-    if (!settings.goalDeadline) return '2m';
+    // Preselect the option closest to the current goal, else the recommended one.
+    if (!settings.goalDeadline) return RECOMMENDED;
     const closest = [...options].sort((a, b) => Math.abs(a.deadline - settings.goalDeadline!) - Math.abs(b.deadline - settings.goalDeadline!))[0];
     return closest.id;
   });
@@ -77,16 +80,27 @@ export function GoalScreen() {
                 pressed && styles.pressed,
               ]}>
               <View style={styles.optionText}>
-                <AppText style={[styles.optionLabel, { color: active ? colors.onInk : colors.text }]}>{o.label}</AppText>
-                <AppText variant="caption" style={{ color: active ? colors.onInkSoft : colors.textFaint }}>
+                <View style={styles.optionHead}>
+                  <AppText style={[styles.optionLabel, { color: active ? colors.onInk : colors.text }]}>{o.label}</AppText>
+                  {o.id === RECOMMENDED ? (
+                    <View style={[styles.badge, { backgroundColor: active ? colors.accent : colors.surfaceMuted }]}>
+                      <AppText style={[styles.badgeText, { color: active ? colors.onAccent : colors.accent }]}>{strings.goal.recommended}</AppText>
+                    </View>
+                  ) : null}
+                </View>
+                <AppText variant="caption" style={{ color: active ? colors.onInkSoft : colors.textMuted }}>
                   {formatShortDate(o.deadline)}
                 </AppText>
               </View>
-              <AppText style={[styles.optionPerDay, { color: active ? colors.onInk : colors.textMuted }]}>{strings.goal.perDay(o.perDay)}</AppText>
+              <View style={styles.optionRight}>
+                <AppText style={[styles.optionPerDay, { color: active ? colors.onInk : colors.text }]}>{strings.goal.perDay(o.perDay)}</AppText>
+                <AppText variant="caption" style={{ color: active ? colors.onInkSoft : colors.textMuted }}>{strings.goal.minutesPerDay(o.minutes)}</AppText>
+              </View>
             </Pressable>
           );
         })}
       </View>
+      <AppText variant="caption" muted style={styles.recommendation}>{strings.goal.recommendation}</AppText>
 
       <View style={[styles.plan, { backgroundColor: colors.surface, borderColor: colors.border }]}>
         <AppText variant="label" faint>{strings.goal.planLabel}</AppText>
@@ -106,8 +120,13 @@ const styles = StyleSheet.create({
   options: { gap: 10 },
   option: { flexDirection: 'row', alignItems: 'center', minHeight: 60, paddingHorizontal: 16, borderRadius: radius.md, borderWidth: 1 },
   optionText: { flex: 1, gap: 2 },
-  optionLabel: { fontSize: 16, fontWeight: '600', letterSpacing: -0.3 },
-  optionPerDay: { fontSize: 14, fontWeight: '600' },
+  optionHead: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  optionLabel: { fontSize: 16, fontWeight: '500', letterSpacing: -0.3 },
+  badge: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
+  badgeText: { fontSize: 11, fontWeight: '500' },
+  optionRight: { alignItems: 'flex-end', gap: 2 },
+  optionPerDay: { fontSize: 14, fontWeight: '500' },
+  recommendation: { marginTop: -4, lineHeight: 18 },
   pressed: { opacity: 0.85 },
   plan: { borderWidth: 1, borderRadius: radius.lg, paddingVertical: 16, paddingHorizontal: 18, gap: 6 },
   planTitle: { fontSize: 22, fontWeight: '600', letterSpacing: -0.6 },

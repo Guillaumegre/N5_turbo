@@ -11,7 +11,7 @@ import { fonts } from '@/theme/tokens';
 
 import { plainText, type FuriganaProps } from './furiganaTypes';
 
-export function Furigana({ segments, size, showReading, color, readingColor, align = 'left' }: FuriganaProps) {
+export function Furigana({ segments, size, showReading, color, readingColor, align = 'left', weight = '400' }: FuriganaProps) {
   const units = segments.flatMap((s) => (s.r ? [s] : [...s.t].map((t) => ({ t }) as FuriganaSegment)));
   const rubySize = Math.round(size * 0.5);
   return (
@@ -28,7 +28,7 @@ export function Furigana({ segments, size, showReading, color, readingColor, ali
               {u.r}
             </Text>
           ) : null}
-          <Text style={{ fontFamily: fonts.jp, fontSize: size, lineHeight: size * 1.4, color }}>{u.t}</Text>
+          <Text style={{ fontFamily: fonts.jp, fontSize: size, lineHeight: size * 1.4, color, fontWeight: weight }}>{u.t}</Text>
         </View>
       ))}
     </View>

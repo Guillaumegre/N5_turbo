@@ -81,17 +81,26 @@ export function ReviewScreen() {
             <AppText variant="caption" muted style={styles.practiceText}>{strings.review.practice}</AppText>
           </View>
         ) : null}
-        <ScrollView style={styles.flex} contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+        {/* The card is a paper sheet; on the front, tapping anywhere on it shows the answer. */}
+        <View style={[styles.sheet, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+          {/* The animated view is the sheet's direct child: nested in a scroll view mounting at the
+              same time, the web fade-in stayed stuck at opacity 0. */}
           {s.revealed ? (
-            <Animated.View key={`${card.id}-back`} entering={FadeIn.duration(180)}>
-              <CardBack word={word} furigana={furigana} />
+            <Animated.View key={`${card.id}-back`} entering={FadeIn.duration(180)} style={styles.flex}>
+              <ScrollView style={styles.flex} contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+                <CardBack word={word} furigana={furigana} />
+              </ScrollView>
             </Animated.View>
           ) : (
             <Animated.View key={`${card.id}-front`} entering={FadeIn.duration(140)} style={styles.flex}>
-              <CardFront word={word} direction={card.direction} furigana={furigana} />
+              {/* A plain tap area, not a button: it holds the speaker button, and buttons can't nest.
+                  Screen readers use the Show answer button below. */}
+              <Pressable accessible={false} onPress={s.reveal} style={styles.flex}>
+                <CardFront word={word} direction={card.direction} furigana={furigana} />
+              </Pressable>
             </Animated.View>
           )}
-        </ScrollView>
+        </View>
         <View style={styles.actions}>
           {s.revealed && s.labels ? (
             <GradeButtons labels={s.labels} onAnswer={s.answer} showKeys={showKeys} />
@@ -137,21 +146,20 @@ function TopBar({ onEnd, canUndo, onUndo, furigana, onToggleFurigana, progress, 
       <View style={styles.side}>
         <IconButton icon="close" label={strings.review.endSession} onPress={onEnd} />
       </View>
-      <View style={[styles.pill, { backgroundColor: colors.surfaceMuted }]} accessibilityRole="progressbar">
+      <View style={styles.progress} accessibilityRole="progressbar">
         {remainingMs !== null ? (
-          <>
+          <View style={styles.clock}>
             <Icon name="clock" size={14} color={colors.text} />
-            <AppText style={styles.pillText}>{paused ? strings.review.timePaused : formatClock(remainingMs)}</AppText>
-          </>
+            <AppText style={styles.progressText}>{paused ? strings.review.timePaused : formatClock(remainingMs)}</AppText>
+          </View>
         ) : (
           <>
-            <View style={[styles.track, { backgroundColor: colors.border }]}>
-              <View style={[styles.fill, { width: `${pct}%`, backgroundColor: colors.accent }]} />
-            </View>
-            <AppText style={styles.pillText}>
-              {progress.done}
-              <AppText muted style={styles.pillTotal}> / {progress.total}</AppText>
+            <AppText muted style={styles.progressText}>
+              <AppText style={[styles.progressText, { color: colors.text }]}>{progress.done}</AppText> / {progress.total}
             </AppText>
+            <View style={[styles.track, { backgroundColor: colors.border }]}>
+              <View style={[styles.fill, { width: `${pct}%`, backgroundColor: colors.text }]} />
+            </View>
           </>
         )}
       </View>
@@ -162,14 +170,8 @@ function TopBar({ onEnd, canUndo, onUndo, furigana, onToggleFurigana, progress, 
           accessibilityLabel={furigana ? strings.review.furiganaOn : strings.review.furiganaOff}
           accessibilityState={{ checked: furigana }}
           onPress={onToggleFurigana}
-          style={[styles.furiToggle, { backgroundColor: furigana ? colors.accent + '22' : 'transparent' }]}>
-          <AppText
-            style={[
-              styles.furiText,
-              { color: furigana ? colors.accent : colors.textMuted, textDecorationLine: furigana ? 'none' : 'line-through' },
-            ]}>
-            あ
-          </AppText>
+          style={[styles.furiToggle, { borderColor: furigana ? colors.accent : colors.border }]}>
+          <AppText style={[styles.furiText, { color: furigana ? colors.accent : colors.textMuted }]}>あ</AppText>
         </Pressable>
       </View>
     </View>
@@ -188,8 +190,12 @@ function Counters({ counts, current }: { counts: { new: number; learning: number
     <View style={styles.counters}>
       {items.map((i) => (
         <View key={i.key} style={styles.countItem} accessible accessibilityLabel={`${i.n} ${i.label}`}>
-          <AppText style={[styles.count, { color: i.color }, kind === i.key && styles.currentCount]}>{i.n}</AppText>
-          <AppText variant="caption" muted style={styles.countLabel}>{i.label}</AppText>
+          <View style={[styles.dot, { backgroundColor: i.color }]} />
+          <AppText muted style={styles.countLabel}>
+            {/* The current card's kind is coloured. */}
+            <AppText style={[styles.countLabel, kind === i.key ? { color: i.color, fontWeight: '500' } : { color: colors.textMuted }]}>{i.n}</AppText>{' '}
+            {i.label}
+          </AppText>
         </View>
       ))}
     </View>
@@ -258,24 +264,24 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   column: { flex: 1, width: '100%', maxWidth: maxContentWidth, alignSelf: 'center', paddingHorizontal: spacing.md, paddingBottom: spacing.md },
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 52 },
-  pill: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16 },
-  pillText: { fontWeight: '500', fontVariant: ['tabular-nums'] },
-  pillTotal: { fontWeight: '400' },
-  track: { width: 56, height: 4, borderRadius: 2, overflow: 'hidden' },
-  fill: { height: 4, borderRadius: 2 },
+  progress: { alignItems: 'center', gap: 6 },
+  clock: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  progressText: { fontSize: 13.5, fontVariant: ['tabular-nums'] },
+  track: { width: 120, height: 3, borderRadius: 2, overflow: 'hidden' },
+  fill: { height: 3, borderRadius: 2 },
+  sheet: { flex: 1, borderWidth: 1, borderRadius: 28, overflow: 'hidden', marginTop: 14 },
   side: { flex: 1, flexDirection: 'row', alignItems: 'center' },
   topRight: { justifyContent: 'flex-end', gap: 4 },
-  furiToggle: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-  furiText: { fontSize: 18, fontWeight: '500' },
+  furiToggle: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  furiText: { fontSize: 17 },
   practice: { alignSelf: 'center', marginTop: 8, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 999 },
   practiceText: { fontWeight: '500' },
-  counters: { flexDirection: 'row', justifyContent: 'center', gap: spacing.lg, paddingTop: 4 },
-  countItem: { flexDirection: 'row', alignItems: 'baseline', gap: 5 },
-  count: { fontSize: 18, fontWeight: '500', fontVariant: ['tabular-nums'] },
-  countLabel: { fontWeight: '400' },
-  currentCount: { textDecorationLine: 'underline' },
+  counters: { flexDirection: 'row', justifyContent: 'center', gap: 18, paddingTop: 6 },
+  countItem: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  dot: { width: 6, height: 6, borderRadius: 3 },
+  countLabel: { fontSize: 13, fontVariant: ['tabular-nums'] },
   scroll: { flexGrow: 1 },
-  actions: { gap: spacing.sm, paddingTop: spacing.sm },
+  actions: { gap: spacing.sm, paddingTop: 14 },
   keys: { textAlign: 'center' },
   nothing: { flex: 1, justifyContent: 'center', gap: spacing.md, padding: spacing.lg, borderRadius: radius.lg },
   nothingActions: { gap: spacing.sm, marginTop: spacing.md },

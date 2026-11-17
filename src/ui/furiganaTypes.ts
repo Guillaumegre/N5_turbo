@@ -9,6 +9,8 @@ export type FuriganaProps = {
   color: string;
   readingColor: string;
   align?: 'left' | 'center';
+  /** Base text weight (the card word is light). */
+  weight?: '300' | '400';
 };
 
 export function plainText(segments: FuriganaSegment[]): string {

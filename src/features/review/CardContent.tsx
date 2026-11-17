@@ -15,42 +15,46 @@ function posLabel(word: Word): string {
   return strings.pos[word.pos] ?? word.pos;
 }
 
-/** Front: the word in kanji only (JP → EN) or the English meaning (EN → JP). */
+/**
+ * Front, laid out on the card sheet: direction at the top, the word (kanji only, JP → EN) or the
+ * English meaning (EN → JP) in the middle, a hint at the bottom. The whole sheet reveals.
+ */
 export function CardFront({ word, direction, furigana }: { word: Word; direction: Direction; furigana: boolean }) {
   const { colors, fontScale } = useTheme();
-  if (direction === 'production') {
-    return (
-      <View style={styles.front}>
-        <AppText variant="caption" muted style={styles.label}>{strings.review.enToJp}</AppText>
-        <AppText style={[styles.prompt, { fontSize: 30 * fontScale, color: colors.text }]}>{word.meaning_en}</AppText>
-        <AppText variant="caption" muted>{posLabel(word)}</AppText>
-      </View>
-    );
-  }
+  const production = direction === 'production';
   return (
     <View style={styles.front}>
-      <AppText variant="caption" muted style={styles.label}>{strings.review.jpToEn}</AppText>
-      <Furigana
-        segments={word.furigana}
-        size={76 * fontScale}
-        showReading={furigana}
-        color={colors.text}
-        readingColor={colors.furigana}
-        align="center"
-      />
-      <IconButton icon="speaker" label={strings.review.playWord} bordered onPress={() => speakJapanese(word.reading)} />
+      <AppText variant="caption" muted style={styles.label}>{production ? strings.review.enToJp : strings.review.jpToEn}</AppText>
+      <View style={styles.frontMiddle}>
+        {production ? (
+          <>
+            <AppText style={[styles.prompt, { fontSize: 32 * fontScale, color: colors.text }]}>{word.meaning_en}</AppText>
+            <AppText variant="caption" muted>{posLabel(word)}</AppText>
+          </>
+        ) : (
+          <>
+            <Furigana
+              segments={word.furigana}
+              size={80 * fontScale}
+              weight="300"
+              showReading={furigana}
+              color={colors.text}
+              readingColor={colors.furigana}
+              align="center"
+            />
+            <IconButton icon="speaker" size={48} label={strings.review.playWord} bordered onPress={() => speakJapanese(word.reading)} />
+          </>
+        )}
+      </View>
+      <AppText variant="caption" muted style={styles.hint}>{production ? strings.review.hintProduction : strings.review.hintRecognition}</AppText>
     </View>
   );
 }
 
-/** Back: the word (with furigana when on), meaning, part of speech and themes, example sentences. */
+/** Back: the word (with furigana when on), meaning, part of speech and themes as tags, example sentences. */
 export function CardBack({ word, furigana }: { word: Word; furigana: boolean }) {
   const { colors, fontScale } = useTheme();
-  const meta = [
-    furigana ? null : word.reading, // the reading is part of the answer even with furigana off
-    posLabel(word),
-    word.themes.map((t) => themeName.get(t)).join(', '),
-  ].filter(Boolean);
+  const tags = [posLabel(word), ...word.themes.map((t) => themeName.get(t) ?? t)];
   return (
     <View style={styles.back}>
       <View style={styles.head}>
@@ -58,6 +62,7 @@ export function CardBack({ word, furigana }: { word: Word; furigana: boolean }) 
           <Furigana
             segments={word.furigana}
             size={52 * fontScale}
+            weight="300"
             showReading={furigana}
             color={colors.text}
             readingColor={colors.furigana}
@@ -65,11 +70,25 @@ export function CardBack({ word, furigana }: { word: Word; furigana: boolean }) 
           />
           <IconButton icon="speaker" size={40} label={strings.review.playWord} bordered onPress={() => speakJapanese(word.reading)} />
         </View>
-        <AppText style={[styles.meaning, { color: colors.accent, fontSize: 26 * fontScale }]}>{word.meaning_en}</AppText>
-        <AppText variant="caption" muted style={styles.center}>{meta.join(' · ')}</AppText>
+        {/* The reading is part of the answer even with furigana off. */}
+        {furigana ? null : <AppText muted style={styles.reading}>{word.reading}</AppText>}
+        <AppText style={[styles.meaning, { color: colors.accent, fontSize: 30 * fontScale }]}>{word.meaning_en}</AppText>
+        <View style={styles.tags}>
+          {tags.map((t) => (
+            <View key={t} style={[styles.tag, { backgroundColor: colors.surfaceMuted }]}>
+              <AppText variant="caption" muted>{t}</AppText>
+            </View>
+          ))}
+        </View>
       </View>
 
-      {word.examples.length ? <View style={[styles.rule, { backgroundColor: colors.border }]} /> : null}
+      {word.examples.length ? (
+        <View style={styles.divider}>
+          <View style={[styles.rule, { backgroundColor: colors.border }]} />
+          <AppText variant="caption" muted style={styles.label}>{strings.review.examples}</AppText>
+          <View style={[styles.rule, { backgroundColor: colors.border }]} />
+        </View>
+      ) : null}
 
       <View style={styles.examples}>
         {word.examples.map((ex) => (
@@ -77,12 +96,13 @@ export function CardBack({ word, furigana }: { word: Word; furigana: boolean }) 
             <View style={styles.exampleText}>
               <Furigana
                 segments={ex.ja}
-                size={fontSize.sentence * fontScale}
+                size={(fontSize.sentence - 1) * fontScale}
+                weight="300"
                 showReading={furigana}
                 color={colors.text}
                 readingColor={colors.furigana}
               />
-              <AppText muted style={{ fontSize: 15 * fontScale, fontWeight: '400' }}>{ex.en}</AppText>
+              <AppText muted style={{ fontSize: 14.5 * fontScale }}>{ex.en}</AppText>
             </View>
             <IconButton icon="speaker" size={36} label={strings.review.playSentence} bordered onPress={() => speakJapanese(readingOf(ex.ja))} />
           </View>
@@ -93,16 +113,21 @@ export function CardBack({ word, furigana }: { word: Word; furigana: boolean }) 
 }
 
 const styles = StyleSheet.create({
-  front: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: spacing.lg, paddingVertical: spacing.xl },
-  label: { letterSpacing: 1, textTransform: 'uppercase' },
-  prompt: { fontWeight: '400', textAlign: 'center' },
-  center: { textAlign: 'center' },
-  back: { gap: spacing.lg, paddingVertical: spacing.lg },
-  head: { alignItems: 'center', gap: spacing.xs },
+  front: { flex: 1, alignItems: 'center', justifyContent: 'space-between', paddingVertical: 22, paddingHorizontal: spacing.md },
+  frontMiddle: { alignItems: 'center', gap: spacing.lg, paddingVertical: spacing.lg },
+  label: { letterSpacing: 1.6, textTransform: 'uppercase', fontSize: 11 },
+  hint: { textAlign: 'center' },
+  prompt: { fontWeight: '300', textAlign: 'center', letterSpacing: -0.3 },
+  back: { gap: 20, paddingVertical: 24, paddingHorizontal: 20 },
+  head: { alignItems: 'center', gap: 6 },
   wordRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, flexWrap: 'wrap' },
-  meaning: { fontWeight: '400', textAlign: 'center' },
-  rule: { height: StyleSheet.hairlineWidth * 2 },
-  examples: { gap: spacing.lg },
+  reading: { fontSize: 16 },
+  meaning: { fontWeight: '300', textAlign: 'center', letterSpacing: -0.3 },
+  tags: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6, marginTop: 4 },
+  tag: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12 },
+  divider: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  rule: { flex: 1, height: 1 },
+  examples: { gap: 16 },
   example: { flexDirection: 'row', gap: spacing.sm, alignItems: 'flex-start' },
   exampleText: { flex: 1, gap: 2, minWidth: 0 },
 });

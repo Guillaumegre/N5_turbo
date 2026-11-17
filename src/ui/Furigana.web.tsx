@@ -6,7 +6,7 @@ import { fonts } from '@/theme/tokens';
 
 import type { FuriganaProps } from './furiganaTypes';
 
-export function Furigana({ segments, size, showReading, color, readingColor, align = 'left' }: FuriganaProps) {
+export function Furigana({ segments, size, showReading, color, readingColor, align = 'left', weight = '400' }: FuriganaProps) {
   return (
     <span
       lang="ja"
@@ -14,6 +14,7 @@ export function Furigana({ segments, size, showReading, color, readingColor, ali
         display: 'block',
         fontFamily: fonts.jp,
         fontSize: size,
+        fontWeight: weight,
         // Same line height either way: toggling furigana must not move the text.
         lineHeight: 2.0,
         color,

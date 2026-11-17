@@ -119,8 +119,10 @@ export function SwitchRow({ glyph, label, sub, value, onChange }: { glyph?: stri
           accessibilityLabel={label}
           value={value}
           onValueChange={onChange}
-          trackColor={{ false: colors.borderStrong, true: colors.accent }}
-          thumbColor="#FBF9F5"
+          // A solid, mid-grey "off" track: the white knob must stand out on the paper background.
+          trackColor={{ false: colors.textFaint, true: colors.accent }}
+          ios_backgroundColor={colors.textFaint}
+          thumbColor="#FFFFFF"
           // react-native-web colours the "on" knob with its own prop (teal by default).
           {...(Platform.OS === 'web' ? ({ activeThumbColor: '#FBF9F5' } as object) : {})}
         />

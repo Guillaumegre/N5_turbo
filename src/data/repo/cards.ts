@@ -3,6 +3,7 @@ import { and, desc, eq, gte, sql } from 'drizzle-orm';
 import { studyDaysBetween } from '@/domain/srs/time';
 
 import { wordState, type WordState } from '@/domain/progress';
+import type { LogEntry } from '@/domain/stats';
 import type { DoneToday, StudyCard } from '@/domain/srs/queue';
 import type { Scheduler } from '@/domain/srs/scheduler';
 import type { CardState, Direction, Rating } from '@/domain/srs/types';
@@ -202,4 +203,26 @@ export function wordStates(db: Db): Map<string, WordState> {
     .where(eq(cards.direction, 'recognition'))
     .all();
   return new Map(rows.map((r) => [r.wordId, wordState(r)]));
+}
+
+/** Review log entries (undone answers excluded) since `since`, for the Stats screen. */
+export function reviewLog(db: Db, since: number): LogEntry[] {
+  return db
+    .select({
+      reviewedAt: revlog.reviewedAt,
+      rating: revlog.rating,
+      kind: revlog.kind,
+      statusBefore: revlog.statusBefore,
+      durationMs: revlog.durationMs,
+    })
+    .from(revlog)
+    .where(and(eq(revlog.deleted, 0), gte(revlog.reviewedAt, since)))
+    .all();
+}
+
+/** How many answers a card has had (undone answers excluded). */
+export function answerCount(db: Db, cardId: string): number {
+  return (
+    db.get<{ n: number }>(sql`SELECT COUNT(*) AS n FROM revlog WHERE deleted = 0 AND card_id = ${cardId}`)?.n ?? 0
+  );
 }

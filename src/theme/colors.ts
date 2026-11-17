@@ -23,7 +23,7 @@ export const palette = {
     furigana: 'rgba(20,22,26,.6)',
     again: '#B3261E',
     hard: '#8A6100',
-    good: '#2F7D4F',
+    good: '#2A7047', // dark enough for 4.5:1 on its own tinted grade button
     easy: '#1F5AA6',
   },
   dark: {

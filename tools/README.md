@@ -21,6 +21,7 @@ tools/.venv/Scripts/python.exe -m unittest discover -s tools/tests
 | Word furigana | JmdictFurigana | per-kanji segments `{"t":"赤","r":"あか"}` |
 | Examples | Tatoeba `jpn_indices` (+ sentences, English translations) | ranked: short, mostly N5 vocabulary, N5 kanji, "checked" sentences first; up to 3 |
 | Sentence furigana | Sudachi (core dict) + JmdictFurigana + kana alignment | known Sudachi misreadings fixed in `READING_FIX` |
+| Sentence spelling | `KANA_*` rules in `build_n5.py` | words everyday Japanese writes in kana are respelled: 下さい → ください, 出来る → できる, 事 → こと, 居る → いる, 達 → たち, formal 所/物 → ところ/もの |
 | Themes | `overrides/themes.csv` (reviewed) | rule proposal in `themes.py` only for words missing from the CSV |
 
 IDs are `<JMdict seq>-<reading>` (+ `-suffix` for ～ items): stable across rebuilds, used by the app database and sync.

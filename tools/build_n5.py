@@ -198,12 +198,55 @@ def load_jmdict_furigana() -> dict[tuple[str, str], list[Segment]]:
 
 
 # Sudachi's default readings that are wrong for everyday sentences.
-READING_FIX = {"私": "わたし", "私達": "わたしたち", "明日": "あした", "何時": "なんじ", "一昨日": "おととい", "彼の": "かれの"}
+READING_FIX = {"私": "わたし", "私達": "わたしたち", "明日": "あした", "何時": "なんじ", "一昨日": "おととい", "明後日": "あさって", "彼の": "かれの"}
 
 # Counters/suffixes share a JMdict entry with the plain noun (～本 / 本), so their example
 # sentences must show the suffix after a number: 三本, 何時間, 五年前.
 NUMERAL_RE = "[0-9０-９一二三四五六七八九十百千万何数]"
 NOT_NUMERAL_SUFFIXES = {"1620400-ちゅう-suffix", "1315840-とき-suffix"}
+
+
+# Words Tatoeba often writes in kanji but everyday Japanese (and N5 textbooks) writes in kana:
+# 下さい → ください, 出来る → できる, 事 → こと… Example sentences show them in kana.
+# Verbs and adjectives by dictionary form (every inflection), the rest by surface.
+KANA_DFORMS = {"下さる", "出来る", "居る", "有る", "在る", "無い", "頂く", "頂ける", "致す", "為る", "宜しい", "有難い", "御座る", "仕舞う"}
+KANA_SURFACES = {
+    "事", "丁度", "沢山", "色々", "一寸", "何故", "迄", "又", "中々", "殆ど", "余り", "筈",
+    "貴方", "此処", "其処", "何処", "彼処", "此の", "其の", "何時も", "未だ", "御", "頃",
+    "有難う", "御免", "宜しく", "然し", "矢張り", "是非",
+    # Same spelling as the word cards (overrides/display.csv): non-jōyō kanji or usually kana.
+    "飴", "椅子", "お腹", "醤油", "茶碗", "一昨日", "明後日", "多分",
+}
+# Kana only with this reading: 程 ほど (not てい), 位 くらい (not い, rank), 様 よう (お客様 keeps さま).
+# 達 たち: the plural suffix (女の子達 → 女の子たち); 友達 is one word and keeps its kanji.
+# 昨夜 ゆうべ (kana) but さくや (kanji).
+KANA_IF_READ = {"程": {"ほど"}, "位": {"くらい", "ぐらい"}, "様": {"よう"}, "訳": {"わけ"}, "達": {"たち"}, "昨夜": {"ゆうべ"}}
+# Old or short okurigana → the spelling learners meet today.
+RESPELL = {"買物": "買い物", "入口": "入り口"}
+# Formal nouns: kana after a verb, adjective or auxiliary (出かけるところ, 頼んだもの); kanji
+# when they mean a place or a thing on their own (好きな所 stays legible either way).
+KANA_AFTER_PREDICATE = {"所", "物"}
+PREDICATE_POS = {"動詞", "形容詞", "助動詞"}
+
+
+def kana_spelling(morphs: list[tuple]) -> list[str | None]:
+    """For each morpheme, the kana to write instead of its kanji surface, or None to keep it."""
+    out: list[str | None] = []
+    for i, (surface, reading, dform, _nform, pos) in enumerate(morphs):
+        kana = None
+        if has_kanji(surface) and reading:
+            prev_pos = morphs[i - 1][4][0] if i else ""
+            if dform in KANA_DFORMS or surface in KANA_SURFACES or reading in KANA_IF_READ.get(surface, ()):
+                kana = reading
+            elif surface in KANA_AFTER_PREDICATE and prev_pos in PREDICATE_POS:
+                kana = reading
+            elif surface == "物" and i and morphs[i - 1][0] == "の":
+                kana = reading  # 私のもの: possession is written in kana
+            # 頃 after a time is ごろ (3時頃), which Sudachi reads ころ.
+            if surface == "頃" and i and (morphs[i - 1][4][1] == "数詞" or morphs[i - 1][0] in ("時", "日", "月", "年")):
+                kana = "ごろ"
+        out.append(kana)
+    return out
 
 
 class SentenceFurigana:
@@ -224,9 +267,23 @@ class SentenceFurigana:
     def segments(self, text: str, force: dict[str, str] | None = None) -> list[Segment]:
         """force: surface -> reading, for when the Tatoeba index states the reading explicitly."""
         segs: list[Segment] = []
-        for surface, reading, *_ in self.morphemes(text):
+        morphs = self.morphemes(text)
+        for (surface, reading, *_), kana in zip(morphs, kana_spelling(morphs)):
             if force and surface in force:
                 reading = force[surface]
+                # The index's reading wins; the kana spelling still applies (and may depend on it).
+                kana = reading if kana or reading in KANA_IF_READ.get(surface, ()) else None
+            if kana:
+                segs.append({"t": kana})
+                continue
+            if surface in RESPELL:
+                surface = RESPELL[surface]
+            if surface.endswith("達") and len(surface) > 1 and surface != "友達" and reading.endswith("たち"):
+                # 私達 → 私たち: the plural suffix is written in kana.
+                stem_text, stem_reading = surface[:-1], reading[:-2]
+                segs.extend(self.jmfuri.get((stem_text, stem_reading)) or align(stem_text, stem_reading))
+                segs.append({"t": "たち"})
+                continue
             if has_kanji(surface) and reading:
                 segs.extend(self.jmfuri.get((surface, reading)) or align(surface, reading))
             else:

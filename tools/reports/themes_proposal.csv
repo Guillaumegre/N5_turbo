@@ -12,7 +12,7 @@ id,kanji,reading,meaning_en,pos,themes
 1352320-あげる,上げる,あげる,to give; to raise,verb,actions
 1428280-あさ,朝,あさ,morning,noun,time
 1586330-あさごはん,朝ごはん,あさごはん,breakfast,noun,food
-1584640-あさって,明後日,あさって,day after tomorrow,noun,time
+1584640-あさって,あさって,あさって,day after tomorrow,noun,time
 1404630-あし,足,あし,foot; paw; leg,noun,body
 1584660-あした,明日,あした,tomorrow,noun,time
 1000320-あそこ,あそこ,あそこ,there; over there; that place,pronoun,places;questions
@@ -36,7 +36,7 @@ id,kanji,reading,meaning_en,pos,themes
 1213400-あまい,甘い,あまい,sweet-tasting; sweet; sugary,i-adj,food;adjectives
 1584930-あまり,あまり,あまり,(not) very; (not) much; not very good,adverb,other
 1171900-あめ,雨,あめ,rain,noun,nature
-1153520-あめ,飴,あめ,(hard) candy; toffee,noun,food
+1153520-あめ,あめ,あめ,(hard) candy; toffee,noun,food
 1390930-あらう,洗う,あらう,to wash; to cleanse; to rinse,verb,actions
 1296400-ある,ある,ある,to exist; to have (inanimate things),verb,actions
 1514320-あるく,歩く,あるく,to walk,verb,actions
@@ -51,7 +51,7 @@ id,kanji,reading,meaning_en,pos,themes
 1219980-いくら,いくら,いくら,how much; however (much),noun,questions
 1421700-いけ,池,いけ,pond,noun,nature
 1159980-いしゃ,医者,いしゃ,doctor; physician,noun,people
-1157070-いす,椅子,いす,chair; seat; stool,noun,home
+1157070-いす,いす,いす,chair; seat; stool,noun,home
 1519290-いそがしい,忙しい,いそがしい,busy; occupied; hectic,i-adj,adjectives
 1432680-いたい,痛い,いたい,painful; sore,i-adj,adjectives
 1160790-いち,一,いち,one; 1,number,numbers
@@ -67,7 +67,7 @@ id,kanji,reading,meaning_en,pos,themes
 1156800-いみ,意味,いみ,meaning; significance; sense,noun,school_work
 1524590-いもうと,妹,いもうと,younger sister,noun,people
 1587610-いや,嫌,いや,unpleasant; disagreeable; nasty,na-adj,adjectives
-1582820-いりぐち,入口,いりぐち,entrance; entry; gate,noun,places
+1582820-いりぐち,入り口,いりぐち,entrance; entry; gate,noun,places
 1577980-いる,いる,いる,to be (of animate objects); to exist,verb,actions
 1546640-いる,いる,いる,to be needed; to be necessary,verb,actions
 1465610-いれる,入れる,いれる,to put in; to let in; to take in,verb,actions
@@ -118,10 +118,10 @@ id,kanji,reading,meaning_en,pos,themes
 1581930-おとうと,弟,おとうと,younger brother; little brother,noun,people
 1419990-おとこ,男,おとこ,man; male,noun,people
 1420010-おとこのこ,男の子,おとこのこ,boy; son; baby boy,noun,people
-1576050-おととい,一昨日,おととい,day before yesterday,noun,time
+1576050-おととい,おととい,おととい,day before yesterday,noun,time
 1576060-おととし,おととし,おととし,year before last,noun,time
 1414170-おとな,大人,おとな,adult; grown-up,noun,people
-1002610-おなか,お腹,おなか,belly; abdomen; stomach,noun,body
+1002610-おなか,おなか,おなか,belly; abdomen; stomach,noun,body
 1451750-おなじ,同じ,おなじ,same; identical; equal,na-adj,adjectives
 1001830-おにいさん,お兄さん,おにいさん,older brother; elder brother,noun,people
 1001990-おねえさん,お姉さん,おねえさん,older sister; elder sister; older girl,noun,people
@@ -281,7 +281,7 @@ id,kanji,reading,meaning_en,pos,themes
 1299400-ざっし,雑誌,ざっし,magazine; journal; periodical,noun,home
 1291600-さとう,砂糖,さとう,sugar,noun,food
 1210360-さむい,寒い,さむい,cold (e.g. weather),i-adj,nature;adjectives
-1293660-さらいねん,さ来年,さらいねん,year after next,noun,time
+1293660-さらいねん,再来年,さらいねん,year after next,noun,time
 1005340-さん-suffix,～さん,～さん,Mr; Mrs; Miss,suffix,people
 1579350-さん,三,さん,three; 3,number,numbers
 1303620-さんぽ,散歩,さんぽ,walk; stroll,noun,leisure
@@ -316,7 +316,7 @@ id,kanji,reading,meaning_en,pos,themes
 1337270-しゅくだい,宿題,しゅくだい,homework; assignment,noun,school_work
 1353320-じょうず,上手,じょうず,good at; skillful,na-adj,adjectives
 1580480-じょうぶ,丈夫,じょうぶ,strong; durable; healthy,na-adj,adjectives
-1595020-しょうゆ,醤油,しょうゆ,soy sauce; soya sauce; shoyu,noun,food
+1595020-しょうゆ,しょうゆ,しょうゆ,soy sauce; soya sauce; shoyu,noun,food
 1358550-しょくどう,食堂,しょくどう,dining room; dining hall; cafeteria,noun,food;places
 1420470-しる,知る,しる,to know; to be aware (of); to understand,verb,actions
 1474900-しろ,白,しろ,white,noun,colors
@@ -386,7 +386,7 @@ id,kanji,reading,meaning_en,pos,themes
 1207240-たのしい,楽しい,たのしい,enjoyable; fun; pleasant,i-adj,adjectives
 1548370-たのむ,頼む,たのむ,to request; to beg; to ask,verb,actions
 1597150-たばこ,たばこ,たばこ,tobacco; cigarette; cigar,noun,home
-1407980-たぶん,多分,たぶん,probably; likely; perhaps,adverb,other
+1407980-たぶん,たぶん,たぶん,probably; likely; perhaps,adverb,other
 1358340-たべもの,食べ物,たべもの,food,noun,food
 1358280-たべる,食べる,たべる,to eat,verb,food;actions
 1549140-たまご,卵,たまご,eggs; egg; spawn,noun,food
@@ -403,7 +403,7 @@ id,kanji,reading,meaning_en,pos,themes
 1421290-ちず,地図,ちず,map; atlas; chart,noun,places
 1497610-ちち,父,ちち,father; father (e.g. of a discipline),noun,people
 1422720-ちゃいろ,茶色,ちゃいろ,brown,noun,colors
-1597530-ちゃわん,茶碗,ちゃわん,rice bowl; tea cup; teacup,noun,food;home
+1597530-ちゃわん,ちゃわん,ちゃわん,rice bowl; tea cup; teacup,noun,food;home
 1620400-ちゅう-suffix,～中,～ちゅう,during; while; in (the course of),suffix,time
 1427340-ちょうど,ちょうど,ちょうど,exactly; precisely; just,adverb,time
 1163940-ちょっと,ちょっと,ちょっと,a little; a bit; slightly,adverb,other
@@ -674,7 +674,7 @@ id,kanji,reading,meaning_en,pos,themes
 1542790-ゆうがた,夕方,ゆうがた,early evening (usu. from 3pm to 6pm),noun,time
 1584910-ゆうはん,夕飯,ゆうはん,evening meal; dinner; supper,noun,food;time
 1542430-ゆうびんきょく,郵便局,ゆうびんきょく,post office,noun,places
-1542640-ゆうべ,昨夜,ゆうべ,last night; yesterday evening,noun,time
+1542640-ゆうべ,ゆうべ,ゆうべ,last night; yesterday evening,noun,time
 1541620-ゆうめい,有名,ゆうめい,famous; well-known,na-adj,adjectives
 1386500-ゆき,雪,ゆき,snow; snowfall,noun,nature
 1013050-ゆっくりと,ゆっくりと,ゆっくりと,slowly; unhurriedly; without haste,adverb,other

@@ -65,11 +65,11 @@ Words: 733
 - 九つ (ここのつ) nine; nine years of age
 - こっち (こっち) this way; this direction; this (one)
 - ～ころ (～ころ) (approximate) time; around; about
-- さ来年 (さらいねん) year after next
+- 再来年 (さらいねん) year after next
 - 四 (し) four; 4
 - 字引 (じびき) dictionary
 - ～中 (～じゅう) (all) through; throughout
-- 醤油 (しょうゆ) soy sauce; soya sauce; shoyu
+- しょうゆ (しょうゆ) soy sauce; soya sauce; shoyu
 - ～ずつ (～ずつ) at a time; piecemeal
 - 背 (せい) height; stature
 - ゼロ (ゼロ) zero; 0; nought

@@ -55,7 +55,7 @@ export function SessionSummary({ stats, reason, onMore, onResume, onDone }: Prop
           <View style={styles.legend}>
             {bars.map((b) => (
               <AppText key={b.label} variant="caption">
-                <AppText variant="caption" style={{ color: b.color, fontWeight: '700' }}>{b.n}</AppText> {b.label}
+                <AppText variant="caption" style={{ color: b.color, fontWeight: '600' }}>{b.n}</AppText> {b.label}
               </AppText>
             ))}
           </View>

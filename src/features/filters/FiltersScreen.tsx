@@ -230,7 +230,7 @@ export function FiltersScreen() {
                   setKanaMode(m);
                   set({ startsWith: [] });
                 }}>
-                <AppText variant="caption" style={{ color: kanaMode === m ? colors.text : colors.accent, fontWeight: '700' }}>
+                <AppText variant="caption" style={{ color: kanaMode === m ? colors.text : colors.accent, fontWeight: '600' }}>
                   {m === 'rows' ? t.rows : t.singleKana}
                 </AppText>
               </Pressable>
@@ -282,13 +282,13 @@ export function FiltersScreen() {
 
 const styles = StyleSheet.create({
   headerAction: { paddingHorizontal: 4, paddingVertical: 6 },
-  headerActionText: { fontSize: 15, fontWeight: '700' },
+  headerActionText: { fontSize: 15, fontWeight: '600' },
   footer: { gap: 8 },
   center: { textAlign: 'center' },
   naming: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   input: { flex: 1, minHeight: 44, borderWidth: 1, borderRadius: radius.sm, paddingHorizontal: 12, fontSize: 15 },
   inlineButton: { minHeight: 44, paddingHorizontal: 16, borderRadius: radius.sm, alignItems: 'center', justifyContent: 'center' },
   inlineCancel: { minHeight: 44, paddingHorizontal: 6, alignItems: 'center', justifyContent: 'center' },
-  inlineButtonText: { fontSize: 14.5, fontWeight: '700' },
+  inlineButtonText: { fontSize: 14.5, fontWeight: '600' },
   modeSwitch: { flexDirection: 'row', gap: 12 },
 });

@@ -17,11 +17,11 @@ type Props = TextProps & {
 };
 
 const variantStyle: Record<Variant, TextStyle> = {
-  body: { fontFamily: fonts.ui, fontSize: fontSize.body, fontWeight: '500' },
-  caption: { fontFamily: fonts.ui, fontSize: fontSize.caption, fontWeight: '500' },
-  label: { fontFamily: fonts.ui, fontSize: 11, fontWeight: '700', letterSpacing: 1.4, textTransform: 'uppercase' },
-  title: { fontFamily: fonts.ui, fontSize: 20, fontWeight: '900', letterSpacing: -0.6 },
-  display: { fontFamily: fonts.ui, fontSize: 46, fontWeight: '900', letterSpacing: -1.6 },
+  body: { fontFamily: fonts.ui, fontSize: fontSize.body, fontWeight: '400' },
+  caption: { fontFamily: fonts.ui, fontSize: fontSize.caption, fontWeight: '400' },
+  label: { fontFamily: fonts.ui, fontSize: 11, fontWeight: '600', letterSpacing: 1.4, textTransform: 'uppercase' },
+  title: { fontFamily: fonts.ui, fontSize: 20, fontWeight: '600', letterSpacing: -0.6 },
+  display: { fontFamily: fonts.ui, fontSize: 44, fontWeight: '600', letterSpacing: -1.2 },
   jpWord: { fontFamily: fonts.jp, fontSize: fontSize.word },
   jpSentence: { fontFamily: fonts.jp, fontSize: fontSize.sentence },
 };

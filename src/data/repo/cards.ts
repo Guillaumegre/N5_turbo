@@ -2,6 +2,7 @@ import { and, desc, eq, gte, sql } from 'drizzle-orm';
 
 import { studyDaysBetween } from '@/domain/srs/time';
 
+import { wordState, type WordState } from '@/domain/progress';
 import type { DoneToday, StudyCard } from '@/domain/srs/queue';
 import type { Scheduler } from '@/domain/srs/scheduler';
 import type { CardState, Direction, Rating } from '@/domain/srs/types';
@@ -192,3 +193,13 @@ export function resetProgress(db: Db, scheduler: Scheduler, now: number): void {
   });
 }
 
+
+/** Each word's state (new / learning / mastered) from its JP → EN card. */
+export function wordStates(db: Db): Map<string, WordState> {
+  const rows = db
+    .select({ wordId: cards.wordId, status: cards.status, interval: cards.interval })
+    .from(cards)
+    .where(eq(cards.direction, 'recognition'))
+    .all();
+  return new Map(rows.map((r) => [r.wordId, wordState(r)]));
+}

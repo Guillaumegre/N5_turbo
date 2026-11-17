@@ -79,7 +79,7 @@ export function ThemePickerScreen() {
 
 const styles = StyleSheet.create({
   headerAction: { paddingHorizontal: 4, paddingVertical: 6 },
-  headerActionText: { fontSize: 15, fontWeight: '700' },
+  headerActionText: { fontSize: 15, fontWeight: '600' },
   trailing: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   count: { fontVariant: ['tabular-nums'], fontSize: 14 },
   check: { width: 24, height: 24, borderRadius: 7, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },

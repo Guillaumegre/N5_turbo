@@ -9,10 +9,12 @@ import { strings } from '@/strings';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radius } from '@/theme/tokens';
 import { AppText } from '@/ui/AppText';
-import { BigCard, Divider, Pills, Row, Section, Track } from '@/ui/Blocks';
+import { Divider, Pills, Row, Section } from '@/ui/Blocks';
 import { Button } from '@/ui/Button';
-import { formatShortDate } from '@/ui/dates';
+import { Icon } from '@/ui/Icon';
 import { Screen } from '@/ui/Screen';
+
+import { GoalCard } from './GoalCard';
 
 /** Rough session length: new cards come back a few times, reviews are quick. */
 function estimateMinutes(fresh: number, learning: number, due: number): number {
@@ -20,8 +22,9 @@ function estimateMinutes(fresh: number, learning: number, due: number): number {
 }
 
 /**
- * Home: the Claude Design layout (today's card with the three counters, custom session,
- * streak and goal tiles, links) drawn with TypeKana's components.
+ * Home, in order of importance: today's reviews with the main Start button; a slim custom-session
+ * row with preset shortcuts; the goal and progress by part of speech; links. The streak sits
+ * quietly under the date.
  */
 export function HomeScreen() {
   'use no memo'; // reads the database (streak): see DataProvider
@@ -54,7 +57,10 @@ export function HomeScreen() {
         <View style={styles.titles}>
           <AppText style={[styles.eyebrow, { color: colors.accent }]}>{strings.home.eyebrow}</AppText>
           <AppText variant="display" style={styles.title}>{strings.home.title}</AppText>
-          <AppText muted style={styles.date}>{date}</AppText>
+          <AppText muted style={styles.date}>
+            {date}
+            {days ? <AppText style={[styles.date, { color: colors.accent }]}>{`  ·  ${strings.home.streakLine(days)}`}</AppText> : null}
+          </AppText>
         </View>
         <Pressable
           accessibilityRole="button"
@@ -96,15 +102,19 @@ export function HomeScreen() {
       </View>
 
       <View style={styles.custom}>
-        <BigCard
-          tone="ink"
-          compact
-          watermark="選"
-          eyebrow={strings.home.customEyebrow}
-          title={strings.home.customTitle}
-          sub={strings.home.customSub}
+        <Pressable
+          accessibilityRole="button"
           onPress={() => router.push('/filters')}
-        />
+          style={({ pressed }) => [styles.customRow, { backgroundColor: colors.inkCard }, pressed && styles.pressed]}>
+          <View style={[styles.customGlyph, { backgroundColor: 'rgba(255,255,255,.1)' }]}>
+            <AppText style={[styles.customGlyphText, { color: colors.onInk }]}>選</AppText>
+          </View>
+          <View style={styles.flex}>
+            <AppText style={[styles.customTitle, { color: colors.onInk }]}>{strings.home.customTitle}</AppText>
+            <AppText variant="caption" style={{ color: colors.onInkSoft }} numberOfLines={1}>{strings.home.customSub}</AppText>
+          </View>
+          <Icon name="chevronRight" size={16} color={colors.onInkSoft} />
+        </Pressable>
         {presets.length ? (
           <Pills
             options={presets.map((p) => ({ value: p.id, label: `▸ ${p.name}` }))}
@@ -117,28 +127,7 @@ export function HomeScreen() {
         ) : null}
       </View>
 
-      <View style={styles.tiles}>
-        <View style={[styles.tile, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          <AppText variant="caption" muted>{strings.home.streak}</AppText>
-          <AppText style={styles.tileValue}>{strings.home.days(days)}</AppText>
-        </View>
-        <Pressable
-          accessibilityRole="button"
-          onPress={() => router.push('/goal')}
-          style={({ pressed }) => [styles.tile, { backgroundColor: colors.surface, borderColor: colors.border }, pressed && styles.pressed]}>
-          <AppText variant="caption" muted>
-            {settings.goalDeadline ? strings.home.goalTile(formatShortDate(settings.goalDeadline)) : strings.home.setGoal}
-          </AppText>
-          <AppText style={styles.tileValue}>
-            {counts.started}
-            <AppText muted style={styles.tileTotal}> / {counts.totalWords}</AppText>
-          </AppText>
-          <Track value={counts.started / counts.totalWords} />
-          <AppText variant="caption" style={{ color: colors.good, fontWeight: '600' }}>
-            {strings.home.perDay(counts.newPerDay)}
-          </AppText>
-        </Pressable>
-      </View>
+      <GoalCard db={db} now={now} deadline={settings.goalDeadline} newPerDay={counts.newPerDay} />
 
       <Section title={strings.home.more}>
         <Row glyph="語" label={strings.home.wordList} sub={strings.home.wordListSub} onPress={() => router.push('/words')} />
@@ -163,15 +152,16 @@ const styles = StyleSheet.create({
   today: { position: 'relative', overflow: 'hidden', borderWidth: 1, borderRadius: radius.xl, padding: 22, gap: 18 },
   watermark: { position: 'absolute', right: 6, top: -26, fontFamily: fonts.mincho, fontSize: 132, lineHeight: 140 },
   bigRow: { flexDirection: 'row', alignItems: 'baseline', gap: 10 },
-  bigNumber: { fontSize: 56, fontWeight: '900', letterSpacing: -2, lineHeight: 60 },
+  bigNumber: { fontSize: 56, fontWeight: '600', letterSpacing: -2, lineHeight: 60 },
   bigLabel: { fontSize: 16 },
   counters: { flexDirection: 'row' },
   counter: { flex: 1, gap: 2 },
-  counterValue: { fontSize: 26, fontWeight: '900', letterSpacing: -0.6 },
-  counterLabel: { fontWeight: '700', textTransform: 'capitalize' },
-  tiles: { flexDirection: 'row', gap: 12 },
+  counterValue: { fontSize: 26, fontWeight: '600', letterSpacing: -0.6 },
+  counterLabel: { fontWeight: '500', textTransform: 'capitalize' },
   custom: { gap: 10 },
-  tile: { flex: 1, borderWidth: 1, borderRadius: 18, paddingVertical: 14, paddingHorizontal: 16, gap: 6 },
-  tileValue: { fontSize: 22, fontWeight: '900', letterSpacing: -0.6 },
-  tileTotal: { fontSize: 14, fontWeight: '500' },
+  flex: { flex: 1 },
+  customRow: { flexDirection: 'row', alignItems: 'center', gap: 14, borderRadius: radius.lg, paddingVertical: 12, paddingHorizontal: 14 },
+  customGlyph: { width: 38, height: 38, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
+  customGlyphText: { fontFamily: fonts.mincho, fontSize: 19 },
+  customTitle: { fontSize: 16, fontWeight: '600', letterSpacing: -0.3 },
 });

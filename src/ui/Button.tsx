@@ -40,7 +40,7 @@ export function Button({ label, onPress, variant = 'primary', disabled, size = '
 
 const styles = StyleSheet.create({
   base: { minHeight: 54, paddingHorizontal: 24, borderRadius: radius.md, alignItems: 'center', justifyContent: 'center' },
-  label: { fontSize: 16, fontWeight: '800', letterSpacing: -0.2 },
-  large: { minHeight: 66, borderRadius: radius.lg },
-  largeLabel: { fontSize: 19 },
+  label: { fontSize: 16, fontWeight: '600', letterSpacing: -0.2 },
+  large: { minHeight: 72, borderRadius: radius.lg },
+  largeLabel: { fontSize: 19, fontWeight: '600' },
 });

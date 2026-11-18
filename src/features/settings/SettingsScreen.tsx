@@ -11,7 +11,26 @@ import { Chips, Divider, Row, Section, SwitchRow } from '@/ui/Blocks';
 import { formatShortDate } from '@/ui/dates';
 import { Screen } from '@/ui/Screen';
 
+import { BackupError, backupFileName, exportBackup, importBackup, parseBackup } from '@/data/backup';
 import { SITE } from '@/features/about/AboutScreen';
+
+import { pickBackupFile, saveBackupFile } from './backupFile';
+
+/** Alert has no buttons on the web: use the browser's dialogs there. */
+function notify(title: string, body: string) {
+  if (Platform.OS === 'web') window.alert(`${title}\n\n${body}`);
+  else Alert.alert(title, body);
+}
+
+function confirm(title: string, body: string, confirmLabel: string): Promise<boolean> {
+  if (Platform.OS === 'web') return Promise.resolve(window.confirm(`${title}\n\n${body}`));
+  return new Promise((resolve) =>
+    Alert.alert(title, body, [
+      { text: strings.settings.cancel, style: 'cancel', onPress: () => resolve(false) },
+      { text: confirmLabel, style: 'destructive', onPress: () => resolve(true) },
+    ]),
+  );
+}
 
 const THEMES: { value: Settings['theme']; label: string }[] = [
   { value: 'light', label: strings.settings.light },
@@ -26,6 +45,34 @@ export function SettingsScreen() {
   const settings = useSettings();
   const update = useUpdateSetting();
   const { newPerDay } = useTodayCounts();
+
+  const onExport = async () => {
+    const now = Date.now();
+    try {
+      await saveBackupFile(backupFileName(now), JSON.stringify(exportBackup(db, now)));
+    } catch {
+      notify(strings.backup.exportFailTitle, strings.backup.exportFailBody);
+    }
+  };
+  const onImport = async () => {
+    const text = await pickBackupFile().catch(() => null);
+    if (text === null) return;
+    let backup;
+    try {
+      backup = parseBackup(text);
+    } catch (e) {
+      const reason = e instanceof BackupError ? strings.backup.errors[e.message] : undefined;
+      notify(strings.backup.failTitle, reason ?? strings.backup.errors.damaged);
+      return;
+    }
+    const studied = backup.cards.length;
+    const answers = backup.revlog.filter((r) => !r.deleted).length;
+    const body = strings.backup.confirmBody(formatShortDate(backup.exportedAt), studied, answers);
+    if (!(await confirm(strings.backup.confirmTitle, body, strings.backup.confirm))) return;
+    const summary = importBackup(db, backup, scheduler, Date.now());
+    notifyChanged();
+    notify(strings.backup.doneTitle, strings.backup.doneBody(summary.cards));
+  };
 
   const doReset = () => {
     resetProgress(db, scheduler, Date.now());
@@ -64,6 +111,12 @@ export function SettingsScreen() {
 
       <Section title={strings.settings.appearance}>
         <Chips options={THEMES} value={settings.theme} onChange={(v) => update('theme', v)} />
+      </Section>
+
+      <Section title={strings.backup.section}>
+        <Row glyph="出" label={strings.backup.export} sub={strings.backup.exportSub} onPress={onExport} />
+        <Divider />
+        <Row glyph="入" label={strings.backup.import} sub={strings.backup.importSub} onPress={onImport} />
       </Section>
 
       <Section title={strings.settings.app}>

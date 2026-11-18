@@ -81,7 +81,7 @@ export function ReviewScreen() {
             <AppText variant="caption" muted style={styles.practiceText}>{strings.review.practice}</AppText>
           </View>
         ) : null}
-        {/* The card is a paper sheet; on the front, tapping anywhere on it shows the answer. */}
+        {/* The card is a paper sheet. */}
         <View style={[styles.sheet, { backgroundColor: colors.surface, borderColor: colors.border }]}>
           {/* The animated view is the sheet's direct child: nested in a scroll view mounting at the
               same time, the web fade-in stayed stuck at opacity 0. */}
@@ -92,12 +92,9 @@ export function ReviewScreen() {
               </ScrollView>
             </Animated.View>
           ) : (
+            // Only the Show answer button reveals: a tap on the card (or its speaker) must not.
             <Animated.View key={`${card.id}-front`} entering={FadeIn.duration(140)} style={styles.flex}>
-              {/* A plain tap area, not a button: it holds the speaker button, and buttons can't nest.
-                  Screen readers use the Show answer button below. */}
-              <Pressable accessible={false} onPress={s.reveal} style={styles.flex}>
-                <CardFront word={word} direction={card.direction} furigana={furigana} />
-              </Pressable>
+              <CardFront word={word} direction={card.direction} furigana={furigana} />
             </Animated.View>
           )}
         </View>

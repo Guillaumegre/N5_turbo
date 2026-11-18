@@ -15,7 +15,7 @@ import { StackedBar } from '@/ui/StackedBar';
 
 const h = strings.home;
 
-/** The goal at a glance: deadline, words started, the daily pace and a progress bar. Opens the goal screen. */
+/** The goal at a glance: deadline, words started, the daily pace and a progress bar. Opens Stats (which links to the goal). */
 export function GoalCard({ db, deadline, newPerDay }: { db: Db; deadline: number | null; newPerDay: number }) {
   'use no memo'; // reads the database: see DataProvider
   const { colors } = useTheme();
@@ -25,14 +25,15 @@ export function GoalCard({ db, deadline, newPerDay }: { db: Db; deadline: number
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityHint={h.changeGoal}
-      onPress={() => router.push('/goal')}
+      accessibilityHint={h.seeStatsHint}
+      onPress={() => router.push('/stats')}
       style={({ pressed }) => [styles.card, { backgroundColor: colors.surface, borderColor: colors.border }, pressed && styles.pressed]}>
       <View style={styles.head}>
         <AppText muted style={styles.title} numberOfLines={1}>
           {deadline ? h.goalShort(formatShortDate(deadline)) : h.noGoalTitle}
         </AppText>
-        <Icon name="chevronRight" size={15} color={colors.textMuted} />
+        <AppText style={[styles.link, { color: colors.accent }]}>{h.seeStats}</AppText>
+        <Icon name="chevronRight" size={14} color={colors.accent} />
       </View>
       <View style={styles.bigRow}>
         <AppText style={styles.big}>{started}</AppText>
@@ -55,4 +56,5 @@ const styles = StyleSheet.create({
   big: { fontSize: 30, fontWeight: '300', letterSpacing: -0.6, fontVariant: ['tabular-nums'] },
   bigOf: { fontSize: 14 },
   pace: { fontSize: 13.5 },
+  link: { fontSize: 13.5, fontWeight: '500' },
 });

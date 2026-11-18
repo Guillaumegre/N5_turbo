@@ -25,9 +25,11 @@ export function Screen({ children, title, titleJa, back = true, scroll = true, f
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const header = back || title ? <BackHeader title={title} titleJa={titleJa} right={headerRight} /> : <View style={{ height: insets.top + 12 }} />;
-  const body = <View style={styles.body}>{children}</View>;
+  // A screen that doesn't scroll (the word list) still keeps clear of the home indicator / Android nav bar.
+  const body = <View style={[styles.body, !scroll && !footer && { paddingBottom: insets.bottom + 12 }]}>{children}</View>;
   return (
-    <View style={[styles.root, { backgroundColor: colors.background }]}>
+    // Side insets: landscape with a notch or camera cut-out, Android edge-to-edge.
+    <View style={[styles.root, { backgroundColor: colors.background, paddingLeft: insets.left, paddingRight: insets.right }]}>
       <View style={styles.column}>
         {header}
         {scroll ? (

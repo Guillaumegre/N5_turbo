@@ -50,7 +50,6 @@ export function HomeScreen() {
   ];
   const links = [
     { label: strings.home.wordList, href: '/words' as const },
-    { label: strings.home.stats, href: '/stats' as const },
     { label: strings.home.about, href: '/about' as const },
   ];
 

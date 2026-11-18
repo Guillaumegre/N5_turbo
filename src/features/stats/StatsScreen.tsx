@@ -1,6 +1,7 @@
+import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
-import { useData } from '@/data/DataProvider';
+import { useData, useSettings, useTodayCounts } from '@/data/DataProvider';
 import { allCards, reviewLog, streak, wordStates } from '@/data/repo/cards';
 import { words } from '@/data/vocab';
 import { POS_GROUPS } from '@/domain/filters';
@@ -12,7 +13,7 @@ import { useTheme } from '@/theme/ThemeProvider';
 import { radius } from '@/theme/tokens';
 import { AppText } from '@/ui/AppText';
 import { BarChart } from '@/ui/BarChart';
-import { Section } from '@/ui/Blocks';
+import { Row, Section } from '@/ui/Blocks';
 import { formatShortDate } from '@/ui/dates';
 import { Screen } from '@/ui/Screen';
 import { StackedBar } from '@/ui/StackedBar';
@@ -39,6 +40,8 @@ export function StatsScreen() {
   'use no memo'; // reads the database: see DataProvider
   const { colors } = useTheme();
   const { db, now, config } = useData();
+  const { goalDeadline } = useSettings();
+  const { newPerDay } = useTodayCounts();
   const H = config.dayStartHour;
 
   const since = addStudyDays(now, -29, H);
@@ -57,6 +60,16 @@ export function StatsScreen() {
 
   return (
     <Screen title={t.title} titleJa={t.titleJa}>
+      {/* The goal sits here: Home's progress card opens this screen. */}
+      <Section title={t.goal}>
+        <Row
+          glyph="標"
+          label={goalDeadline ? h.goalBy(formatShortDate(goalDeadline)) : h.noGoalTitle}
+          sub={`${h.perDay(newPerDay)} · ${t.changeGoal}`}
+          onPress={() => router.push('/goal')}
+        />
+      </Section>
+
       <View style={styles.tiles}>
         <Tile label={t.today} value={String(today)} unit={t.answers(today)} />
         <Tile label={t.streak} value={String(days)} unit={t.days(days)} />

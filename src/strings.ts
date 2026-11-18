@@ -1,3 +1,8 @@
+/** Lower end of a daily-time range: about half the busiest days, rounded to 5 minutes. */
+function minutesLow(n: number): number {
+  return Math.max(5, Math.round(n / 2 / 5) * 5);
+}
+
 /**
  * Every user-facing string lives here. English only — no i18n layer.
  */
@@ -63,12 +68,16 @@ export const strings = {
     heading: 'Set your goal',
     lede: (n: number) => `Learn all ${n} N5 words by…`,
     perDay: (n: number) => `${n} words/day`,
-    minutesPerDay: (n: number) => `~${n} min a day`,
+    /** A range: the first weeks and the last ones are lighter than the busiest stretch (`n`). */
+    minutesPerDay: (n: number) => (minutesLow(n) < n ? `${minutesLow(n)}–${n} min a day` : `~${n} min a day`),
     recommended: 'Recommended',
     recommendation: 'We recommend 3 months: a steady pace you can keep alongside work or school, with time for every word to stick.',
     planLabel: 'Your daily plan',
     plan: (n: number) => `${n} new words a day`,
-    effort: (minutes: number) => `About ${minutes} min a day at the busiest point.`,
+    effort: (minutes: number) =>
+      minutesLow(minutes) < minutes
+        ? `${minutesLow(minutes)}–${minutes} min a day: lighter in the first weeks, ${minutes} at the busiest point.`
+        : `About ${minutes} min a day.`,
     recompute: 'Recalculated every day: miss a day and the rest is spread over the days left.',
     start: 'Start learning',
     save: 'Save goal',
@@ -321,6 +330,8 @@ export const strings = {
     privacySub: 'No ads, no tracking; your progress stays on this device',
     support: 'Help & support',
     supportSub: 'Questions, bugs, ideas',
+    terms: 'Terms of use',
+    termsSub: 'The rules for using N5 Turbo',
   },
   speech: {
     noVoiceTitle: 'No Japanese voice installed',

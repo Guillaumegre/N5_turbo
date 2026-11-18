@@ -53,6 +53,8 @@ export function AboutScreen() {
         <Row glyph="秘" label={t.privacy} sub={t.privacySub} onPress={open(`${SITE}/privacy-policy.html`)} />
         <Divider />
         <Row glyph="助" label={t.support} sub={t.supportSub} onPress={open(`${SITE}/support.html`)} />
+        <Divider />
+        <Row glyph="約" label={t.terms} sub={t.termsSub} onPress={open(`${SITE}/terms.html`)} />
       </Section>
     </Screen>
   );

@@ -4,8 +4,8 @@ import { Platform, Pressable, ScrollView, StyleSheet, useWindowDimensions, View 
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useSettings, useUpdateSetting } from '@/data/DataProvider';
-import { wordById } from '@/data/vocab';
+import { useSettings, useTodayCounts, useUpdateSetting } from '@/data/DataProvider';
+import { wordById, words } from '@/data/vocab';
 import type { StudyCard } from '@/domain/srs/queue';
 import type { Rating } from '@/domain/srs/types';
 import { strings } from '@/strings';
@@ -35,6 +35,7 @@ export function ReviewScreen() {
   const { furigana } = useSettings();
   const updateSetting = useUpdateSetting();
   const toggleFurigana = () => updateSetting('furigana', !furigana);
+  const { freeNewLeft } = useTodayCounts();
   // Keyboard hints only where a keyboard is likely: the web version at desktop width.
   const { width } = useWindowDimensions();
   const showKeys = Platform.OS === 'web' && width >= 700;
@@ -49,14 +50,20 @@ export function ReviewScreen() {
     onEnd: () => (s.canUndo ? s.end() : leave()),
   });
 
+  // Free words all started: "learn more" becomes the way to premium.
+  const unlock = freeNewLeft === 0;
+  const onMore = custom ? undefined : unlock ? () => router.replace('/premium') : s.learnMore;
+  const moreLabel = unlock ? strings.premium.unlockShort(words.length) : undefined;
+
   const body = (() => {
-    if (s.finished && !s.stats.answers) return <NothingToStudy onMore={custom ? undefined : s.learnMore} />;
+    if (s.finished && !s.stats.answers) return <NothingToStudy onMore={onMore} moreLabel={moreLabel} />;
     if (s.finished)
       return (
         <SessionSummary
           stats={s.stats}
           reason={s.finished}
-          onMore={custom ? undefined : s.learnMore}
+          onMore={onMore}
+          moreLabel={moreLabel}
           onResume={s.resume}
           onDone={leave}
         />
@@ -200,7 +207,7 @@ function Counters({ counts, current }: { counts: { new: number; learning: number
 }
 
 /** `onMore` is absent in a custom session: nothing matched the filters. */
-function NothingToStudy({ onMore }: { onMore?: () => void }) {
+function NothingToStudy({ onMore, moreLabel }: { onMore?: () => void; moreLabel?: string }) {
   return (
     <View style={styles.nothing}>
       <AppText variant="title" style={styles.centerText}>
@@ -208,7 +215,7 @@ function NothingToStudy({ onMore }: { onMore?: () => void }) {
       </AppText>
       <AppText muted style={styles.centerText}>{onMore ? strings.review.nothingBody : strings.review.noMatchBody}</AppText>
       <View style={styles.nothingActions}>
-        {onMore ? <Button label={strings.review.learnMore} onPress={onMore} /> : null}
+        {onMore ? <Button label={moreLabel ?? strings.review.learnMore} onPress={onMore} /> : null}
         <Button label={onMore ? strings.review.back : strings.review.backToFilters} variant="secondary" onPress={leave} />
       </View>
     </View>

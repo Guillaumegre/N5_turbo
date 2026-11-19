@@ -20,6 +20,11 @@ export type Settings = {
   fontScale: number;
   /** The filter screen's current choices (kept between visits). */
   customFilter: Filter;
+  /**
+   * Premium unlocked (all words). A local copy of the store's answer, so it works offline;
+   * the store (RevenueCat) is the source of truth. Never exported in a backup.
+   */
+  premium: boolean;
 };
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -32,6 +37,7 @@ export const DEFAULT_SETTINGS: Settings = {
   theme: 'light',
   fontScale: 1,
   customFilter: DEFAULT_FILTER,
+  premium: false,
 };
 
 export function getSetting<K extends keyof Settings>(db: Db, key: K): Settings[K] {

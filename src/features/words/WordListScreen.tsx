@@ -2,10 +2,11 @@ import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { FlatList, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 
-import { useData } from '@/data/DataProvider';
+import { useData, useSettings } from '@/data/DataProvider';
 import { wordStates } from '@/data/repo/cards';
 import { words, type Word } from '@/data/vocab';
 import { toHiragana } from '@/domain/kana';
+import { isLocked } from '@/domain/premium';
 import type { WordState } from '@/domain/progress';
 import { strings } from '@/strings';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -30,6 +31,7 @@ export function WordListScreen() {
   'use no memo'; // reads the database: see DataProvider
   const { colors } = useTheme();
   const { db, revision } = useData();
+  const { premium } = useSettings();
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<StateFilter>('all');
   const [focused, setFocused] = useState(false);
@@ -91,18 +93,20 @@ export function WordListScreen() {
         ListEmptyComponent={<AppText muted style={styles.empty}>{t.empty}</AppText>}
         renderItem={({ item: w }) => {
           const s = stateOf(w);
+          // Premium words stay readable here; studying them (or opening them) leads to premium.
+          const locked = isLocked(w.rank, premium);
           return (
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={`${w.kanji}, ${w.reading}, ${w.meaning_en}, ${t.states[s]}`}
-              onPress={() => router.push({ pathname: '/word/[id]', params: { id: w.id } })}
+              accessibilityLabel={`${w.kanji}, ${w.reading}, ${w.meaning_en}, ${locked ? strings.premium.locked : t.states[s]}`}
+              onPress={() => (locked ? router.push('/premium') : router.push({ pathname: '/word/[id]', params: { id: w.id } }))}
               style={({ pressed }) => [styles.row, pressed && styles.pressed]}>
               <View style={styles.jp}>
                 <AppText style={styles.kanji} numberOfLines={1}>{w.kanji}</AppText>
                 {w.kanji !== w.reading ? <AppText variant="caption" muted numberOfLines={1}>{w.reading}</AppText> : null}
               </View>
               <AppText style={styles.meaning} numberOfLines={2}>{w.meaning_en}</AppText>
-              <View style={[styles.dot, { backgroundColor: dot[s] }]} />
+              {locked ? <Icon name="lock" size={14} color={colors.textFaint} /> : <View style={[styles.dot, { backgroundColor: dot[s] }]} />}
               <Icon name="chevronRight" size={14} color={colors.textFaint} />
             </Pressable>
           );

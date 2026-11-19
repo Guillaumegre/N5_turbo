@@ -27,6 +27,23 @@ const answer = (db: Db, id: string, rating: 1 | 2 | 3 | 4) =>
   answerCard(db, { cardId: id, rating, now: NOW, durationMs: 5000, kind: 'review', scheduler, newId });
 
 describe('backup', () => {
+  it("never carries premium: a file cannot unlock it, and importing keeps the phone's own", async () => {
+    const source = await freshDb();
+    setSetting(source, 'premium', true, NOW);
+    const backup = exportBackup(source, NOW);
+    expect(backup.settings.some((s) => s.key === 'premium')).toBe(false);
+
+    const forged = { ...backup, settings: [...backup.settings, { key: 'premium', value: 'true', updatedAt: NOW }] };
+    const free = await freshDb();
+    importBackup(free, parseBackup(JSON.stringify(forged)), scheduler, NOW);
+    expect(getSetting(free, 'premium')).toBe(false);
+
+    const paid = await freshDb();
+    setSetting(paid, 'premium', true, NOW);
+    importBackup(paid, backup, scheduler, NOW);
+    expect(getSetting(paid, 'premium')).toBe(true);
+  });
+
   it('round-trips progress, history, settings and presets into another database', async () => {
     const source = await freshDb();
     answer(source, a, 4);

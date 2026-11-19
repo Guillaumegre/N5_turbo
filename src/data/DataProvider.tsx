@@ -98,8 +98,8 @@ export function useTodayCounts() {
   'use no memo'; // reads the database: see DataProvider
   const { db, config, revision, now } = useData();
   return useMemo(() => {
-    const { queue, newPerDay, started } = buildTodayQueue(db, config, now);
-    return { ...queueCounts(queue), newPerDay, started, totalWords: words.length };
+    const { queue, newPerDay, started, freeNewLeft } = buildTodayQueue(db, config, now);
+    return { ...queueCounts(queue), newPerDay, started, totalWords: words.length, freeNewLeft };
     // `revision` changes after every write, which is what invalidates this.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db, config, revision, now]);

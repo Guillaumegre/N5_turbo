@@ -4,7 +4,9 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { useData, useSettings, useTodayCounts, useUpdateSetting } from '@/data/DataProvider';
 import { streak } from '@/data/repo/cards';
 import { listPresets, type Preset } from '@/data/repo/presets';
+import { words } from '@/data/vocab';
 import { SPRINT_MINUTES } from '@/domain/filters';
+import { FREE_WORDS } from '@/domain/premium';
 import { strings } from '@/strings';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radius } from '@/theme/tokens';
@@ -41,6 +43,9 @@ export function HomeScreen() {
 
   const days = streak(db, now, config.dayStartHour);
   const total = counts.new + counts.learning + counts.due;
+  // The free words are all started: nothing new to learn without premium.
+  const unlock = counts.freeNewLeft === 0;
+  const p = strings.premium;
   const date = new Date(now).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
   // Lighter tints of the counter colours: they sit on the black card.
   const counters = [
@@ -96,20 +101,36 @@ export function HomeScreen() {
         ) : null}
         <Pressable
           accessibilityRole="button"
-          onPress={() => router.push('/review')}
+          onPress={() => router.push(!total && unlock ? '/premium' : '/review')}
           style={({ pressed }) => [
             styles.start,
             total ? { backgroundColor: colors.accent } : { borderWidth: 1, borderColor: colors.onInkSoft },
             pressed && styles.pressed,
           ]}>
           <AppText style={[styles.startLabel, { color: total ? colors.onAccent : colors.onInk }]}>
-            {total ? strings.home.startReview : strings.review.learnMore}
+            {total ? strings.home.startReview : unlock ? p.unlockShort(words.length) : strings.review.learnMore}
           </AppText>
           <Icon name="chevronRight" size={20} color={total ? colors.onAccent : colors.onInk} />
         </Pressable>
       </View>
 
       <GoalCard db={db} deadline={settings.goalDeadline} newPerDay={counts.newPerDay} />
+
+      {total && unlock ? (
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => router.push('/premium')}
+          style={({ pressed }) => [styles.customRow, { borderColor: colors.accent }, pressed && styles.pressed]}>
+          <View style={[styles.customGlyph, { backgroundColor: colors.surfaceMuted }]}>
+            <AppText style={[styles.customGlyphText, { color: colors.accent }]}>全</AppText>
+          </View>
+          <View style={styles.flex}>
+            <AppText style={styles.customTitle}>{p.homeNudgeTitle(FREE_WORDS)}</AppText>
+            <AppText variant="caption" muted numberOfLines={1} style={styles.customSub}>{p.homeNudgeSub(words.length)}</AppText>
+          </View>
+          <Icon name="chevronRight" size={15} color={colors.accent} />
+        </Pressable>
+      ) : null}
 
       <View style={styles.custom}>
         <Pressable

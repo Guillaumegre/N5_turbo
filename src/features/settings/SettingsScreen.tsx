@@ -9,28 +9,18 @@ import { useTheme } from '@/theme/ThemeProvider';
 import { AppText } from '@/ui/AppText';
 import { Chips, Divider, Row, Section, SwitchRow } from '@/ui/Blocks';
 import { formatShortDate } from '@/ui/dates';
+import { confirm, notify } from '@/ui/dialogs';
 import { Screen } from '@/ui/Screen';
 
 import { BackupError, backupFileName, exportBackup, importBackup, parseBackup } from '@/data/backup';
+import { words } from '@/data/vocab';
+import { FREE_WORDS } from '@/domain/premium';
 import { SITE } from '@/features/about/AboutScreen';
+import { runRestore } from '@/features/premium/actions';
 
 import { pickBackupFile, saveBackupFile } from './backupFile';
 
-/** Alert has no buttons on the web: use the browser's dialogs there. */
-function notify(title: string, body: string) {
-  if (Platform.OS === 'web') window.alert(`${title}\n\n${body}`);
-  else Alert.alert(title, body);
-}
-
-function confirm(title: string, body: string, confirmLabel: string): Promise<boolean> {
-  if (Platform.OS === 'web') return Promise.resolve(window.confirm(`${title}\n\n${body}`));
-  return new Promise((resolve) =>
-    Alert.alert(title, body, [
-      { text: strings.settings.cancel, style: 'cancel', onPress: () => resolve(false) },
-      { text: confirmLabel, style: 'destructive', onPress: () => resolve(true) },
-    ]),
-  );
-}
+const p = strings.premium;
 
 const THEMES: { value: Settings['theme']; label: string }[] = [
   { value: 'light', label: strings.settings.light },
@@ -111,6 +101,22 @@ export function SettingsScreen() {
 
       <Section title={strings.settings.appearance}>
         <Chips options={THEMES} value={settings.theme} onChange={(v) => update('theme', v)} />
+      </Section>
+
+      <Section title={p.title}>
+        {settings.premium ? (
+          <Row glyph="全" label={p.settingsActive} sub={p.settingsActiveSub(words.length)} />
+        ) : (
+          <Row glyph="全" label={p.settingsRow} sub={p.settingsSub(FREE_WORDS, words.length)} onPress={() => router.push('/premium')} />
+        )}
+        <Divider />
+        <Row glyph="戻" label={p.restore} onPress={() => runRestore((v) => update('premium', v))} />
+        {__DEV__ && settings.premium ? (
+          <>
+            <Divider />
+            <Row glyph="鍵" label={p.devLock} sub={p.devLockSub} onPress={() => update('premium', false)} />
+          </>
+        ) : null}
       </Section>
 
       <Section title={strings.backup.section}>

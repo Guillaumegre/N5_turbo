@@ -33,6 +33,9 @@ export type Backup = {
 
 export class BackupError extends Error {}
 
+/** The premium flag stays on the phone (a backup file must not unlock premium). */
+const LOCAL_ONLY = 'premium';
+
 export function exportBackup(db: Db, now: number): Backup {
   return {
     app: BACKUP_APP,
@@ -40,7 +43,7 @@ export function exportBackup(db: Db, now: number): Backup {
     exportedAt: now,
     cards: db.select().from(cards).where(sql`${cards.status} != 'new'`).all(),
     revlog: db.select().from(revlog).all(),
-    settings: db.select().from(settings).all(),
+    settings: db.select().from(settings).where(sql`${settings.key} != ${LOCAL_ONLY}`).all(),
     presets: db.select().from(presets).all(),
   };
 }
@@ -119,8 +122,10 @@ export function importBackup(db: Db, backup: Backup, scheduler: Scheduler, now: 
     }
     tx.delete(revlog).run();
     for (let i = 0; i < backup.revlog.length; i += 50) tx.insert(revlog).values(backup.revlog.slice(i, i + 50)).run();
-    tx.delete(settings).run();
-    if (backup.settings.length) tx.insert(settings).values(backup.settings).run();
+    // Premium comes from the store, never from a file: keep this phone's own value.
+    tx.delete(settings).where(sql`${settings.key} != ${LOCAL_ONLY}`).run();
+    const imported = backup.settings.filter((s) => s.key !== LOCAL_ONLY);
+    if (imported.length) tx.insert(settings).values(imported).run();
     tx.delete(presets).run();
     if (backup.presets.length) tx.insert(presets).values(backup.presets).run();
     return { cards: backupCards.length, reviews: backup.revlog.filter((r) => !r.deleted).length };

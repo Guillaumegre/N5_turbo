@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { DataProvider, useSettings } from '@/data/DataProvider';
+import { usePremiumSync } from '@/features/premium/usePremiumSync';
 import { AppThemeProvider, useTheme } from '@/theme/ThemeProvider';
 
 // The splash stays up until the database is open and seeded (DataProvider renders nothing before).
@@ -23,6 +24,7 @@ export default function RootLayout() {
 /** The theme comes from settings (light by default, dark or system on request), so it sits inside the data. */
 function ThemedApp() {
   const { theme, fontScale } = useSettings();
+  usePremiumSync();
   useEffect(() => {
     SplashScreen.hideAsync().catch(() => {});
   }, []);

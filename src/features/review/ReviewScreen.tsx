@@ -16,6 +16,8 @@ import { Button } from '@/ui/Button';
 import { Icon } from '@/ui/Icon';
 import { IconButton } from '@/ui/IconButton';
 
+import { UnlockReminder } from '@/features/premium/UnlockReminder';
+
 import { CardBack, CardFront } from './CardContent';
 import { GradeButtons, ShowAnswerButton } from './GradeButtons';
 import { SessionSummary } from './SessionSummary';
@@ -64,6 +66,7 @@ export function ReviewScreen() {
           reason={s.finished}
           onMore={onMore}
           moreLabel={moreLabel}
+          extra={custom ? undefined : <UnlockReminder />}
           onResume={s.resume}
           onDone={leave}
         />

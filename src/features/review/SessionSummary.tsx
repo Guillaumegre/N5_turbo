@@ -1,4 +1,5 @@
-import { StyleSheet, View } from 'react-native';
+import type { ReactNode } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { wordById } from '@/data/vocab';
 import { strings } from '@/strings';
@@ -16,9 +17,12 @@ function formatDuration(ms: number): string {
 }
 
 /** `onMore` is absent in custom sessions (no daily goal there). */
-type Props = { stats: SessionStats; reason: EndReason; onMore?: () => void; moreLabel?: string; onResume: () => void; onDone: () => void };
+type Props = { stats: SessionStats; reason: EndReason; onMore?: () => void; moreLabel?: string; onResume: () => void; onDone: () => void;
+  /** Shown above the buttons (the one-time unlock reminder). */
+  extra?: ReactNode;
+};
 
-export function SessionSummary({ stats, reason, onMore, moreLabel, onResume, onDone }: Props) {
+export function SessionSummary({ stats, reason, onMore, moreLabel, onResume, onDone, extra }: Props) {
   const { colors } = useTheme();
   const title = reason === 'done' ? (onMore ? strings.summary.goalDone : strings.summary.sessionDone) : reason === 'time' ? strings.summary.timeUp : strings.summary.ended;
   const perCard = stats.answers ? `${(stats.timeMs / stats.answers / 1000).toFixed(1)}s` : '–';
@@ -29,7 +33,8 @@ export function SessionSummary({ stats, reason, onMore, moreLabel, onResume, onD
     { n: stats.byRating[4], color: colors.easy, label: strings.review.easy },
   ];
   return (
-    <View style={styles.root}>
+    // Scrolls on small phones (the unlock reminder adds height); the spacer still pins the buttons low.
+    <ScrollView style={styles.scroll} contentContainerStyle={styles.root} showsVerticalScrollIndicator={false}>
       <View style={styles.head}>
         <View style={[styles.seal, { borderColor: colors.accent }]}>
           <AppText variant="jpWord" style={{ fontSize: 38, lineHeight: 48, color: colors.accent }}>済</AppText>
@@ -75,6 +80,7 @@ export function SessionSummary({ stats, reason, onMore, moreLabel, onResume, onD
         </View>
       ) : null}
 
+      {extra}
       <View style={styles.spacer} />
       <View style={styles.actions}>
         {reason !== 'done' ? (
@@ -84,7 +90,7 @@ export function SessionSummary({ stats, reason, onMore, moreLabel, onResume, onD
         ) : null}
         <Button label={strings.summary.done} variant="secondary" onPress={onDone} />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -98,7 +104,8 @@ function Tile({ value, label, color }: { value: string; label: string; color?: s
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, gap: spacing.xl, paddingTop: spacing.xl },
+  scroll: { flex: 1 },
+  root: { flexGrow: 1, gap: spacing.xl, paddingTop: spacing.xl },
   head: { alignItems: 'center', gap: spacing.sm },
   seal: { width: 84, height: 84, borderRadius: 42, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
   tiles: { flexDirection: 'row', borderWidth: 1, borderRadius: radius.lg, paddingVertical: spacing.md },

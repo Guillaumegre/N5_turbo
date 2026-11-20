@@ -7,7 +7,7 @@ import type { Settings } from '@/data/repo/settings';
 import { strings } from '@/strings';
 import { useTheme } from '@/theme/ThemeProvider';
 import { AppText } from '@/ui/AppText';
-import { Chips, Divider, Row, Section, SwitchRow } from '@/ui/Blocks';
+import { BigCard, Chips, Divider, Row, Section, SwitchRow } from '@/ui/Blocks';
 import { formatShortDate } from '@/ui/dates';
 import { confirm, notify } from '@/ui/dialogs';
 import { Screen } from '@/ui/Screen';
@@ -82,6 +82,18 @@ export function SettingsScreen() {
 
   return (
     <Screen title={strings.settings.title} titleJa={strings.settings.titleJa}>
+      {/* As in TypeKana: the unlock sits first, in the accent colour, until it's bought. */}
+      {settings.premium ? null : (
+        <BigCard
+          tone="accent"
+          watermark="全"
+          eyebrow={p.cardEyebrow}
+          title={p.cardTitle}
+          sub={p.cardSub(FREE_WORDS, words.length)}
+          onPress={() => router.push('/premium')}
+        />
+      )}
+
       <Section title={strings.settings.study}>
         <Row
           glyph="標"
@@ -105,11 +117,11 @@ export function SettingsScreen() {
 
       <Section title={p.title}>
         {settings.premium ? (
-          <Row glyph="全" label={p.settingsActive} sub={p.settingsActiveSub(words.length)} />
-        ) : (
-          <Row glyph="全" label={p.settingsRow} sub={p.settingsSub(FREE_WORDS, words.length)} onPress={() => router.push('/premium')} />
-        )}
-        <Divider />
+          <>
+            <Row glyph="全" label={p.settingsActive} sub={p.settingsActiveSub(words.length)} />
+            <Divider />
+          </>
+        ) : null}
         <Row glyph="戻" label={p.restore} onPress={() => runRestore((v) => update('premium', v))} />
         {__DEV__ && settings.premium ? (
           <>

@@ -25,6 +25,8 @@ export type Settings = {
    * the store (RevenueCat) is the source of truth. Never exported in a backup.
    */
   premium: boolean;
+  /** The one-time "unlock the full version" reminder was shown. */
+  unlockReminderShown: boolean;
 };
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -38,6 +40,7 @@ export const DEFAULT_SETTINGS: Settings = {
   fontScale: 1,
   customFilter: DEFAULT_FILTER,
   premium: false,
+  unlockReminderShown: false,
 };
 
 export function getSetting<K extends keyof Settings>(db: Db, key: K): Settings[K] {

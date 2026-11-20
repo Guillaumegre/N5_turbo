@@ -116,7 +116,8 @@ export function HomeScreen() {
 
       <GoalCard db={db} deadline={settings.goalDeadline} newPerDay={counts.newPerDay} />
 
-      {total && unlock ? (
+      {/* Free version: always said under the goal; once the free words are all started, it becomes the next step. */}
+      {settings.premium ? null : unlock ? (
         <Pressable
           accessibilityRole="button"
           onPress={() => router.push('/premium')}
@@ -130,7 +131,18 @@ export function HomeScreen() {
           </View>
           <Icon name="chevronRight" size={15} color={colors.accent} />
         </Pressable>
-      ) : null}
+      ) : (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`${p.freeLine(FREE_WORDS)}. ${p.unlockShort(words.length)}`}
+          onPress={() => router.push('/premium')}
+          style={({ pressed }) => [styles.free, { backgroundColor: colors.surfaceMuted }, pressed && styles.pressed]}>
+          <Icon name="lock" size={14} color={colors.textMuted} />
+          <AppText muted style={styles.freeText} numberOfLines={2}>{p.freeLine(FREE_WORDS)}</AppText>
+          <AppText style={[styles.freeLink, { color: colors.accent }]}>{p.unlockLink}</AppText>
+          <Icon name="chevronRight" size={13} color={colors.accent} />
+        </Pressable>
+      )}
 
       <View style={styles.custom}>
         <Pressable
@@ -196,6 +208,9 @@ const styles = StyleSheet.create({
   start: { minHeight: 64, borderRadius: 18, paddingHorizontal: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   startLabel: { fontSize: 17, fontWeight: '500', letterSpacing: -0.2 },
   custom: { gap: 10 },
+  free: { flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 44, borderRadius: radius.md, paddingHorizontal: 14, paddingVertical: 8, marginTop: -8 },
+  freeText: { flex: 1, fontSize: 13.5 },
+  freeLink: { fontSize: 13.5, fontWeight: '500' },
   customRow: { flexDirection: 'row', alignItems: 'center', gap: 14, borderWidth: 1, borderRadius: radius.lg, paddingVertical: 10, paddingLeft: 10, paddingRight: 16 },
   customGlyph: { width: 40, height: 40, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
   customGlyphText: { fontFamily: fonts.mincho, fontSize: 19 },

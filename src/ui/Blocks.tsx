@@ -44,9 +44,9 @@ export function BigCard({
       <AppText style={[styles.watermark, compact && styles.compactWatermark, { color: ink ? colors.watermark : colors.watermarkWarm }]} accessible={false}>
         {watermark}
       </AppText>
-      <AppText style={[styles.cardEyebrow, { color: ink ? colors.onInkSoft : 'rgba(255,255,255,.66)' }]}>{eyebrow}</AppText>
-      <AppText style={[styles.cardTitle, compact && styles.compactTitle, { color: ink ? colors.onInk : '#FBF9F5' }]}>{title}</AppText>
-      {sub ? <AppText style={[styles.cardSub, { color: ink ? colors.onInkSoft : 'rgba(255,255,255,.78)' }]}>{sub}</AppText> : null}
+      <AppText style={[styles.cardEyebrow, ink ? { color: colors.onInkSoft } : { color: colors.onAccent, opacity: 0.72 }]}>{eyebrow}</AppText>
+      <AppText style={[styles.cardTitle, compact && styles.compactTitle, { color: ink ? colors.onInk : colors.onAccent }]}>{title}</AppText>
+      {sub ? <AppText style={[styles.cardSub, ink ? { color: colors.onInkSoft } : { color: colors.onAccent, opacity: 0.85 }]}>{sub}</AppText> : null}
     </Pressable>
   );
 }

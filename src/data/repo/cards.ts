@@ -226,3 +226,8 @@ export function answerCount(db: Db, cardId: string): number {
     db.get<{ n: number }>(sql`SELECT COUNT(*) AS n FROM revlog WHERE deleted = 0 AND card_id = ${cardId}`)?.n ?? 0
   );
 }
+
+/** When the first real answer was given (undone answers and practice excluded), or null. */
+export function firstAnswerAt(db: Db): number | null {
+  return db.get<{ t: number | null }>(sql`SELECT MIN(reviewed_at) AS t FROM revlog WHERE deleted = 0 AND kind = 'review'`)?.t ?? null;
+}

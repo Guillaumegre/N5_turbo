@@ -23,7 +23,7 @@ export const strings = {
     words: 'words',
     seeStats: 'Stats',
     seeStatsHint: 'Opens your stats',
-    perDayShort: (n: number) => `${n} new a day`,
+    perDayShort: (n: number) => (n === 1 ? '1 word a day' : `${n} words a day`),
     goalEyebrow: 'Your goal',
     goalBy: (date: string) => `All N5 words by ${date}`,
     noGoalTitle: 'All N5 words, at your pace',

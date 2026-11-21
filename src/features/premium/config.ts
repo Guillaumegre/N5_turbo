@@ -4,6 +4,6 @@
  * development builds then simulate the purchase so the flow can be tried.
  */
 export const REVENUECAT_KEYS = {
-  ios: '',
-  android: '',
+  ios: 'appl_DoeDTGLobRovInxIQDZDneNFDMT',
+  android: 'goog_saWhSpYfLTMRiqrLgQbafFICqdZ',
 };

@@ -1,4 +1,4 @@
-import { addStudyDays } from './time';
+import { addStudyDays, studyDayStart } from './time';
 import { MINUTE, type CardState, type Direction, type SchedulerConfig } from './types';
 
 export type StudyCard = CardState & { id: string; wordId: string; direction: Direction; rank: number };
@@ -6,7 +6,7 @@ export type StudyCard = CardState & { id: string; wordId: string; direction: Dir
 export type DailyLimits = {
   /** New words per day (recognition cards), from the goal or settings. */
   newRecognition: number;
-  /** New production cards per day (EN → JP), unlocked once the word's JP → EN card graduated. */
+  /** New production cards per day (EN → JP), unlocked the day after the word's JP → EN card graduated. */
   newProduction: number;
   /** Maximum reviews per day. */
   reviews: number;
@@ -43,8 +43,8 @@ export function buildQueue(cards: StudyCard[], o: QueueOptions): StudyQueue {
     .sort((a, b) => a.due - b.due || a.rank - b.rank)
     .slice(0, Math.max(0, o.limits.reviews - o.doneToday.reviews));
 
-  // A production card (EN → JP) only appears once its recognition card (JP → EN) graduated.
-  const graduated = new Set(cards.filter((c) => c.direction === 'recognition' && c.status === 'review').map((c) => c.wordId));
+  // A production card (EN → JP) only appears once its recognition card (JP → EN) graduated, on an earlier day.
+  const graduated = productionUnlocked(cards, o.now, o.config.dayStartHour);
   const byRank = (a: StudyCard, b: StudyCard) => a.rank - b.rank;
   const newRecognition = eligible
     .filter((c) => c.status === 'new' && c.direction === 'recognition')
@@ -56,6 +56,21 @@ export function buildQueue(cards: StudyCard[], o: QueueOptions): StudyQueue {
     .slice(0, Math.max(0, o.limits.newProduction - o.doneToday.newProduction));
 
   return { learning, review, fresh: [...newRecognition, ...newProduction] };
+}
+
+/**
+ * Words whose EN → JP card may be introduced: the JP → EN card graduated on an earlier study day.
+ * Never the same day, so a session doesn't grow a second wave of cards, and the word gets a
+ * night's sleep before it has to be produced. (A review card was last answered `interval` days
+ * before its due day.)
+ */
+export function productionUnlocked(cards: StudyCard[], now: number, dayStartHour: number): Set<string> {
+  const today = studyDayStart(now, dayStartHour);
+  return new Set(
+    cards
+      .filter((c) => c.direction === 'recognition' && c.status === 'review' && addStudyDays(c.due, -c.interval, dayStartHour) < today)
+      .map((c) => c.wordId),
+  );
 }
 
 /** The three Anki counters: new / learning / due. */

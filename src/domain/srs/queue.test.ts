@@ -53,6 +53,14 @@ describe('study queue', () => {
     expect(q.fresh.filter((c) => c.direction === 'production').map((c) => c.wordId)).toEqual(['w2']);
   });
 
+  it('never unlocks a production card the day its recognition card graduated', () => {
+    // Graduated today: interval 1, due tomorrow. Graduated yesterday: interval 1, due today.
+    const today = { ...card(8, 'recognition', 'review', addStudyDays(NOW, 1, 4)), interval: 1 };
+    const yesterday = { ...card(9, 'recognition', 'review', addStudyDays(NOW, 0, 4)), interval: 1 };
+    const q = buildQueue([today, card(8, 'production', 'new'), yesterday, card(9, 'production', 'new')], opts());
+    expect(q.fresh.map((c) => c.id)).toEqual(['w9|p']);
+  });
+
   it('shows due reviews today, and learning cards within 20 minutes', () => {
     const q = buildQueue(cards, opts());
     expect(q.review.map((c) => c.id)).toEqual(['w2|r']);

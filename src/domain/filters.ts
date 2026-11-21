@@ -3,12 +3,12 @@
  *
  * - Due cards and new cards are real reviews: answering them changes their schedule.
  * - Cards that aren't due yet (state "All") are practice: logged for stats, schedule untouched.
- * - A production card (EN → JP) whose word hasn't graduated JP → EN yet is locked: never
+ * - A production card (EN → JP) whose word hasn't graduated JP → EN on an earlier day is locked: never
  *   introduced by a custom session, only practised in "All".
  * - Daily limits don't apply: the user picked these words on purpose; the length caps the session.
  */
 import { firstKana, kanaRow, KANA_ROWS, lastKana, type KanaRow } from './kana';
-import type { StudyCard } from './srs/queue';
+import { productionUnlocked, type StudyCard } from './srs/queue';
 import { addStudyDays } from './srs/time';
 import { MINUTE, type SchedulerConfig } from './srs/types';
 import { isWeak } from './srs/weak';
@@ -115,7 +115,7 @@ export function buildCustomQueue(
   const random = o.random ?? Math.random;
   const learnAhead = o.learnAheadMs ?? 20 * MINUTE;
   const endOfToday = addStudyDays(o.now, 1, o.config.dayStartHour);
-  const graduated = new Set(cards.filter((c) => c.direction === 'recognition' && c.status === 'review').map((c) => c.wordId));
+  const graduated = productionUnlocked(cards, o.now, o.config.dayStartHour);
 
   const isDue = (c: StudyCard) =>
     c.status === 'review' ? c.due < endOfToday : c.status !== 'new' && c.due <= o.now + learnAhead;

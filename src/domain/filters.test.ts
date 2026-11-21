@@ -92,7 +92,7 @@ describe('custom queue', () => {
   const cards = [
     card('aka', 'recognition', 'review', NOW - DAY), // due
     card('aka', 'production', 'new'), // unlocked: aka|r graduated
-    card('akai', 'recognition', 'review', addStudyDays(NOW, 5, 4)), // not due
+    card('akai', 'recognition', 'review', addStudyDays(NOW, 5, 4), { interval: 10 }), // not due
     card('akai', 'production', 'new'), // unlocked: akai|r graduated (even if not due)
     card('taberu', 'recognition', 'new'),
     card('taberu', 'production', 'new'), // locked
